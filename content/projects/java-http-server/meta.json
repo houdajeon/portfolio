@@ -1,0 +1,83 @@
+{
+  "order": 4,
+  "categories": ["backend"],
+  "stack": ["Java", "java.nio", "HTTP/1.1", "CGI", "ProcessBuilder"],
+  "teamSize": 3,
+  "repo": null,
+  "demo": null,
+  "diagram": {
+    "cols": 4,
+    "rows": 3,
+    "nodes": [
+      {
+        "id": "clients",
+        "label": "Clients",
+        "sub": { "en": "several ports", "fr": "plusieurs ports" },
+        "at": [0, 1],
+        "kind": "client"
+      },
+      {
+        "id": "config",
+        "label": { "en": "Config file", "fr": "Fichier de config" },
+        "sub": { "en": "routes · limits · errors", "fr": "routes · limites" },
+        "at": [1, 0],
+        "kind": "data"
+      },
+      {
+        "id": "loop",
+        "label": { "en": "Event loop", "fr": "Boucle d'événements" },
+        "sub": "java.nio · 1 thread",
+        "at": [1, 1]
+      },
+      {
+        "id": "router",
+        "label": { "en": "Router", "fr": "Routeur" },
+        "sub": { "en": "per-route rules", "fr": "règles par route" },
+        "at": [2, 1]
+      },
+      {
+        "id": "static",
+        "label": { "en": "Static files", "fr": "Fichiers statiques" },
+        "sub": { "en": "+ directory listing", "fr": "+ listing de dossiers" },
+        "at": [3, 0],
+        "kind": "data"
+      },
+      {
+        "id": "uploads",
+        "label": { "en": "Uploads", "fr": "Fichiers envoyés" },
+        "sub": "POST · DELETE",
+        "at": [3, 1],
+        "kind": "data"
+      },
+      {
+        "id": "cgi",
+        "label": { "en": "CGI process", "fr": "Processus CGI" },
+        "sub": "ProcessBuilder",
+        "at": [3, 2]
+      },
+      {
+        "id": "sessions",
+        "label": "Sessions",
+        "sub": "cookies",
+        "at": [2, 2],
+        "kind": "data"
+      }
+    ],
+    "edges": [
+      { "from": "clients", "to": "loop", "label": "HTTP/1.1", "both": true },
+      { "from": "config", "to": "loop", "dashed": true },
+      { "from": "loop", "to": "router" },
+      { "from": "router", "to": "static" },
+      { "from": "router", "to": "uploads" },
+      { "from": "router", "to": "cgi" },
+      { "from": "router", "to": "sessions" }
+    ],
+    "groups": [
+      {
+        "label": { "en": "one Java process", "fr": "un seul processus Java" },
+        "from": [1, 1],
+        "to": [2, 2]
+      }
+    ]
+  }
+}

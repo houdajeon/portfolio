@@ -1,0 +1,26 @@
+{
+  "title": "Bases du réseau",
+  "tagline": "Huit exercices sous Cisco Packet Tracer sur les équipements réseau, les protocoles, le modèle OSI et les outils réseau Linux.",
+  "summary": "Un projet réseau composé de 8 exercices sous Cisco Packet Tracer. J'ai construit et configuré des réseaux avec différents types d'équipements, travaillé sur les protocoles et services essentiels, situé chacun dans le modèle OSI, et pratiqué les commandes réseau Linux.",
+  "problem": "Le DevOps demande une image claire de la façon dont les données circulent entre les machines. Ce projet construit cette image depuis la base, un exercice après l'autre.",
+  "role": "Projet solo.",
+  "features": [
+    "8 exercices sous Cisco Packet Tracer",
+    "Configuration d'équipements réseau [TODO: lesquels, par exemple routeurs et switchs]",
+    "Protocoles et services [TODO: lesquels, par exemple DHCP, DNS ou routage statique]",
+    "Placer chaque exercice dans le modèle OSI",
+    "Commandes réseau Linux [TODO: lesquelles, par exemple ip, ping, traceroute, ss]"
+  ],
+  "challenges": [
+    {
+      "title": "[TODO: l'exercice le plus difficile]",
+      "problem": "[TODO: ce qui le rendait difficile]",
+      "solution": "[TODO: comment tu l'as résolu]"
+    }
+  ],
+  "learned": [
+    "Comment les données traversent les couches OSI",
+    "Configurer des équipements réseau",
+    "Diagnostiquer la connectivité en ligne de commande"
+  ]
+}

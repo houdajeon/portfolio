@@ -1,0 +1,75 @@
+{
+  "order": 8,
+  "categories": ["devops"],
+  "stack": ["Ubuntu Server", "Linux", "SSH", "Firewall", "FTP", "MySQL", "WordPress", "cron"],
+  "teamSize": 1,
+  "repo": null,
+  "demo": null,
+  "diagram": {
+    "cols": 3,
+    "rows": 3,
+    "nodes": [
+      {
+        "id": "admin",
+        "label": "Admin",
+        "sub": "SSH",
+        "at": [0, 0],
+        "kind": "client"
+      },
+      {
+        "id": "visitors",
+        "label": { "en": "Visitors", "fr": "Visiteurs" },
+        "sub": "HTTP",
+        "at": [0, 1],
+        "kind": "client"
+      },
+      {
+        "id": "ftp-user",
+        "label": { "en": "FTP user", "fr": "Utilisateur FTP" },
+        "sub": "FTP",
+        "at": [0, 2],
+        "kind": "client"
+      },
+      {
+        "id": "ssh",
+        "label": "SSH",
+        "sub": { "en": "hardened", "fr": "durci" },
+        "at": [1, 0]
+      },
+      {
+        "id": "wordpress",
+        "label": "WordPress",
+        "sub": { "en": "website", "fr": "site web" },
+        "at": [1, 1]
+      },
+      {
+        "id": "ftp",
+        "label": { "en": "FTP server", "fr": "Serveur FTP" },
+        "at": [1, 2]
+      },
+      {
+        "id": "cron",
+        "label": "cron",
+        "sub": { "en": "scheduled backups", "fr": "sauvegardes planifiées" },
+        "at": [2, 0]
+      },
+      { "id": "mysql", "label": "MySQL", "at": [2, 1], "kind": "data" }
+    ],
+    "edges": [
+      { "from": "admin", "to": "ssh" },
+      { "from": "visitors", "to": "wordpress" },
+      { "from": "ftp-user", "to": "ftp" },
+      { "from": "wordpress", "to": "mysql", "label": "SQL" }
+    ],
+    "groups": [
+      {
+        "label": {
+          "en": "Ubuntu Server · firewall",
+          "fr": "Ubuntu Server · pare-feu"
+        },
+        "from": [1, 0],
+        "to": [2, 2]
+      }
+    ]
+  }
+}

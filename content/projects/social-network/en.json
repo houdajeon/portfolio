@@ -1,0 +1,39 @@
+{
+  "title": "Social Network",
+  "tagline": "A Facebook-like platform with followers, groups, events and real-time chat. Go backend, Next.js frontend.",
+  "summary": "A complete social platform built as a team: profiles, posts with privacy levels, groups with events, notifications and real-time chat. The backend is written in Go with SQLite and versioned migrations, and the frontend uses Next.js. Each side ships as its own Docker image.",
+  "problem": "Build a social network from scratch without a backend framework: user accounts, a follow system that respects private profiles, posts that only the right people can see, groups with events, and a chat that updates in real time. The whole app had to run in two separate Docker containers.",
+  "role": "[TODO: team size, and the parts you built (for example: chat, groups, authentication, frontend pages)]",
+  "features": [
+    "Registration and login, with sessions kept in cookies and passwords hashed with bcrypt",
+    "Public and private profiles, with follow requests for private ones",
+    "Posts with three privacy levels: public, followers only, or selected followers",
+    "Groups with invitations, join requests, posts and events with RSVP",
+    "Private and group chat in real time over WebSockets (Gorilla)",
+    "Notifications for follow requests, group invitations, join requests and events",
+    "Image uploads in JPEG, PNG and GIF"
+  ],
+  "challenges": [
+    {
+      "title": "Who is allowed to see this post?",
+      "problem": "Every post has one of three privacy levels, and profiles can be public or private. One wrong check leaks private content.",
+      "solution": "Visibility is checked by the Go backend on every request, from the post's privacy level and the follower relationships stored in SQLite. [TODO: confirm, and add how you wrote the check]"
+    },
+    {
+      "title": "Chat and notifications in real time",
+      "problem": "Messages and notifications must appear instantly, without reloading the page.",
+      "solution": "Each logged-in user keeps a WebSocket connection open (Gorilla WebSocket), and the server pushes new messages and notifications to the right connections. [TODO: confirm how you tracked open connections]"
+    },
+    {
+      "title": "Changing the database safely",
+      "problem": "The schema changed many times while features were added by different teammates.",
+      "solution": "Versioned SQL migration files managed with `golang-migrate`, so every teammate and every container builds exactly the same schema."
+    }
+  ],
+  "learned": [
+    "Designing a relational schema for social features: followers, privacy levels, group membership",
+    "Session and cookie authentication without a framework",
+    "Pushing real-time updates with WebSockets",
+    "Splitting an app into two Docker images that work together"
+  ]
+}

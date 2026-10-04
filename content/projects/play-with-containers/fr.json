@@ -1,0 +1,38 @@
+{
+  "title": "Play with Containers",
+  "tagline": "Des microservices derrière une API gateway, empaquetés avec des Dockerfiles optimisés et reliés par Docker Compose.",
+  "summary": "Un système de microservices conteneurisé de zéro : une API gateway, des services applicatifs, des bases PostgreSQL et une file RabbitMQ, le tout démarré avec Docker Compose. J'ai écrit les Dockerfiles, configuré les réseaux et les volumes, et documenté comment tout lancer.",
+  "problem": "Empaqueter plusieurs services pour que n'importe qui puisse démarrer tout le système en une commande, avec des données qui survivent aux redémarrages et des services qui communiquent via des réseaux Docker.",
+  "role": "Projet solo : Dockerfiles, fichier Compose, réseaux, volumes et documentation. [TODO: confirmer que les services correspondent au schéma (applications inventaire et facturation)]",
+  "features": [
+    "Tout le système démarre avec Docker Compose",
+    "Une API gateway comme point d'entrée unique",
+    "Des bases PostgreSQL avec des volumes pour garder les données",
+    "RabbitMQ pour les messages entre services",
+    "Des Dockerfiles optimisés",
+    "Un README qui explique comment construire, lancer et tester le tout"
+  ],
+  "challenges": [
+    {
+      "title": "Des images légères et rapides à construire",
+      "problem": "Des Dockerfiles naïfs donnent des images lourdes et des rebuilds lents.",
+      "solution": "[TODO: ce que tu as fait, par exemple des images de base légères, l'ordre des couches pour le cache, ou des builds multi-étapes]"
+    },
+    {
+      "title": "Démarrer les services dans le bon ordre",
+      "problem": "Une application qui démarre avant sa base de données ou sa file de messages plante au lancement.",
+      "solution": "[TODO: comment tu l'as géré, par exemple des healthchecks avec depends_on, ou des tentatives répétées dans les applications]"
+    },
+    {
+      "title": "Des données qui survivent aux conteneurs",
+      "problem": "Les conteneurs sont jetables, mais pas les données des bases.",
+      "solution": "Les fichiers des bases vivent dans des volumes Docker : supprimer ou reconstruire un conteneur conserve les données."
+    }
+  ],
+  "learned": [
+    "Écrire des Dockerfiles rapides à construire et légers",
+    "Le réseau entre conteneurs : des services qui se joignent par leur nom",
+    "La différence entre un volume et le système de fichiers du conteneur",
+    "La communication entre services avec RabbitMQ"
+  ]
+}

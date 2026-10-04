@@ -1,0 +1,40 @@
+{
+  "title": "0-shell",
+  "tagline": "Un shell Unix minimaliste écrit en Rust : 13 commandes qui reposent sur les appels système, sans bash, sans sh et sans binaire externe.",
+  "summary": "Un shell de type Unix minimaliste, écrit en Rust et inspiré de BusyBox, réalisé en équipe de 4. Il affiche une invite, lit et analyse chaque ligne, et exécute lui-même les commandes via les appels système, sans bash, sh ni aucun binaire externe. Il propose 13 commandes, dont `ls` avec `-a`, `-F` et `-l`, et garde un historique des commandes.",
+  "problem": "Les systèmes Linux embarqués ne peuvent souvent pas embarquer un shell complet et ses utilitaires. L'objectif : un petit shell autonome qui gère la navigation, la manipulation de fichiers et le contrôle des processus, tout en se comportant comme le shell que tout le monde connaît.",
+  "role": "Équipe de 4. [TODO: les commandes ou parties que tu as réalisées, par exemple ls -l, le parseur ou l'historique]",
+  "features": [
+    "Une boucle lecture, analyse, exécution avec sa propre invite",
+    "13 commandes écrites en Rust : `echo`, `cd`, `ls`, `pwd`, `cat`, `cp`, `mv`, `rm`, `mkdir`, `exit`, `clear`, `help`, `history`",
+    "`ls` avec `-a`, `-F` et `-l` : permissions, propriétaire, taille, date et numéros de périphérique",
+    "`rm -r` pour les dossiers",
+    "Arguments entre guillemets, avec une invite de continuation tant qu'un guillemet reste ouvert",
+    "Historique des commandes enregistré dans un fichier",
+    "Des tests pour `ls` sur fichiers, dossiers, liens symboliques et exécutables"
+  ],
+  "challenges": [
+    {
+      "title": "Envoyer chaque commande au bon code",
+      "problem": "Chaque ligne tapée doit atteindre la bonne implémentation, et un nom inconnu ne doit pas faire planter le shell.",
+      "solution": "Un dispatcher basé sur une `HashMap` qui associe chaque nom de commande à un pointeur de fonction. Un nom inconnu affiche `Command Not Found` et l'invite revient."
+    },
+    {
+      "title": "Reconstruire `ls -l` sans le vrai `ls`",
+      "problem": "Chaque colonne doit être calculée à la main : la chaîne de permissions, propriétaire et groupe, taille, date de modification, et numéros de périphérique pour les fichiers spéciaux.",
+      "solution": "Les métadonnées des fichiers sont lues via la bibliothèque standard de Rust et `libc`, puis mises en forme comme le fait `ls`. [TODO: ajouter le détail dont tu es le plus fier, par exemple la construction de la chaîne de permissions]"
+    },
+    {
+      "title": "Des erreurs qui ne ferment pas la session",
+      "problem": "Un fichier manquant, un mauvais chemin ou une permission refusée doit afficher un message et revenir à l'invite.",
+      "solution": "[TODO: comment tu as géré les erreurs, par exemple avec match sur Result et un message cohérent]"
+    }
+  ],
+  "learned": [
+    "Le fonctionnement d'un shell : la boucle lecture, analyse, exécution",
+    "Les métadonnées de fichiers Unix et les appels système depuis Rust",
+    "La gestion d'erreurs avec `Result` plutôt qu'avec des exceptions",
+    "Découper un projet Rust en modules, et le tester",
+    "Travailler sur une même base de code dans une équipe de 4"
+  ]
+}

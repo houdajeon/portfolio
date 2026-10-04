@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "title": "Houda Hdili · Full-stack & DevOps",
+    "description": "Développement full-stack orienté DevOps, formation à Zone01 Oujda. Go, Java et Spring Boot, Next.js, Angular, Docker et Kubernetes. Disponible pour un stage ou un premier poste."
+  },
+  "nav": {
+    "about": "À propos",
+    "projects": "Projets",
+    "skills": "Compétences",
+    "journey": "Parcours",
+    "community": "Communauté",
+    "contact": "Contact",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "skip": "Aller au contenu",
+    "home": "Page d'accueil",
+    "main": "Principal"
+  },
+  "theme": {
+    "toDark": "Passer au thème sombre",
+    "toLight": "Passer au thème clair"
+  },
+  "locale": {
+    "switchLabel": "Read in English",
+    "short": "EN"
+  },
+  "hero": {
+    "status": "Disponible pour un stage ou un premier poste",
+    "kicker": "Houda Hdili · Full-stack · Orientation DevOps",
+    "titleStart": "Du code",
+    "titleMiddle": "au",
+    "titleAccent": "cluster.",
+    "lede": "Je m'appelle Houda Hdili et je me forme au développement full-stack, avec une orientation DevOps, à Zone01 Oujda. Je développe des applications web complètes avec Go, Spring Boot, Next.js et Angular, puis je les déploie avec Docker et Kubernetes.",
+    "ctaProjects": "Voir les projets",
+    "ctaCv": "Télécharger le CV",
+    "cvSoon": "CV bientôt disponible",
+    "terminal": {
+      "title": "~/houda — zsh",
+      "role": "full-stack, orientation devops",
+      "status": "Disponible",
+      "roleShort": "full-stack/devops"
+    }
+  },
+  "about": {
+    "eyebrow": "à propos",
+    "title": "J'apprends en construisant, entre pairs plutôt qu'en cours",
+    "paragraphs": [
+      "J'étudie à Zone01 Oujda, une école par projets, sans professeurs et sans cours magistraux. Chaque compétence de cette page vient d'un projet : on lit un sujet, on le réalise seul ou en petite équipe, puis d'autres étudiants relisent le travail avant de le valider.",
+      "Avant Zone01, j'ai obtenu un Bac Sciences Mathématiques B (option française). Les maths m'ont donné l'habitude de découper un problème en petites étapes et de vérifier chacune d'elles, et c'est comme ça que je débogue aujourd'hui.",
+      "J'ai validé la spécialité DevOps, et j'aime comprendre ce qui se passe sous le capot. J'ai travaillé sur un serveur HTTP écrit sans framework, un mini-framework front-end construit de zéro et un shell Unix en Rust. [TODO: une ou deux phrases, avec tes mots, sur ce qui te motive]"
+    ],
+    "facts": {
+      "school": "École",
+      "schoolValue": "Zone01 Oujda",
+      "focus": "Domaine",
+      "focusValue": "Full-stack · DevOps",
+      "languages": "Langues",
+      "languagesValue": "Français, anglais",
+      "based": "Ville",
+      "basedValue": "Safi, Maroc"
+    },
+    "photoAlt": "Portrait de Houda Hdili",
+    "photoTodo": "[TODO: ajouter ta photo]"
+  },
+  "skills": {
+    "eyebrow": "compétences",
+    "title": "Mes outils",
+    "intro": "Pas de pourcentages. Chaque compétence renvoie aux projets où je l'ai utilisée, pour que vous puissiez vérifier par vous-même.",
+    "levels": {
+      "used": "Utilisé en projet",
+      "familiar": "Notions",
+      "learning": "En apprentissage"
+    },
+    "legend": "Légende",
+    "status": {
+      "used": "utilisé",
+      "familiar": "notions",
+      "learning": "en cours"
+    },
+    "columns": {
+      "name": "nom",
+      "status": "statut",
+      "proof": "utilisé dans"
+    }
+  },
+  "projects": {
+    "eyebrow": "projets",
+    "title": "Projets choisis",
+    "intro": "Des systèmes complets, d'un serveur HTTP écrit à la main jusqu'à des microservices sur Kubernetes. Chaque projet a son étude de cas : le problème, ma part, l'architecture et ce que j'en ai appris.",
+    "filters": {
+      "all": "Tous",
+      "fullstack": "Full-stack",
+      "backend": "Backend",
+      "systems": "Systèmes",
+      "game": "Jeu",
+      "devops": "DevOps"
+    },
+    "filterLabel": "Filtrer les projets par type",
+    "solo": "Solo",
+    "team": "Équipe de {n}",
+    "teamTodo": "[TODO: taille de l'équipe]",
+    "readCase": "Lire l'étude de cas",
+    "count": "{n} projets affichés"
+  },
+  "caseStudy": {
+    "back": "Tous les projets",
+    "problem": "Le problème",
+    "role": "Mon rôle",
+    "features": "Fonctionnalités",
+    "architecture": "Architecture",
+    "architectureNote": "Vue simplifiée des composants principaux et de leurs échanges.",
+    "diagramList": "Afficher le schéma en texte",
+    "challenges": "Défis techniques",
+    "challengeProblem": "Problème",
+    "challengeSolution": "Ma solution",
+    "learned": "Ce que j'ai appris",
+    "stack": "Stack",
+    "team": "Équipe",
+    "links": "Liens",
+    "repo": "Code source",
+    "repoTodo": "[TODO: rendre le dépôt public]",
+    "demo": "Démo en ligne",
+    "screenshots": "Captures d'écran",
+    "screenshotsTodo": "[TODO: ajouter 2 ou 3 captures ou un court GIF]",
+    "prev": "Précédent",
+    "next": "Suivant"
+  },
+  "journey": {
+    "eyebrow": "parcours",
+    "title": "Mon parcours"
+  },
+  "community": {
+    "eyebrow": "communauté",
+    "title": "Au-delà du code : des CTF avec le club Cyberz",
+    "intro": "Je suis membre de Cyberz, un club de cybersécurité qui organise des compétitions CTF (Capture The Flag). Je m'occupe des réseaux sociaux et de la communication, et j'aide à organiser les événements.",
+    "eventsTitle": "Événements auxquels j'ai contribué",
+    "partners": "Avec",
+    "yaml": {
+      "name": "nom",
+      "about": "description",
+      "roles": "rôles"
+    }
+  },
+  "contact": {
+    "eyebrow": "contact",
+    "title": "Parlons-en",
+    "intro": "Je cherche un stage ou un premier poste en full-stack, backend ou DevOps, au Maroc, en France ou à distance. Le plus simple pour me joindre : ce formulaire ou LinkedIn.",
+    "direct": "Me trouver",
+    "emailTodo": "[TODO: ajouter l'adresse e-mail à afficher]",
+    "form": {
+      "title": "Envoyer un message",
+      "name": "Nom",
+      "email": "E-mail",
+      "message": "Message",
+      "send": "Envoyer",
+      "sending": "Envoi…",
+      "success": "Merci, votre message a bien été envoyé. Je vous répondrai par e-mail.",
+      "error": "Le message n'a pas pu être envoyé. Réessayez, ou contactez-moi sur LinkedIn.",
+      "notConfigured": "[TODO: le formulaire n'est pas encore relié à un service d'e-mail]"
+    }
+  },
+  "footer": {
+    "built": "Réalisé avec Next.js et Tailwind CSS, exporté en site statique.",
+    "top": "Haut de page"
+  }
+}

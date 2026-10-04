@@ -1,0 +1,38 @@
+{
+  "title": "Play with Containers",
+  "tagline": "Microservices behind an API gateway, packaged with optimized Dockerfiles and wired together with Docker Compose.",
+  "summary": "A microservices system containerized from scratch: an API gateway, application services, PostgreSQL databases and a RabbitMQ queue, all started with Docker Compose. I wrote the Dockerfiles, set up the networks and volumes, and documented how to run everything.",
+  "problem": "Package several services so that anyone can start the whole system with one command, with data that survives restarts and services that reach each other over Docker networks.",
+  "role": "Solo project: Dockerfiles, Compose file, networks, volumes and documentation. [TODO: confirm the services match the diagram (inventory and billing apps)]",
+  "features": [
+    "The whole system starts with Docker Compose",
+    "An API gateway as the single entry point",
+    "PostgreSQL databases with volumes for persistent data",
+    "RabbitMQ for messages between services",
+    "Optimized Dockerfiles",
+    "A README that explains how to build, run and test everything"
+  ],
+  "challenges": [
+    {
+      "title": "Small images that build fast",
+      "problem": "Naive Dockerfiles produce big images and slow rebuilds.",
+      "solution": "[TODO: what you did, for example slim base images, layer order for the build cache, or multi-stage builds]"
+    },
+    {
+      "title": "Starting services in the right order",
+      "problem": "An app that starts before its database or its queue is ready crashes on boot.",
+      "solution": "[TODO: how you handled it, for example healthchecks with depends_on, or retries in the apps]"
+    },
+    {
+      "title": "Data that outlives containers",
+      "problem": "Containers are disposable, but database data is not.",
+      "solution": "Database files live in Docker volumes, so removing or rebuilding a container keeps the data."
+    }
+  ],
+  "learned": [
+    "Writing Dockerfiles that build fast and stay small",
+    "Container networking: services reaching each other by name",
+    "The difference between a volume and the container filesystem",
+    "Messaging between services with RabbitMQ"
+  ]
+}

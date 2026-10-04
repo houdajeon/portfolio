@@ -1,0 +1,39 @@
+{
+  "title": "Administration de serveur Linux",
+  "tagline": "Un serveur Ubuntu installé et sécurisé à la main : partitions, utilisateurs, pare-feu, SSH, FTP, MySQL, WordPress et sauvegardes.",
+  "summary": "Un projet d'administration système sur Ubuntu Server. J'ai installé le serveur avec un partitionnement personnalisé, géré les utilisateurs et les permissions, configuré un pare-feu, durci SSH, et mis en place FTP, MySQL et un site WordPress, avec des sauvegardes planifiées par cron.",
+  "problem": "Faire tourner un petit serveur proche de la production et le garder sûr : seules les bonnes personnes y accèdent, seuls les ports nécessaires sont ouverts, et les données sont sauvegardées sans y penser.",
+  "role": "Projet solo.",
+  "features": [
+    "Partitionnement de disque personnalisé à l'installation",
+    "Utilisateurs, groupes et permissions de fichiers",
+    "Règles de pare-feu",
+    "Durcissement de SSH",
+    "Un serveur FTP",
+    "Une base MySQL et un site WordPress",
+    "Sauvegardes automatiques avec cron"
+  ],
+  "challenges": [
+    {
+      "title": "Durcir SSH",
+      "problem": "Un serveur accessible en SSH reçoit des tentatives de connexion toute la journée.",
+      "solution": "[TODO: ce que tu as changé, par exemple le port, la connexion root, l'authentification par clé]"
+    },
+    {
+      "title": "N'ouvrir que le nécessaire",
+      "problem": "Chaque port ouvert est une porte d'entrée de plus.",
+      "solution": "[TODO: quel pare-feu tu as utilisé et quelles règles tu as posées]"
+    },
+    {
+      "title": "Des sauvegardes qui tournent seules",
+      "problem": "Les sauvegardes manuelles finissent par être oubliées.",
+      "solution": "Une tâche cron lance les sauvegardes à intervalles réguliers. [TODO: ce qui est sauvegardé, à quelle fréquence, et où]"
+    }
+  ],
+  "learned": [
+    "Les utilisateurs, groupes et permissions sous Linux",
+    "Sécuriser un serveur étape par étape",
+    "Héberger une application web avec sa base de données",
+    "Automatiser des tâches avec cron"
+  ]
+}

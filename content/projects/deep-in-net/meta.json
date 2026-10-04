@@ -1,0 +1,9 @@
+{
+  "order": 9,
+  "categories": ["devops"],
+  "stack": ["Cisco Packet Tracer", "Networking", "OSI model", "Linux networking"],
+  "teamSize": 1,
+  "repo": null,
+  "demo": null,
+  "diagram": null
+}

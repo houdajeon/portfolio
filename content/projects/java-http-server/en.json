@@ -1,0 +1,38 @@
+{
+  "title": "HTTP/1.1 server in Java",
+  "tagline": "A single-thread, non-blocking web server built on java.nio, with no frameworks.",
+  "summary": "A web server written from scratch in Java with java.nio and no frameworks. One thread handles every connection through non-blocking I/O. It listens on several ports, supports GET, POST and DELETE, chunked requests, file uploads, cookies and sessions, runs CGI scripts, and takes all its behavior from a configuration file. We stress-tested it under load. [TODO: add your stress-test results, for example availability under siege]",
+  "problem": "Understand what servers like Nginx do for you by building one: accept many clients at the same time, parse HTTP/1.1 correctly, apply the rules of a configuration file, and keep serving everyone even when one client is slow.",
+  "role": "Team of 3. [TODO: the parts you built, for example the request parser, the config file, CGI or sessions]",
+  "features": [
+    "Single thread, non-blocking I/O with `java.nio`",
+    "Listens on several ports at the same time",
+    "GET, POST and DELETE, chunked request bodies and file uploads",
+    "Cookies and sessions",
+    "CGI scripts run in a separate process with `ProcessBuilder`",
+    "Configuration file: routes, custom error pages, body size limit, directory listing"
+  ],
+  "challenges": [
+    {
+      "title": "Many clients, one thread",
+      "problem": "One thread per client wastes memory, and a single blocking read would freeze the whole server.",
+      "solution": "Non-blocking channels registered on a `java.nio` Selector. The event loop only reads or writes a socket when it is ready, so one thread can serve every client."
+    },
+    {
+      "title": "Requests that arrive in pieces",
+      "problem": "With non-blocking I/O, one request can arrive over several reads, and a chunked body does not announce its total size.",
+      "solution": "Each connection keeps its own buffer and parsing state, and the parser only moves to the next step (headers, body, next chunk) once enough bytes have arrived. [TODO: confirm this matches your implementation]"
+    },
+    {
+      "title": "Running CGI scripts",
+      "problem": "A CGI script is an external program. The server must pass it the request and read its output without stopping the other clients.",
+      "solution": "Scripts run in their own process started with `ProcessBuilder`, with request data passed through environment variables and standard input, as the CGI standard defines. [TODO: explain how you kept the event loop from blocking while the script runs]"
+    }
+  ],
+  "learned": [
+    "How HTTP/1.1 really works: request line, headers, Content-Length and chunked transfer encoding",
+    "Event-driven, non-blocking I/O with selectors",
+    "Why web servers are driven by configuration: routes, limits and error pages",
+    "Testing a server under load, then fixing what breaks"
+  ]
+}

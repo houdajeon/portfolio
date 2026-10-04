@@ -1,0 +1,39 @@
+{
+  "title": "Orchestrator",
+  "tagline": "Six microservices on a two-node K3s cluster, with StatefulSets, autoscaling and secrets.",
+  "summary": "A movie inventory and billing system deployed on Kubernetes. Vagrant creates two Debian VMs: one K3s server and one worker. The cluster runs six services: an API gateway, two apps, two databases and a RabbitMQ queue. The gateway and the inventory app scale from 1 to 3 replicas when CPU usage reaches 60%.",
+  "problem": "A set of microservices had to run on a real orchestrator: keep their data when pods are replaced, scale under load, keep credentials in Kubernetes Secrets instead of the app manifests, and start from a single command.",
+  "role": "Team of 2. [TODO: what you built, for example the manifests, the Vagrant and K3s setup, or the scripts]",
+  "features": [
+    "One command creates the VMs, installs K3s, joins the worker and applies every manifest: `./Scripts/orchestrator.sh create`",
+    "API gateway and inventory app as Deployments with a HorizontalPodAutoscaler: 1 to 3 replicas at 60% CPU",
+    "Both databases and the billing app as StatefulSets, with persistent volume claims for the data",
+    "Configuration in ConfigMaps, database and RabbitMQ credentials in Secrets",
+    "Container images published on Docker Hub",
+    "API documented with OpenAPI and a Postman collection"
+  ],
+  "challenges": [
+    {
+      "title": "Keeping data when pods are replaced",
+      "problem": "Kubernetes can replace a pod at any moment. A database running in a plain Deployment would lose its data.",
+      "solution": "The inventory and billing databases run as StatefulSets with persistent volume claims, so their data survives when Kubernetes replaces a database pod."
+    },
+    {
+      "title": "Scaling with the load",
+      "problem": "The public entry point must absorb more traffic without anyone adding replicas by hand.",
+      "solution": "HorizontalPodAutoscalers scale the API gateway and the inventory app from 1 to 3 replicas when CPU usage reaches 60%, using the metrics server that ships with K3s."
+    },
+    {
+      "title": "Never losing an order",
+      "problem": "If the billing app is down, orders sent during that time must not disappear.",
+      "solution": "The gateway publishes orders to RabbitMQ instead of calling billing directly. The queue keeps the messages until the billing app is back, which then saves them to its database."
+    }
+  ],
+  "learned": [
+    "When to use a Deployment and when to use a StatefulSet",
+    "How a HorizontalPodAutoscaler uses metrics to scale",
+    "Managing configuration with ConfigMaps and Secrets",
+    "Building a reproducible cluster with Vagrant and K3s",
+    "Debugging pods with `kubectl describe` and `kubectl logs`"
+  ]
+}

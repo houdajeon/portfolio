@@ -1,0 +1,62 @@
+{
+  "order": 5,
+  "categories": ["systems"],
+  "stack": ["Rust", "Unix system calls", "libc", "rustyline", "Cargo"],
+  "teamSize": 4,
+  "repo": "https://github.com/houdajeon/0-shell",
+  "demo": null,
+  "diagram": {
+    "cols": 4,
+    "rows": 2,
+    "nodes": [
+      {
+        "id": "user",
+        "label": { "en": "User", "fr": "Utilisateur" },
+        "sub": "stdin / stdout",
+        "at": [0, 0],
+        "kind": "client"
+      },
+      {
+        "id": "loop",
+        "label": { "en": "Shell loop", "fr": "Boucle du shell" },
+        "sub": { "en": "prompt · read · parse", "fr": "invite · lecture · analyse" },
+        "at": [1, 0]
+      },
+      { "id": "dispatcher", "label": "Dispatcher", "sub": "HashMap<&str, fn>", "at": [2, 0] },
+      {
+        "id": "commands",
+        "label": { "en": "13 commands", "fr": "13 commandes" },
+        "sub": "ls · cd · cp · mv · rm …",
+        "at": [3, 0]
+      },
+      {
+        "id": "history",
+        "label": { "en": "History file", "fr": "Fichier d'historique" },
+        "sub": "0-shell_history",
+        "at": [1, 1],
+        "kind": "data"
+      },
+      {
+        "id": "fs",
+        "label": { "en": "File system", "fr": "Système de fichiers" },
+        "sub": { "en": "system calls", "fr": "appels système" },
+        "at": [3, 1],
+        "kind": "data"
+      }
+    ],
+    "edges": [
+      { "from": "user", "to": "loop", "label": { "en": "input", "fr": "saisie" }, "both": true },
+      { "from": "loop", "to": "dispatcher" },
+      { "from": "dispatcher", "to": "commands" },
+      { "from": "loop", "to": "history", "dashed": true },
+      { "from": "commands", "to": "fs" }
+    ],
+    "groups": [
+      {
+        "label": { "en": "0-shell · one Rust binary", "fr": "0-shell · un binaire Rust" },
+        "from": [1, 0],
+        "to": [3, 0]
+      }
+    ]
+  }
+}

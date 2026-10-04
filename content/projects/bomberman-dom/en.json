@@ -1,0 +1,38 @@
+{
+  "title": "Bomberman DOM",
+  "tagline": "An online Bomberman for 2 to 4 players at 60 fps, on plain DOM elements and our own mini-framework.",
+  "summary": "A multiplayer Bomberman for 2 to 4 players in the browser. There is no canvas and no WebGL: the whole game is made of DOM elements, rendered by a mini-framework we wrote ourselves and animated with requestAnimationFrame at 60 fps. Players meet in a lobby with timers, chat in real time, pick up power-ups and have 3 lives each.",
+  "problem": "Make a smooth real-time game with the DOM only, which was never designed for games, and keep 2 to 4 players in sync over the network.",
+  "role": "Team of 4. [TODO: the parts you built, for example the game loop, the WebSocket server, the lobby or the mini-framework]",
+  "features": [
+    "2 to 4 players online, 3 lives each",
+    "A lobby with timers before the game starts",
+    "Power-ups",
+    "Real-time chat",
+    "Rendering with our own mini-framework, no canvas or WebGL",
+    "A game loop on `requestAnimationFrame` at 60 fps"
+  ],
+  "challenges": [
+    {
+      "title": "60 fps without a canvas",
+      "problem": "Updating many DOM elements on every frame can trigger layout work and drop frames.",
+      "solution": "A game loop driven by `requestAnimationFrame`, in step with the browser's repaints. [TODO: add the techniques you used to stay under 16 ms per frame, for example CSS transforms or fewer layout reads]"
+    },
+    {
+      "title": "Keeping every player in sync",
+      "problem": "Each player's moves, bombs and explosions must show up on every screen at the same time.",
+      "solution": "Player actions travel over WebSockets to the server, which broadcasts them to everyone in the game. [TODO: explain who decides the game state: the server or each browser]"
+    },
+    {
+      "title": "Running on our own framework",
+      "problem": "The game had to run on the mini-framework we built ourselves, so every missing feature was ours to add.",
+      "solution": "[TODO: describe your framework: how it handles state, events and rendering]"
+    }
+  ],
+  "learned": [
+    "How the browser renders a frame, and what makes it slow",
+    "Real-time communication with WebSockets",
+    "What frameworks do under the hood: state, events and rendering",
+    "Splitting the work and merging code in a team of 4"
+  ]
+}

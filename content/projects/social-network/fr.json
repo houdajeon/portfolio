@@ -1,0 +1,39 @@
+{
+  "title": "Social Network",
+  "tagline": "Une plateforme type Facebook avec abonnés, groupes, événements et chat en temps réel. Backend en Go, frontend en Next.js.",
+  "summary": "Une plateforme sociale complète réalisée en équipe : profils, publications avec niveaux de confidentialité, groupes avec événements, notifications et chat en temps réel. Le backend est écrit en Go avec SQLite et des migrations versionnées, et le frontend utilise Next.js. Chaque partie est livrée dans sa propre image Docker.",
+  "problem": "Construire un réseau social de zéro, sans framework backend : comptes utilisateurs, abonnements qui respectent les profils privés, publications visibles uniquement par les bonnes personnes, groupes avec événements, et un chat qui se met à jour en temps réel. Toute l'application devait tourner dans deux conteneurs Docker séparés.",
+  "role": "[TODO: taille de l'équipe et les parties que tu as réalisées (par exemple : chat, groupes, authentification, pages frontend)]",
+  "features": [
+    "Inscription et connexion, avec sessions stockées en cookies et mots de passe hachés avec bcrypt",
+    "Profils publics et privés, avec demandes d'abonnement pour les profils privés",
+    "Publications avec trois niveaux de confidentialité : public, abonnés seulement, ou abonnés choisis",
+    "Groupes avec invitations, demandes d'adhésion, publications et événements avec réponses (RSVP)",
+    "Chat privé et de groupe en temps réel via WebSockets (Gorilla)",
+    "Notifications pour les demandes d'abonnement, invitations, demandes d'adhésion et événements",
+    "Envoi d'images en JPEG, PNG et GIF"
+  ],
+  "challenges": [
+    {
+      "title": "Qui a le droit de voir cette publication ?",
+      "problem": "Chaque publication a l'un des trois niveaux de confidentialité, et les profils peuvent être publics ou privés. Une seule vérification oubliée et du contenu privé fuite.",
+      "solution": "La visibilité est vérifiée par le backend Go à chaque requête, à partir du niveau de confidentialité et des relations d'abonnement stockées dans SQLite. [TODO: confirmer, et préciser comment tu as écrit la vérification]"
+    },
+    {
+      "title": "Chat et notifications en temps réel",
+      "problem": "Les messages et notifications doivent apparaître immédiatement, sans recharger la page.",
+      "solution": "Chaque utilisateur connecté garde une connexion WebSocket ouverte (Gorilla WebSocket), et le serveur envoie les nouveaux messages et notifications aux bonnes connexions. [TODO: confirmer comment tu suivais les connexions ouvertes]"
+    },
+    {
+      "title": "Faire évoluer la base sans risque",
+      "problem": "Le schéma a changé plusieurs fois, au fil des fonctionnalités ajoutées par différents membres de l'équipe.",
+      "solution": "Des fichiers de migration SQL versionnés, gérés avec `golang-migrate`, pour que chaque membre de l'équipe et chaque conteneur construise exactement le même schéma."
+    }
+  ],
+  "learned": [
+    "Concevoir un schéma relationnel pour des fonctionnalités sociales : abonnés, confidentialité, membres de groupes",
+    "L'authentification par session et cookies sans framework",
+    "Envoyer des mises à jour en temps réel avec les WebSockets",
+    "Découper une application en deux images Docker qui fonctionnent ensemble"
+  ]
+}

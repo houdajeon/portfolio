@@ -1,0 +1,26 @@
+{
+  "title": "Networking Fundamentals",
+  "tagline": "Eight Cisco Packet Tracer exercises on network devices, protocols, the OSI model and Linux networking tools.",
+  "summary": "A networking project made of 8 exercises in Cisco Packet Tracer. I built and configured networks with different device types, worked with core protocols and services, placed them in the OSI model, and practiced Linux networking commands.",
+  "problem": "DevOps work needs a clear picture of how data moves between machines. This project builds that picture from the ground up, one exercise at a time.",
+  "role": "Solo project.",
+  "features": [
+    "8 exercises in Cisco Packet Tracer",
+    "Configuring network devices [TODO: which ones, for example routers and switches]",
+    "Protocols and services [TODO: which ones, for example DHCP, DNS or static routing]",
+    "Placing each exercise in the OSI model",
+    "Linux networking commands [TODO: which ones, for example ip, ping, traceroute, ss]"
+  ],
+  "challenges": [
+    {
+      "title": "[TODO: the exercise that was hardest]",
+      "problem": "[TODO: what made it hard]",
+      "solution": "[TODO: how you solved it]"
+    }
+  ],
+  "learned": [
+    "How data moves through the OSI layers",
+    "Configuring network devices",
+    "Troubleshooting connectivity from the command line"
+  ]
+}

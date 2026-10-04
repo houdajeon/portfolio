@@ -1,0 +1,83 @@
+[
+  {
+    "date": "[TODO: year]",
+    "title": {
+      "en": "Bac in Mathematical Sciences B",
+      "fr": "Bac Sciences Mathématiques B"
+    },
+    "body": {
+      "en": "French option. A solid base in maths and logical reasoning.",
+      "fr": "Option française. Une base solide en mathématiques et en raisonnement logique."
+    }
+  },
+  {
+    "date": "[TODO: month and year]",
+    "title": {
+      "en": "Joined Zone01 Oujda",
+      "fr": "Entrée à Zone01 Oujda"
+    },
+    "body": {
+      "en": "Project-based, peer-to-peer learning. No teachers, no lectures: specifications, code and peer reviews.",
+      "fr": "Apprentissage par projets et entre pairs. Pas de professeurs, pas de cours : des sujets, du code et des relectures entre étudiants."
+    }
+  },
+  {
+    "date": "[TODO]",
+    "title": {
+      "en": "Full-stack with Go and JavaScript",
+      "fr": "Full-stack avec Go et JavaScript"
+    },
+    "body": {
+      "en": "Social Network (Go + Next.js) and Bomberman DOM, a real-time multiplayer game on our own mini-framework.",
+      "fr": "Social Network (Go + Next.js) et Bomberman DOM, un jeu multijoueur en temps réel sur notre propre mini-framework."
+    }
+  },
+  {
+    "date": "[TODO]",
+    "title": {
+      "en": "Systems programming in Rust",
+      "fr": "Programmation système en Rust"
+    },
+    "body": {
+      "en": "0-shell, a Unix shell built in a team of 4, with 13 commands running on system calls.",
+      "fr": "0-shell, un shell Unix réalisé en équipe de 4, avec 13 commandes qui reposent sur les appels système."
+    }
+  },
+  {
+    "date": "[TODO]",
+    "title": {
+      "en": "Java track",
+      "fr": "Parcours Java"
+    },
+    "body": {
+      "en": "An HTTP/1.1 server in plain Java, then 01Blog with Spring Boot and Angular.",
+      "fr": "Un serveur HTTP/1.1 en Java pur, puis 01Blog avec Spring Boot et Angular."
+    }
+  },
+  {
+    "date": "[TODO]",
+    "title": {
+      "en": "DevOps specialty completed",
+      "fr": "Spécialité DevOps validée"
+    },
+    "body": {
+      "en": "Networking, Linux server administration, Docker microservices and Kubernetes with K3s.",
+      "fr": "Réseau, administration de serveurs Linux, microservices Docker et Kubernetes avec K3s."
+    }
+  },
+  {
+    "date": {
+      "en": "Now",
+      "fr": "Aujourd'hui"
+    },
+    "title": {
+      "en": "Last project, and looking for work",
+      "fr": "Dernier projet, et recherche de poste"
+    },
+    "body": {
+      "en": "Finishing my final Zone01 project [TODO: name] and looking for an internship or a junior role.",
+      "fr": "Je termine mon dernier projet à Zone01 [TODO: nom] et je cherche un stage ou un premier poste."
+    },
+    "current": true
+  }
+]

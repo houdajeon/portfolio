@@ -1,0 +1,97 @@
+{
+  "order": 3,
+  "categories": ["devops"],
+  "stack": [
+    "Kubernetes",
+    "K3s",
+    "Vagrant",
+    "Docker",
+    "Docker Hub",
+    "PostgreSQL",
+    "RabbitMQ",
+    "Python",
+    "OpenAPI",
+    "Postman"
+  ],
+  "teamSize": 2,
+  "repo": "https://github.com/houdajeon/orchestrator",
+  "demo": null,
+  "diagram": {
+    "cols": 4,
+    "rows": 3,
+    "nodes": [
+      {
+        "id": "client",
+        "label": "Client",
+        "sub": "localhost:3000",
+        "at": [0, 1],
+        "kind": "client"
+      },
+      {
+        "id": "gateway",
+        "label": "API Gateway",
+        "sub": "Deployment · HPA 1–3",
+        "at": [1, 1]
+      },
+      {
+        "id": "inventory",
+        "label": { "en": "Inventory app", "fr": "App inventaire" },
+        "sub": "Deployment · HPA 1–3",
+        "at": [2, 0]
+      },
+      {
+        "id": "inventory-db",
+        "label": { "en": "Inventory DB", "fr": "BD inventaire" },
+        "sub": "PostgreSQL · StatefulSet",
+        "at": [3, 0],
+        "kind": "data"
+      },
+      {
+        "id": "rabbit",
+        "label": "RabbitMQ",
+        "sub": "Deployment",
+        "at": [2, 2],
+        "kind": "queue"
+      },
+      {
+        "id": "billing",
+        "label": { "en": "Billing app", "fr": "App facturation" },
+        "sub": "StatefulSet",
+        "at": [3, 2]
+      },
+      {
+        "id": "billing-db",
+        "label": { "en": "Billing DB", "fr": "BD facturation" },
+        "sub": "StatefulSet · PVC",
+        "at": [3, 1],
+        "kind": "data"
+      }
+    ],
+    "edges": [
+      { "from": "client", "to": "gateway", "label": "HTTP" },
+      { "from": "gateway", "to": "inventory", "label": "HTTP" },
+      { "from": "inventory", "to": "inventory-db", "label": "SQL" },
+      {
+        "from": "gateway",
+        "to": "rabbit",
+        "label": { "en": "order", "fr": "commande" }
+      },
+      {
+        "from": "rabbit",
+        "to": "billing",
+        "label": { "en": "consume", "fr": "consomme" }
+      },
+      { "from": "billing", "to": "billing-db", "label": "SQL" }
+    ],
+    "groups": [
+      {
+        "label": {
+          "en": "K3s cluster · 2 Vagrant VMs",
+          "fr": "cluster K3s · 2 VM Vagrant"
+        },
+        "from": [1, 0],
+        "to": [3, 2]
+      }
+    ]
+  }
+}

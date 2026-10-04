@@ -1,0 +1,38 @@
+{
+  "title": "Serveur HTTP/1.1 en Java",
+  "tagline": "Un serveur web mono-thread et non bloquant, construit sur java.nio, sans framework.",
+  "summary": "Un serveur web écrit de zéro en Java avec java.nio, sans framework. Un seul thread gère toutes les connexions grâce aux entrées/sorties non bloquantes. Il écoute sur plusieurs ports, gère GET, POST et DELETE, les requêtes chunked, l'envoi de fichiers, les cookies et les sessions, exécute des scripts CGI, et tire tout son comportement d'un fichier de configuration. Nous l'avons testé sous charge. [TODO: ajouter les résultats du test de charge, par exemple la disponibilité sous siege]",
+  "problem": "Comprendre ce que des serveurs comme Nginx font pour nous en en construisant un : accepter beaucoup de clients en même temps, analyser correctement HTTP/1.1, appliquer les règles d'un fichier de configuration, et continuer à servir tout le monde même quand un client est lent.",
+  "role": "Équipe de 3. [TODO: les parties que tu as réalisées, par exemple le parseur de requêtes, le fichier de config, le CGI ou les sessions]",
+  "features": [
+    "Un seul thread, entrées/sorties non bloquantes avec `java.nio`",
+    "Écoute sur plusieurs ports en même temps",
+    "GET, POST et DELETE, corps de requête chunked et envoi de fichiers",
+    "Cookies et sessions",
+    "Scripts CGI exécutés dans un processus séparé avec `ProcessBuilder`",
+    "Fichier de configuration : routes, pages d'erreur personnalisées, taille maximale du corps, listing de dossiers"
+  ],
+  "challenges": [
+    {
+      "title": "Beaucoup de clients, un seul thread",
+      "problem": "Un thread par client gaspille de la mémoire, et une seule lecture bloquante gèlerait tout le serveur.",
+      "solution": "Des canaux non bloquants enregistrés sur un Selector `java.nio`. La boucle d'événements ne lit ou n'écrit sur une socket que lorsqu'elle est prête : un seul thread peut servir tous les clients."
+    },
+    {
+      "title": "Des requêtes qui arrivent en morceaux",
+      "problem": "En non bloquant, une requête peut arriver en plusieurs lectures, et un corps chunked n'annonce pas sa taille totale.",
+      "solution": "Chaque connexion garde son propre tampon et son état d'analyse, et le parseur ne passe à l'étape suivante (en-têtes, corps, chunk suivant) qu'une fois assez d'octets reçus. [TODO: confirmer que cela correspond à ton implémentation]"
+    },
+    {
+      "title": "Exécuter des scripts CGI",
+      "problem": "Un script CGI est un programme externe. Le serveur doit lui transmettre la requête et lire sa réponse sans bloquer les autres clients.",
+      "solution": "Les scripts tournent dans leur propre processus lancé avec `ProcessBuilder`, les données de la requête passant par les variables d'environnement et l'entrée standard, comme le définit le standard CGI. [TODO: expliquer comment la boucle d'événements reste libre pendant l'exécution du script]"
+    }
+  ],
+  "learned": [
+    "Le fonctionnement réel de HTTP/1.1 : ligne de requête, en-têtes, Content-Length et transfert chunked",
+    "Les entrées/sorties événementielles et non bloquantes avec les selectors",
+    "Pourquoi un serveur web est piloté par sa configuration : routes, limites et pages d'erreur",
+    "Tester un serveur sous charge, puis corriger ce qui casse"
+  ]
+}

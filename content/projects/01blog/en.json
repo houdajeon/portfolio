@@ -1,0 +1,37 @@
+{
+  "title": "01Blog",
+  "tagline": "A blogging platform for students, with JWT authentication, roles and moderation. Spring Boot API, Angular frontend.",
+  "summary": "A social blogging platform where students share what they learn. I built it alone: a REST API in Spring Boot secured with Spring Security and JWT, an Angular frontend, media uploads, likes, comments, subscriptions, and an admin area for moderation.",
+  "problem": "Students needed one place to publish what they learn, follow each other and react to posts. The platform also needed moderation, so admins can manage content and users without touching the database by hand.",
+  "role": "Solo project. I designed the database, built the Spring Boot API and its security, and wrote the Angular frontend.",
+  "features": [
+    "Registration and login with JWT, and role-based access (user and admin)",
+    "Posts with media uploads",
+    "Likes, comments and subscriptions to other students",
+    "Admin tools to moderate content and manage users",
+    "A REST API used by an Angular single-page app"
+  ],
+  "challenges": [
+    {
+      "title": "Securing every endpoint by role",
+      "problem": "Every request must say who is calling and what they are allowed to do. Admin actions must be impossible for normal users, even if they call the API directly.",
+      "solution": "Spring Security with stateless JWT authentication: the token is checked on every request, and endpoints are restricted by role (USER or ADMIN). [TODO: add one detail, for example how your JWT filter works]"
+    },
+    {
+      "title": "A consistent relational model",
+      "problem": "Users, posts, comments, likes and subscriptions are all linked. The data must stay consistent when a post or a user is deleted.",
+      "solution": "A relational schema with foreign keys between users, posts, comments, likes and subscriptions. [TODO: explain how you handled deletions, for example cascades or soft deletes]"
+    },
+    {
+      "title": "Accepting media safely",
+      "problem": "Users attach files to their posts. The server must refuse dangerous or oversized files and serve the rest efficiently.",
+      "solution": "[TODO: describe how you validated and stored media: allowed types, size limit, storage folder]"
+    }
+  ],
+  "learned": [
+    "Configuring Spring Security for a stateless REST API",
+    "Role-based authorization with JWT",
+    "Structuring an Angular app around services that call a REST API",
+    "Planning and delivering a full project alone, with a Git workflow"
+  ]
+}

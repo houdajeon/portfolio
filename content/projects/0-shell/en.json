@@ -1,0 +1,40 @@
+{
+  "title": "0-shell",
+  "tagline": "A minimal Unix shell written in Rust: 13 commands built on system calls, with no bash, no sh and no external binaries.",
+  "summary": "A minimalist Unix-like shell written in Rust and inspired by BusyBox, built as a team of 4. It shows a prompt, reads and parses each line, and runs the commands itself through system calls, without bash, sh or any external binary. It ships 13 commands, including `ls` with `-a`, `-F` and `-l`, and keeps a command history.",
+  "problem": "Embedded Linux systems often can't ship a full shell and its utilities. The goal was a small standalone shell that handles navigation, file manipulation and process control on its own, while behaving like the shell people already know.",
+  "role": "Team of 4. [TODO: the commands or parts you built, for example ls -l, the parser or the history]",
+  "features": [
+    "A read, parse, run loop with its own prompt",
+    "13 commands written in Rust: `echo`, `cd`, `ls`, `pwd`, `cat`, `cp`, `mv`, `rm`, `mkdir`, `exit`, `clear`, `help`, `history`",
+    "`ls` with `-a`, `-F` and `-l`: permissions, owner, size, date and device numbers",
+    "`rm -r` for directories",
+    "Quoted arguments, with a continuation prompt while a quote is still open",
+    "Command history saved to a file",
+    "Tests for `ls` on regular files, directories, symlinks and executables"
+  ],
+  "challenges": [
+    {
+      "title": "Sending each command to the right code",
+      "problem": "Every line typed has to reach the right implementation, and an unknown name must not crash the shell.",
+      "solution": "A dispatcher built on a `HashMap` from command names to function pointers. An unknown name prints `Command Not Found` and the prompt comes back."
+    },
+    {
+      "title": "Rebuilding `ls -l` without the real `ls`",
+      "problem": "Every column has to be computed by hand: the permission string, owner and group, size, modification date, and device numbers for special files.",
+      "solution": "File metadata is read through Rust's standard library and `libc`, then formatted the way `ls` does. [TODO: add the detail you are proudest of, for example how you built the permission string]"
+    },
+    {
+      "title": "Errors that don't end the session",
+      "problem": "A missing file, a bad path or a permission error must print a message and return to the prompt.",
+      "solution": "[TODO: how you handled errors, for example matching on Result and printing a consistent message]"
+    }
+  ],
+  "learned": [
+    "How a shell works: the read, parse, execute loop",
+    "Unix file metadata and system calls from Rust",
+    "Error handling with `Result` instead of exceptions",
+    "Splitting a Rust project into modules, and testing it",
+    "Working on one codebase in a team of 4"
+  ]
+}

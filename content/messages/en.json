@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "title": "Houda Hdili · Full-stack Developer (DevOps focus)",
+    "description": "Full-stack developer with a DevOps focus, trained at Zone01 Oujda. Go, Java and Spring Boot, Next.js, Angular, Docker and Kubernetes. Open to internships and junior roles."
+  },
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "journey": "Journey",
+    "community": "Community",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skip": "Skip to content",
+    "home": "Home page",
+    "main": "Main"
+  },
+  "theme": {
+    "toDark": "Switch to dark theme",
+    "toLight": "Switch to light theme"
+  },
+  "locale": {
+    "switchLabel": "Lire en français",
+    "short": "FR"
+  },
+  "hero": {
+    "status": "Open to internships & junior roles",
+    "kicker": "Houda Hdili · Full-stack developer · DevOps focus",
+    "titleStart": "From code",
+    "titleMiddle": "to",
+    "titleAccent": "cluster.",
+    "lede": "I'm Houda Hdili, a full-stack developer with a DevOps focus, trained at Zone01 Oujda. I build complete web apps with Go, Spring Boot, Next.js and Angular, then ship them with Docker and Kubernetes.",
+    "ctaProjects": "View projects",
+    "ctaCv": "Download CV",
+    "cvSoon": "CV coming soon",
+    "terminal": {
+      "title": "~/houda — zsh",
+      "role": "full-stack developer, devops focus",
+      "status": "Available",
+      "roleShort": "full-stack/devops"
+    }
+  },
+  "about": {
+    "eyebrow": "about",
+    "title": "I learn by building, with peers instead of lectures",
+    "paragraphs": [
+      "I study at Zone01 Oujda, a project-based school with no teachers and no lectures. Every skill on this page comes from a project: we read a specification, build it alone or in a small team, and other students review the work before it is validated.",
+      "Before Zone01, I earned a Bac in Mathematical Sciences B (French option). Maths gave me the habit of breaking a problem into small steps and checking each one, which is how I debug today.",
+      "I've completed the DevOps specialty, and I like knowing what happens under the hood. I've worked on an HTTP server written without any framework, a front-end mini-framework built from scratch and a Unix shell in Rust. [TODO: one or two sentences in your own words about what drives you]"
+    ],
+    "facts": {
+      "school": "School",
+      "schoolValue": "Zone01 Oujda",
+      "focus": "Focus",
+      "focusValue": "Full-stack · DevOps",
+      "languages": "Languages",
+      "languagesValue": "French, English",
+      "based": "Based in",
+      "basedValue": "Safi, Morocco"
+    },
+    "photoAlt": "Portrait of Houda Hdili",
+    "photoTodo": "[TODO: add your photo]"
+  },
+  "skills": {
+    "eyebrow": "skills",
+    "title": "What I work with",
+    "intro": "No percentages. Each skill links to the projects where I used it, so you can check the work yourself.",
+    "levels": {
+      "used": "Used in projects",
+      "familiar": "Familiar",
+      "learning": "Learning"
+    },
+    "legend": "Legend",
+    "status": {
+      "used": "in use",
+      "familiar": "familiar",
+      "learning": "learning"
+    },
+    "columns": {
+      "name": "name",
+      "status": "status",
+      "proof": "used in"
+    }
+  },
+  "projects": {
+    "eyebrow": "projects",
+    "title": "Selected projects",
+    "intro": "Complete systems, from a hand-written HTTP server to microservices on Kubernetes. Each one has a case study: the problem, my part, the architecture and what I learned.",
+    "filters": {
+      "all": "All",
+      "fullstack": "Full-stack",
+      "backend": "Backend",
+      "systems": "Systems",
+      "game": "Game",
+      "devops": "DevOps"
+    },
+    "filterLabel": "Filter projects by type",
+    "solo": "Solo",
+    "team": "Team of {n}",
+    "teamTodo": "[TODO: team size]",
+    "readCase": "Read case study",
+    "count": "{n} projects shown"
+  },
+  "caseStudy": {
+    "back": "All projects",
+    "problem": "The problem",
+    "role": "My role",
+    "features": "What it does",
+    "architecture": "Architecture",
+    "architectureNote": "Simplified view of the main components and how they talk to each other.",
+    "diagramList": "Show the diagram as text",
+    "challenges": "Key technical challenges",
+    "challengeProblem": "Problem",
+    "challengeSolution": "How I solved it",
+    "learned": "What I learned",
+    "stack": "Stack",
+    "team": "Team",
+    "links": "Links",
+    "repo": "Source code",
+    "repoTodo": "[TODO: make the repository public]",
+    "demo": "Live demo",
+    "screenshots": "Screenshots",
+    "screenshotsTodo": "[TODO: add 2–3 screenshots or a short GIF]",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "journey": {
+    "eyebrow": "journey",
+    "title": "How I got here"
+  },
+  "community": {
+    "eyebrow": "community",
+    "title": "Beyond code: CTFs with the Cyberz club",
+    "intro": "I'm a member of Cyberz, a cybersecurity club that runs CTF (Capture The Flag) competitions. I handle social media and communication, and I help organise events.",
+    "eventsTitle": "Events I worked on",
+    "partners": "With",
+    "yaml": {
+      "name": "name",
+      "about": "about",
+      "roles": "roles"
+    }
+  },
+  "contact": {
+    "eyebrow": "contact",
+    "title": "Let's talk",
+    "intro": "I'm looking for an internship or a junior role in full-stack, backend or DevOps, in Morocco, France or remote. The quickest way to reach me is this form or LinkedIn.",
+    "direct": "Find me here",
+    "emailTodo": "[TODO: add the email address you want to show]",
+    "form": {
+      "title": "Send a message",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send message",
+      "sending": "Sending…",
+      "success": "Thanks, your message was sent. I'll reply by email.",
+      "error": "The message could not be sent. Please try again, or contact me on LinkedIn.",
+      "notConfigured": "[TODO: the form is not connected to an email service yet]"
+    }
+  },
+  "footer": {
+    "built": "Built with Next.js and Tailwind CSS, exported as a static site.",
+    "top": "Back to top"
+  }
+}

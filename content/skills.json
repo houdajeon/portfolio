@@ -1,0 +1,176 @@
+{
+  "groups": [
+    {
+      "id": "backend",
+      "label": {
+        "en": "Backend",
+        "fr": "Backend"
+      },
+      "items": [
+        {
+          "name": "Go",
+          "level": "used",
+          "projects": ["social-network"]
+        },
+        {
+          "name": "Java",
+          "level": "used",
+          "projects": ["java-http-server", "01blog"]
+        },
+        {
+          "name": "Spring Boot",
+          "level": "used",
+          "projects": ["01blog"]
+        },
+        {
+          "name": "Spring Security",
+          "level": "used",
+          "projects": ["01blog"]
+        },
+        {
+          "name": "JWT",
+          "level": "used",
+          "projects": ["01blog"]
+        },
+        {
+          "name": "REST APIs",
+          "level": "used",
+          "projects": ["social-network", "01blog"]
+        },
+        {
+          "name": "WebSockets",
+          "level": "used",
+          "projects": ["social-network", "bomberman-dom"]
+        },
+        {
+          "name": "SQLite",
+          "level": "used",
+          "projects": ["social-network"]
+        },
+        {
+          "name": "PostgreSQL",
+          "level": "used",
+          "projects": ["orchestrator", "play-with-containers"]
+        },
+        {
+          "name": "RabbitMQ",
+          "level": "used",
+          "projects": ["orchestrator", "play-with-containers"]
+        },
+        {
+          "name": "Node.js",
+          "level": "familiar"
+        },
+        {
+          "name": "Rust",
+          "level": "used",
+          "projects": ["0-shell"]
+        }
+      ]
+    },
+    {
+      "id": "frontend",
+      "label": {
+        "en": "Frontend",
+        "fr": "Frontend"
+      },
+      "items": [
+        {
+          "name": "JavaScript",
+          "level": "used",
+          "projects": ["bomberman-dom", "social-network"]
+        },
+        {
+          "name": "TypeScript",
+          "level": "used",
+          "projects": ["01blog"]
+        },
+        {
+          "name": "Next.js",
+          "level": "used",
+          "projects": ["social-network"]
+        },
+        {
+          "name": "Angular",
+          "level": "used",
+          "projects": ["01blog"]
+        },
+        {
+          "name": "HTML & CSS",
+          "level": "used",
+          "projects": ["bomberman-dom", "social-network"]
+        }
+      ]
+    },
+    {
+      "id": "devops",
+      "label": {
+        "en": "DevOps & systems",
+        "fr": "DevOps & systèmes"
+      },
+      "items": [
+        {
+          "name": "Docker",
+          "level": "used",
+          "projects": ["play-with-containers", "social-network"]
+        },
+        {
+          "name": "Docker Compose",
+          "level": "used",
+          "projects": ["play-with-containers"]
+        },
+        {
+          "name": "Kubernetes (K3s)",
+          "level": "used",
+          "projects": ["orchestrator"]
+        },
+        {
+          "name": "Vagrant",
+          "level": "used",
+          "projects": ["orchestrator"]
+        },
+        {
+          "name": "Linux administration",
+          "level": "used",
+          "projects": ["deep-in-system"]
+        },
+        {
+          "name": "Networking",
+          "level": "used",
+          "projects": ["deep-in-net"]
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "label": {
+        "en": "Tools",
+        "fr": "Outils"
+      },
+      "items": [
+        {
+          "name": "Git & GitHub",
+          "level": "used"
+        },
+        {
+          "name": "Postman",
+          "level": "used",
+          "projects": ["orchestrator"]
+        },
+        {
+          "name": "Cisco Packet Tracer",
+          "level": "used",
+          "projects": ["deep-in-net"]
+        },
+        {
+          "name": "Jira",
+          "level": "familiar"
+        },
+        {
+          "name": "Notion",
+          "level": "familiar"
+        }
+      ]
+    }
+  ]
+}

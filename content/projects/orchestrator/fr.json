@@ -1,0 +1,39 @@
+{
+  "title": "Orchestrator",
+  "tagline": "Six microservices sur un cluster K3s à deux nœuds, avec StatefulSets, autoscaling et secrets.",
+  "summary": "Un système d'inventaire de films et de facturation déployé sur Kubernetes. Vagrant crée deux VM Debian : un serveur K3s et un worker. Le cluster fait tourner six services : une API gateway, deux applications, deux bases de données et une file RabbitMQ. La gateway et l'application d'inventaire passent de 1 à 3 réplicas quand le CPU atteint 60 %.",
+  "problem": "Des microservices devaient tourner sur un vrai orchestrateur : garder leurs données quand les pods sont remplacés, monter en charge, garder les identifiants dans des Secrets Kubernetes plutôt que dans les manifestes des applications, et démarrer avec une seule commande.",
+  "role": "Équipe de 2. [TODO: ce que tu as réalisé, par exemple les manifestes, l'installation Vagrant et K3s, ou les scripts]",
+  "features": [
+    "Une seule commande crée les VM, installe K3s, ajoute le worker et applique tous les manifestes : `./Scripts/orchestrator.sh create`",
+    "API gateway et application d'inventaire en Deployments avec HorizontalPodAutoscaler : 1 à 3 réplicas à 60 % de CPU",
+    "Les deux bases de données et l'application de facturation en StatefulSets, avec des volumes persistants",
+    "Configuration dans des ConfigMaps, identifiants de base de données et de RabbitMQ dans des Secrets",
+    "Images de conteneurs publiées sur Docker Hub",
+    "API documentée avec OpenAPI et une collection Postman"
+  ],
+  "challenges": [
+    {
+      "title": "Garder les données quand un pod est remplacé",
+      "problem": "Kubernetes peut remplacer un pod à tout moment. Une base de données dans un simple Deployment perdrait ses données.",
+      "solution": "Les bases d'inventaire et de facturation tournent en StatefulSets avec des volumes persistants (PVC) : les données restent disponibles quand Kubernetes remplace un pod de base de données."
+    },
+    {
+      "title": "Suivre la charge",
+      "problem": "Le point d'entrée public doit absorber plus de trafic sans que personne n'ajoute de réplicas à la main.",
+      "solution": "Des HorizontalPodAutoscalers font passer l'API gateway et l'application d'inventaire de 1 à 3 réplicas quand le CPU atteint 60 %, grâce au metrics server fourni avec K3s."
+    },
+    {
+      "title": "Ne jamais perdre une commande",
+      "problem": "Si l'application de facturation est arrêtée, les commandes envoyées pendant ce temps ne doivent pas disparaître.",
+      "solution": "La gateway publie les commandes dans RabbitMQ au lieu d'appeler la facturation directement. La file garde les messages jusqu'au retour de l'application de facturation, qui les enregistre alors dans sa base."
+    }
+  ],
+  "learned": [
+    "Quand utiliser un Deployment et quand utiliser un StatefulSet",
+    "Comment un HorizontalPodAutoscaler s'appuie sur les métriques",
+    "Gérer la configuration avec des ConfigMaps et des Secrets",
+    "Construire un cluster reproductible avec Vagrant et K3s",
+    "Déboguer des pods avec `kubectl describe` et `kubectl logs`"
+  ]
+}

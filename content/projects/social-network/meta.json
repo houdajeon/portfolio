@@ -1,0 +1,82 @@
+{
+  "order": 1,
+  "categories": ["fullstack"],
+  "stack": [
+    "Go",
+    "Next.js",
+    "JavaScript",
+    "SQLite",
+    "golang-migrate",
+    "Gorilla WebSocket",
+    "bcrypt",
+    "Docker"
+  ],
+  "teamSize": null,
+  "repo": "https://github.com/houdajeon/Social-Network",
+  "demo": null,
+  "diagram": {
+    "cols": 3,
+    "rows": 3,
+    "nodes": [
+      {
+        "id": "browser",
+        "label": { "en": "Browser", "fr": "Navigateur" },
+        "at": [0, 1],
+        "kind": "client"
+      },
+      {
+        "id": "next",
+        "label": "Next.js",
+        "sub": { "en": "pages & UI", "fr": "pages et UI" },
+        "at": [1, 0]
+      },
+      {
+        "id": "api",
+        "label": "Go API",
+        "sub": "REST · WS · sessions",
+        "at": [1, 1]
+      },
+      {
+        "id": "db",
+        "label": "SQLite",
+        "sub": "golang-migrate",
+        "at": [2, 1],
+        "kind": "data"
+      },
+      {
+        "id": "uploads",
+        "label": { "en": "Image uploads", "fr": "Images envoyées" },
+        "sub": "JPEG · PNG · GIF",
+        "at": [2, 2],
+        "kind": "data"
+      }
+    ],
+    "edges": [
+      { "from": "browser", "to": "next", "label": "HTTP" },
+      {
+        "from": "browser",
+        "to": "api",
+        "label": "REST · WebSocket",
+        "both": true
+      },
+      { "from": "api", "to": "db", "label": "SQL" },
+      {
+        "from": "api",
+        "to": "uploads",
+        "label": { "en": "files", "fr": "fichiers" }
+      }
+    ],
+    "groups": [
+      {
+        "label": { "en": "frontend container", "fr": "conteneur frontend" },
+        "from": [1, 0],
+        "to": [1, 0]
+      },
+      {
+        "label": { "en": "backend container", "fr": "conteneur backend" },
+        "from": [1, 1],
+        "to": [2, 2]
+      }
+    ]
+  }
+}

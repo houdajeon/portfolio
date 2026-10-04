@@ -1,0 +1,38 @@
+{
+  "title": "Bomberman DOM",
+  "tagline": "Un Bomberman en ligne pour 2 à 4 joueurs à 60 fps, en éléments DOM et sur notre propre mini-framework.",
+  "summary": "Un Bomberman multijoueur pour 2 à 4 joueurs dans le navigateur. Pas de canvas ni de WebGL : tout le jeu est fait d'éléments DOM, rendus par un mini-framework que nous avons écrit nous-mêmes et animés avec requestAnimationFrame à 60 fps. Les joueurs se retrouvent dans un lobby avec minuteurs, discutent en temps réel, ramassent des bonus et ont 3 vies chacun.",
+  "problem": "Créer un jeu fluide en temps réel avec le DOM seulement, qui n'a jamais été conçu pour les jeux, et garder 2 à 4 joueurs synchronisés à travers le réseau.",
+  "role": "Équipe de 4. [TODO: les parties que tu as réalisées, par exemple la boucle de jeu, le serveur WebSocket, le lobby ou le mini-framework]",
+  "features": [
+    "2 à 4 joueurs en ligne, 3 vies chacun",
+    "Un lobby avec minuteurs avant le début de la partie",
+    "Des bonus (power-ups)",
+    "Chat en temps réel",
+    "Rendu avec notre propre mini-framework, sans canvas ni WebGL",
+    "Une boucle de jeu sur `requestAnimationFrame` à 60 fps"
+  ],
+  "challenges": [
+    {
+      "title": "60 fps sans canvas",
+      "problem": "Mettre à jour beaucoup d'éléments DOM à chaque image peut déclencher des recalculs de mise en page et faire sauter des images.",
+      "solution": "Une boucle de jeu pilotée par `requestAnimationFrame`, calée sur les rafraîchissements du navigateur. [TODO: ajouter les techniques utilisées pour rester sous 16 ms par image, par exemple les transformations CSS ou moins de lectures de layout]"
+    },
+    {
+      "title": "Garder tous les joueurs synchronisés",
+      "problem": "Les déplacements, bombes et explosions de chaque joueur doivent apparaître sur tous les écrans en même temps.",
+      "solution": "Les actions des joueurs passent par WebSocket jusqu'au serveur, qui les diffuse à tous les joueurs de la partie. [TODO: préciser qui décide de l'état du jeu : le serveur ou chaque navigateur]"
+    },
+    {
+      "title": "Tourner sur notre propre framework",
+      "problem": "Le jeu devait tourner sur le mini-framework que nous avions construit, donc chaque fonctionnalité manquante était à nous d'ajouter.",
+      "solution": "[TODO: décrire ton framework : gestion de l'état, des événements et du rendu]"
+    }
+  ],
+  "learned": [
+    "Comment le navigateur affiche une image, et ce qui la ralentit",
+    "La communication en temps réel avec les WebSockets",
+    "Ce que font les frameworks en interne : état, événements et rendu",
+    "Se répartir le travail et fusionner le code dans une équipe de 4"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "order": 7,
+  "categories": ["devops"],
+  "stack": ["Docker", "Docker Compose", "PostgreSQL", "RabbitMQ", "API Gateway"],
+  "teamSize": 1,
+  "repo": null,
+  "demo": null,
+  "diagram": {
+    "cols": 4,
+    "rows": 3,
+    "nodes": [
+      {
+        "id": "client",
+        "label": "Client",
+        "sub": "HTTP",
+        "at": [0, 1],
+        "kind": "client"
+      },
+      {
+        "id": "gateway",
+        "label": "API Gateway",
+        "sub": { "en": "single entry point", "fr": "point d'entrée unique" },
+        "at": [1, 1]
+      },
+      {
+        "id": "inventory",
+        "label": { "en": "Inventory app", "fr": "App inventaire" },
+        "at": [2, 0]
+      },
+      {
+        "id": "inventory-db",
+        "label": { "en": "Inventory DB", "fr": "BD inventaire" },
+        "sub": "PostgreSQL · volume",
+        "at": [3, 0],
+        "kind": "data"
+      },
+      {
+        "id": "rabbit",
+        "label": "RabbitMQ",
+        "sub": { "en": "message queue", "fr": "file de messages" },
+        "at": [2, 2],
+        "kind": "queue"
+      },
+      {
+        "id": "billing",
+        "label": { "en": "Billing app", "fr": "App facturation" },
+        "at": [3, 2]
+      },
+      {
+        "id": "billing-db",
+        "label": { "en": "Billing DB", "fr": "BD facturation" },
+        "sub": "PostgreSQL · volume",
+        "at": [3, 1],
+        "kind": "data"
+      }
+    ],
+    "edges": [
+      { "from": "client", "to": "gateway", "label": "HTTP" },
+      { "from": "gateway", "to": "inventory", "label": "HTTP" },
+      { "from": "inventory", "to": "inventory-db", "label": "SQL" },
+      {
+        "from": "gateway",
+        "to": "rabbit",
+        "label": { "en": "message", "fr": "message" }
+      },
+      { "from": "rabbit", "to": "billing" },
+      { "from": "billing", "to": "billing-db", "label": "SQL" }
+    ],
+    "groups": [{ "label": "docker compose", "from": [1, 0], "to": [3, 2] }]
+  }
+}

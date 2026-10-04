@@ -1,0 +1,70 @@
+{
+  "order": 6,
+  "categories": ["game"],
+  "stack": [
+    "JavaScript",
+    "WebSockets",
+    "Own mini-framework",
+    "requestAnimationFrame",
+    "HTML & CSS"
+  ],
+  "teamSize": 4,
+  "repo": null,
+  "demo": null,
+  "diagram": {
+    "cols": 3,
+    "rows": 3,
+    "nodes": [
+      {
+        "id": "p1",
+        "label": { "en": "Player 1", "fr": "Joueur 1" },
+        "sub": { "en": "browser", "fr": "navigateur" },
+        "at": [0, 0],
+        "kind": "client"
+      },
+      {
+        "id": "p2",
+        "label": { "en": "Player 2", "fr": "Joueur 2" },
+        "sub": { "en": "browser", "fr": "navigateur" },
+        "at": [0, 1],
+        "kind": "client"
+      },
+      {
+        "id": "p34",
+        "label": { "en": "Players 3–4", "fr": "Joueurs 3–4" },
+        "sub": { "en": "optional", "fr": "optionnels" },
+        "at": [0, 2],
+        "kind": "client"
+      },
+      {
+        "id": "server",
+        "label": { "en": "Game server", "fr": "Serveur de jeu" },
+        "sub": "WebSocket · lobby · chat",
+        "at": [2, 1]
+      }
+    ],
+    "edges": [
+      { "from": "p1", "to": "server", "both": true },
+      {
+        "from": "p2",
+        "to": "server",
+        "label": {
+          "en": "moves · bombs · chat",
+          "fr": "actions · bombes · chat"
+        },
+        "both": true
+      },
+      { "from": "p34", "to": "server", "both": true }
+    ],
+    "groups": [
+      {
+        "label": {
+          "en": "each browser: mini-framework + 60 fps loop",
+          "fr": "chaque navigateur : mini-framework + boucle 60 fps"
+        },
+        "from": [0, 0],
+        "to": [0, 2]
+      }
+    ]
+  }
+}

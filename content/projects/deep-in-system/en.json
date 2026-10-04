@@ -1,0 +1,39 @@
+{
+  "title": "Linux Server Administration",
+  "tagline": "An Ubuntu server set up and hardened by hand: partitions, users, firewall, SSH, FTP, MySQL, WordPress and backups.",
+  "summary": "A system administration project on Ubuntu Server. I installed the server with a custom partition layout, managed users and permissions, configured a firewall, hardened SSH, and set up FTP, MySQL and a WordPress site, with backups scheduled by cron.",
+  "problem": "Run a small production-like server and keep it safe: only the right people get access, only the needed ports are open, and data is backed up without anyone thinking about it.",
+  "role": "Solo project.",
+  "features": [
+    "Custom disk partitioning at install time",
+    "Users, groups and file permissions",
+    "Firewall rules",
+    "SSH hardening",
+    "An FTP server",
+    "A MySQL database and a WordPress site",
+    "Automatic backups with cron"
+  ],
+  "challenges": [
+    {
+      "title": "Hardening SSH",
+      "problem": "A server reachable over SSH receives login attempts all day long.",
+      "solution": "[TODO: what you changed, for example the port, root login, key-based authentication]"
+    },
+    {
+      "title": "Only opening what is needed",
+      "problem": "Every open port is one more way in.",
+      "solution": "[TODO: which firewall you used and which rules you set]"
+    },
+    {
+      "title": "Backups that run on their own",
+      "problem": "Manual backups end up forgotten.",
+      "solution": "A cron job runs the backups on a schedule. [TODO: what is backed up, how often, and where]"
+    }
+  ],
+  "learned": [
+    "Linux users, groups and permissions",
+    "Securing a server step by step",
+    "Hosting a web app together with its database",
+    "Automating tasks with cron"
+  ]
+}

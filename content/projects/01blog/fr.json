@@ -1,0 +1,37 @@
+{
+  "title": "01Blog",
+  "tagline": "Une plateforme de blog pour étudiants, avec authentification JWT, rôles et modération. API Spring Boot, frontend Angular.",
+  "summary": "Une plateforme de blog social où les étudiants partagent ce qu'ils apprennent. Projet réalisé en solo : une API REST en Spring Boot sécurisée avec Spring Security et JWT, un frontend Angular, l'envoi de médias, les likes, commentaires et abonnements, et un espace d'administration pour la modération.",
+  "problem": "Les étudiants avaient besoin d'un endroit pour publier ce qu'ils apprennent, se suivre et réagir aux publications. La plateforme devait aussi être modérable, pour que les admins gèrent contenus et utilisateurs sans toucher à la base à la main.",
+  "role": "Projet solo. J'ai conçu la base de données, développé l'API Spring Boot et sa sécurité, et écrit le frontend Angular.",
+  "features": [
+    "Inscription et connexion avec JWT, et accès par rôle (utilisateur et admin)",
+    "Publications avec envoi de médias",
+    "Likes, commentaires et abonnements à d'autres étudiants",
+    "Outils d'administration pour modérer le contenu et gérer les utilisateurs",
+    "Une API REST utilisée par une application Angular monopage"
+  ],
+  "challenges": [
+    {
+      "title": "Sécuriser chaque endpoint par rôle",
+      "problem": "Chaque requête doit dire qui appelle et ce qu'il a le droit de faire. Les actions admin doivent être impossibles pour un utilisateur normal, même en appelant l'API directement.",
+      "solution": "Spring Security avec une authentification JWT sans état : le jeton est vérifié à chaque requête, et les endpoints sont restreints par rôle (USER ou ADMIN). [TODO: ajouter un détail, par exemple le fonctionnement de ton filtre JWT]"
+    },
+    {
+      "title": "Un modèle relationnel cohérent",
+      "problem": "Utilisateurs, publications, commentaires, likes et abonnements sont tous liés. Les données doivent rester cohérentes quand on supprime une publication ou un utilisateur.",
+      "solution": "Un schéma relationnel avec des clés étrangères entre utilisateurs, publications, commentaires, likes et abonnements. [TODO: expliquer comment tu as géré les suppressions, par exemple en cascade ou suppression logique]"
+    },
+    {
+      "title": "Accepter des médias sans risque",
+      "problem": "Les utilisateurs joignent des fichiers à leurs publications. Le serveur doit refuser les fichiers dangereux ou trop lourds et servir les autres efficacement.",
+      "solution": "[TODO: décrire comment tu as validé et stocké les médias : types autorisés, taille maximale, dossier de stockage]"
+    }
+  ],
+  "learned": [
+    "Configurer Spring Security pour une API REST sans état",
+    "L'autorisation par rôle avec JWT",
+    "Structurer une application Angular autour de services qui appellent une API REST",
+    "Planifier et livrer un projet complet en solo, avec un workflow Git"
+  ]
+}
