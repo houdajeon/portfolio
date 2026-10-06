@@ -30,7 +30,18 @@ function readJson<S extends z.ZodType>(schema: S, ...segments: string[]): z.infe
   return result.data;
 }
 
-export const getSite = () => readJson(siteSchema, "site.json");
+// next/link adds the base path by itself, but plain <img> and <a download> paths don't.
+const withBasePath = (file: string | null) =>
+  file && (process.env.NEXT_PUBLIC_BASE_PATH ?? "") + file;
+
+export function getSite() {
+  const site = readJson(siteSchema, "site.json");
+  return {
+    ...site,
+    photo: withBasePath(site.photo),
+    cv: { en: withBasePath(site.cv.en), fr: withBasePath(site.cv.fr) },
+  };
+}
 export const getSkills = () => readJson(skillsSchema, "skills.json");
 export const getJourney = () => readJson(journeySchema, "journey.json");
 export const getCommunity = () => readJson(communitySchema, "community.json");

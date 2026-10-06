@@ -15,6 +15,7 @@ npm run dev        # http://localhost:3000 → redirects to /en/ or /fr/
 | `npm run dev`       | Dev server with hot reload                                |
 | `npm run build`     | Static export to `out/` (fails if any content is invalid) |
 | `npm start`         | Serves `out/` locally, as GitHub Pages would              |
+| `npm run deploy`    | Builds for `/portfolio/` and publishes to `gh-pages`      |
 | `npm run lint`      | ESLint                                                    |
 | `npm run typecheck` | TypeScript, no output                                     |
 | `npm run format`    | Prettier (also sorts Tailwind classes)                    |

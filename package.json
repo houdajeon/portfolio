@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "npx serve@14 out",
+    "deploy": "NEXT_PUBLIC_BASE_PATH=/portfolio next build && cd out && git init -q && git add -A && git commit -qm Deploy && git push -qf .. HEAD:gh-pages && cd .. && git push -f origin gh-pages",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",

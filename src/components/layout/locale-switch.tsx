@@ -31,8 +31,11 @@ export function LocaleSwitch({
   short: string;
 }) {
   const target = otherLocale(locale);
-  // Same page, other language: "/en/projects/x/" → "/fr/projects/x/".
-  const href = localePath(target, usePathname().slice(`/${locale}`.length));
+  // Same page, other language: "/en/projects/x/" → "/fr/projects/x/". A plain <a> doesn't get
+  // the base path (`/portfolio` on GitHub Pages) added by Next, so it is added here.
+  const href =
+    (process.env.NEXT_PUBLIC_BASE_PATH ?? "") +
+    localePath(target, usePathname().slice(`/${locale}`.length));
 
   function onClick(event: MouseEvent<HTMLAnchorElement>) {
     try {
