@@ -11,10 +11,12 @@ export function Reveal({
   children,
   delay = 0,
   className,
+  style,
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
+  style?: CSSProperties;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -40,7 +42,7 @@ export function Reveal({
       ref={ref}
       data-reveal=""
       className={className}
-      style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}
+      style={{ ...style, "--reveal-delay": `${delay}ms` } as CSSProperties}
     >
       {children}
     </div>

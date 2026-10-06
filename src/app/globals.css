@@ -360,6 +360,139 @@
   -webkit-text-stroke: 1.5px color-mix(in srgb, var(--tint) 75%, var(--fg));
 }
 
+/* ---------- About scene (AboutScene) ----------
+   With data-scene (large screens, motion allowed) the section is 280vh tall and its stage is
+   pinned under the header while the scroll plays five steps, each 0 → 1: --appear (Killua),
+   --bolt (lightning from his hand), --flash, --emerge (the text comes out of the light) and
+   --calm (the lightning settles so the text can be read). Without data-scene, everything
+   is simply in place. */
+
+.about-scene[data-scene] {
+  height: 280vh;
+}
+.about-scene[data-scene] .about-stage {
+  position: sticky;
+  top: 4rem;
+  height: calc(100dvh - 4rem);
+  overflow: clip;
+}
+.about-scene[data-scene] .about-stage > .page-wrap {
+  height: 100%;
+  padding-block: 0;
+}
+/* The flash lights the whole stage, from the side of the hand. */
+.about-scene[data-scene] .about-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 30% 80%, rgb(165 180 252 / 0.55), transparent 60%);
+  mix-blend-mode: screen;
+  opacity: var(--flash);
+}
+
+/* 1. Killua comes out of the dark. */
+.about-scene[data-scene] .killua {
+  opacity: var(--appear);
+  scale: calc(1.12 - 0.12 * var(--appear));
+  filter: brightness(calc(0.35 + 0.65 * var(--appear) + 0.4 * var(--flash)));
+}
+.killua-frame {
+  box-shadow: 0 30px 80px -30px rgb(79 70 229 / 0.6);
+}
+.about-scene[data-scene] .killua-frame {
+  box-shadow: 0 0 calc(var(--bolt) * 70px) calc(var(--bolt) * 4px)
+    rgb(99 102 241 / calc(0.15 + 0.35 * var(--bolt) * (1 - 0.5 * var(--calm))));
+}
+.killua-flash {
+  background: radial-gradient(
+    circle at 78% 90%,
+    rgb(224 231 255 / 0.9),
+    rgb(129 140 248 / 0.35) 35%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+.about-scene[data-scene] .killua-flash {
+  opacity: calc(var(--flash) * 0.85);
+}
+
+/* 2. Light gathers in his hand (575, 790 on the 736×875 poster) and the bolts leave it. */
+.hand-glow {
+  position: absolute;
+  left: 78.1%;
+  top: 90.3%;
+  width: 14rem;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #fff 0%,
+    rgb(165 180 252 / 0.8) 12%,
+    rgb(99 102 241 / 0.35) 35%,
+    transparent 68%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: 0;
+}
+.about-scene[data-scene] .hand-glow {
+  opacity: calc(var(--bolt) * (1 - 0.6 * var(--calm)));
+  scale: calc(0.3 + 0.9 * var(--bolt) + 0.4 * var(--flash));
+}
+/* Neon glow, like the lightning on the poster. Only in the scene: still bolts would just
+   cross the text. */
+.bolts {
+  opacity: 0;
+  filter: drop-shadow(0 0 4px #a5b4fc) drop-shadow(0 0 14px #6366f1);
+}
+/* Once the text is out, the bolts fade almost away so they do not cross the reading. */
+.about-scene[data-scene] .bolts {
+  opacity: calc(min(1, var(--bolt) * 20) * (1 - 0.88 * var(--calm)));
+}
+/* Each bolt is drawn from the hand outwards, a little after the previous one (--b). */
+.about-scene[data-scene] .bolt path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, var(--bolt) * 1.5 - var(--b) * 0.08, 1));
+}
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  8% {
+    opacity: 0.45;
+  }
+  11% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0.7;
+  }
+  55% {
+    opacity: 1;
+  }
+}
+.about-scene[data-scene] .bolt {
+  animation: flicker calc(1.6s + var(--b) * 0.37s) steps(1) infinite;
+}
+
+/* 3. The text grows out of the light on the hand side, blurred, then sharp; title first,
+   then the paragraphs, then the facts (--k). Scroll-driven, so no fade transition. */
+.about-scene[data-scene] .emerge {
+  transform-origin: 0% 85%;
+  scale: calc(0.35 + 0.65 * var(--emerge));
+  translate: calc((1 - var(--emerge)) * -160px) 0;
+  filter: blur(calc((1 - var(--emerge)) * 14px));
+  opacity: min(1, calc(var(--emerge) * 3));
+}
+.about-scene[data-scene] .emerge-part {
+  opacity: clamp(0, calc(var(--emerge) * 1.8 - var(--k) * 0.35), 1);
+  transition: translate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
