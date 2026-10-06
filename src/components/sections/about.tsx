@@ -1,5 +1,5 @@
 import type { Messages } from "@/i18n/dictionaries";
-import { Rich } from "@/components/ui/rich";
+import { LitText } from "@/components/ui/lit-text";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 
@@ -26,12 +26,8 @@ export function About({ dict }: { dict: Messages }) {
           </dl>
         </Reveal>
 
-        <Reveal delay={120} className="max-w-2xl space-y-5 text-lg leading-relaxed text-muted">
-          {t.paragraphs.map((paragraph) => (
-            <p key={paragraph.slice(0, 24)}>
-              <Rich text={paragraph} />
-            </p>
-          ))}
+        <Reveal delay={120} className="max-w-2xl text-lg leading-relaxed text-muted">
+          <LitText paragraphs={t.paragraphs} className="space-y-5" />
         </Reveal>
       </div>
     </Section>

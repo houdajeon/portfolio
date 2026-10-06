@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { format } from "@/i18n/format";
 import type { Category } from "@/lib/schemas";
 import { ArrowRight } from "@/components/ui/icons";
-import { Reveal } from "@/components/ui/reveal";
 import { Rich } from "@/components/ui/rich";
+import { useScrollFrame } from "@/components/ui/use-scroll-frame";
 
 export type ProjectCard = {
   slug: string;
@@ -23,7 +23,13 @@ export type FilterId = "all" | Category;
 
 type Labels = { filter: string; count: string; readCase: string };
 
-// Only this grid needs JavaScript (the filter); the rest of the page is static HTML.
+// Card tints, taken from the hero flowers: violet, pink, burgundy.
+const TINTS = ["var(--accent)", "#db2777", "#9f1239"];
+
+const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
+
+// Needs JavaScript for the filter and the stacking effect: each card sticks under the header
+// and the next one slides over it (stack-* in globals.css).
 export function ProjectGrid({
   cards,
   filters,
@@ -35,6 +41,24 @@ export function ProjectGrid({
 }) {
   const [active, setActive] = useState<FilterId>("all");
   const shown = active === "all" ? cards : cards.filter((card) => card.categories.includes(active));
+  const list = useRef<HTMLUListElement>(null);
+
+  // Two values per card for the CSS: --arrive (0 → 1) while it travels up to its place, which
+  // zooms it in, and --cover (0 → 1) while the next card slides over it, which shrinks and
+  // dims it. Reduced motion keeps the plain sticky stack.
+  useScrollFrame(() => {
+    const items = Array.from(list.current?.children ?? []) as HTMLElement[];
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const rects = items.map((item) => item.getBoundingClientRect());
+    items.forEach((item, i) => {
+      const stickTop = parseFloat(getComputedStyle(item).top);
+      const arrive = (innerHeight - rects[i].top) / (innerHeight - stickTop);
+      const next = rects[i + 1];
+      const cover = next ? (rects[i].bottom - next.top) / rects[i].height : 0;
+      item.style.setProperty("--arrive", clamp01(arrive).toFixed(3));
+      item.style.setProperty("--cover", clamp01(cover).toFixed(3));
+    });
+  });
 
   return (
     <>
@@ -56,19 +80,29 @@ export function ProjectGrid({
         {format(labels.count, { n: shown.length })}
       </p>
 
-      <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <ul ref={list} className="mt-8 flex flex-col gap-8">
         {shown.map((card, index) => (
-          <li key={card.slug}>
-            <Reveal delay={(index % 3) * 90} className="h-full">
-              <article className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-line bg-surface transition duration-200 hover:-translate-y-1 hover:border-accent/60 hover:shadow-glow has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-accent">
-                <header className="flex items-center justify-between gap-3 border-b border-line px-5 py-2.5 font-mono text-[11px] tracking-wider uppercase">
-                  <span className="text-accent-text">{card.categoryLabel}</span>
-                  <span className="text-muted">
-                    <Rich text={card.team} />
-                  </span>
-                </header>
-                <div className="flex flex-1 flex-col gap-3 p-5">
-                  <h3 className="text-lg leading-snug font-bold stretch-semi">
+          <li
+            key={card.slug}
+            className="sticky"
+            style={
+              { top: `calc(5rem + ${index * 12}px)`, "--tint": TINTS[index % 3] } as CSSProperties
+            }
+          >
+            <article className="stack-card group relative overflow-hidden rounded-2xl border border-line transition-[border-color] hover:border-accent/60 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-accent">
+              <div className="grid gap-6 p-6 sm:p-8 lg:min-h-72 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-12 lg:p-12">
+                <span aria-hidden="true" className="stack-num">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <p className="font-mono text-[11px] tracking-wider uppercase">
+                    <span className="text-accent-text">{card.categoryLabel}</span>
+                    <span className="text-muted">
+                      {" · "}
+                      <Rich text={card.team} />
+                    </span>
+                  </p>
+                  <h3 className="mt-3 text-2xl leading-tight font-extrabold stretch-semi sm:text-3xl lg:text-4xl">
                     <Link
                       href={card.href}
                       className="after:absolute after:inset-0 focus-visible:outline-none"
@@ -76,10 +110,10 @@ export function ProjectGrid({
                       {card.title}
                     </Link>
                   </h3>
-                  <p className="text-sm text-muted">
+                  <p className="mt-3 max-w-2xl text-muted">
                     <Rich text={card.tagline} />
                   </p>
-                  <ul className="mt-auto flex flex-wrap gap-1.5 pt-2">
+                  <ul className="mt-5 flex flex-wrap gap-1.5">
                     {card.stack.map((item) => (
                       <li
                         key={item}
@@ -90,12 +124,18 @@ export function ProjectGrid({
                     ))}
                   </ul>
                 </div>
-                <footer className="flex items-center justify-between border-t border-line px-5 py-3 text-sm font-medium">
+                <span className="inline-flex items-center gap-3 text-sm font-semibold">
                   {labels.readCase}
-                  <ArrowRight className="size-4 text-accent-text transition group-hover:translate-x-1" />
-                </footer>
-              </article>
-            </Reveal>
+                  <span className="grid size-11 place-items-center rounded-full border border-line transition group-hover:border-transparent group-hover:bg-bloom group-hover:text-white">
+                    <ArrowRight className="size-4 transition group-hover:translate-x-0.5" />
+                  </span>
+                </span>
+              </div>
+              <div
+                aria-hidden="true"
+                className="stack-shade pointer-events-none absolute inset-0"
+              />
+            </article>
           </li>
         ))}
       </ul>
