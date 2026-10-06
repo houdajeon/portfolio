@@ -1,6 +1,6 @@
 [
   {
-    "date": "[TODO: year]",
+    "date": "2021",
     "title": {
       "en": "Bac in Mathematical Sciences B",
       "fr": "Bac Sciences Mathématiques B"
@@ -11,7 +11,18 @@
     }
   },
   {
-    "date": "[TODO: month and year]",
+    "date": "2021 – 2023",
+    "title": {
+      "en": "Multidisciplinary Faculty of Safi",
+      "fr": "Faculté Polydisciplinaire de Safi"
+    },
+    "body": {
+      "en": "Two years of university studies, without completing the degree. I joined Zone01 the following year.",
+      "fr": "Deux années d'études universitaires, sans aller jusqu'au diplôme. J'ai rejoint Zone01 l'année suivante."
+    }
+  },
+  {
+    "date": "2024",
     "title": {
       "en": "Joined Zone01 Oujda",
       "fr": "Entrée à Zone01 Oujda"
@@ -22,18 +33,16 @@
     }
   },
   {
-    "date": "[TODO]",
     "title": {
       "en": "Full-stack with Go and JavaScript",
       "fr": "Full-stack avec Go et JavaScript"
     },
     "body": {
-      "en": "Social Network (Go + Next.js) and Bomberman DOM, a real-time multiplayer game on our own mini-framework.",
-      "fr": "Social Network (Go + Next.js) et Bomberman DOM, un jeu multijoueur en temps réel sur notre propre mini-framework."
+      "en": "Social Network (Go + Next.js), built in a team of 5, and Bomberman DOM, a real-time multiplayer game on our own mini-framework.",
+      "fr": "Social Network (Go + Next.js), réalisé en équipe de 5, et Bomberman DOM, un jeu multijoueur en temps réel sur notre propre mini-framework."
     }
   },
   {
-    "date": "[TODO]",
     "title": {
       "en": "Systems programming in Rust",
       "fr": "Programmation système en Rust"
@@ -44,7 +53,6 @@
     }
   },
   {
-    "date": "[TODO]",
     "title": {
       "en": "Java track",
       "fr": "Parcours Java"
@@ -55,7 +63,7 @@
     }
   },
   {
-    "date": "[TODO]",
+    "date": "2026",
     "title": {
       "en": "DevOps specialty completed",
       "fr": "Spécialité DevOps validée"
@@ -67,16 +75,16 @@
   },
   {
     "date": {
-      "en": "Now",
-      "fr": "Aujourd'hui"
+      "en": "2026 · Now",
+      "fr": "2026 · Aujourd'hui"
     },
     "title": {
       "en": "Last project, and looking for work",
       "fr": "Dernier projet, et recherche de poste"
     },
     "body": {
-      "en": "Finishing my final Zone01 project [TODO: name] and looking for an internship or a junior role.",
-      "fr": "Je termine mon dernier projet à Zone01 [TODO: nom] et je cherche un stage ou un premier poste."
+      "en": "Finishing my final Zone01 project, code-keeper, in DevOps. Right now I'm also working on projects that combine DevOps and Java, and I'm looking for an internship or a junior role.",
+      "fr": "Je termine mon dernier projet à Zone01, code-keeper, en DevOps. En ce moment, je travaille aussi sur des projets qui combinent DevOps et Java, et je cherche un stage ou un premier poste."
     },
     "current": true
   }

@@ -122,6 +122,8 @@ export const skillsSchema = z.object({
           level: skillLevelSchema,
           /** slugs of projects that prove the skill */
           projects: z.array(z.string()).default([]),
+          /** where it was used, when there is no project page to link to */
+          note: localized.optional(),
         }),
       ),
     }),
@@ -131,7 +133,8 @@ export type SkillsData = z.infer<typeof skillsSchema>;
 
 export const journeySchema = z.array(
   z.object({
-    date: label,
+    /** optional: a step without a date simply has no date line */
+    date: label.optional(),
     title: localized,
     body: localized,
     current: z.boolean().default(false),

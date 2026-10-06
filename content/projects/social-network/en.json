@@ -3,7 +3,7 @@
   "tagline": "A Facebook-like platform with followers, groups, events and real-time chat. Go backend, Next.js frontend.",
   "summary": "A complete social platform built as a team: profiles, posts with privacy levels, groups with events, notifications and real-time chat. The backend is written in Go with SQLite and versioned migrations, and the frontend uses Next.js. Each side ships as its own Docker image.",
   "problem": "Build a social network from scratch without a backend framework: user accounts, a follow system that respects private profiles, posts that only the right people can see, groups with events, and a chat that updates in real time. The whole app had to run in two separate Docker containers.",
-  "role": "[TODO: team size, and the parts you built (for example: chat, groups, authentication, frontend pages)]",
+  "role": "Team of 5. [TODO: the parts you built, for example the chat, groups, authentication or frontend pages]",
   "features": [
     "Registration and login, with sessions kept in cookies and passwords hashed with bcrypt",
     "Public and private profiles, with follow requests for private ones",

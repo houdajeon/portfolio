@@ -95,7 +95,7 @@ export function Skills({
                     </span>
                     <Status level={item.level} label={t.status[item.level]} />
                     <span className="col-span-2 mt-0.5 text-xs text-muted sm:col-span-1 sm:mt-0">
-                      {item.projects.length > 0 ? (
+                      {item.projects.length > 0 || item.note ? (
                         <span className="flex flex-wrap gap-x-3 gap-y-0.5">
                           <span className="sr-only">{t.columns.proof}:</span>
                           {item.projects.map((slug) => (
@@ -107,6 +107,7 @@ export function Skills({
                               {slug}
                             </Link>
                           ))}
+                          {item.note && <span>{item.note[locale]}</span>}
                         </span>
                       ) : (
                         <span aria-hidden="true" className="hidden sm:inline">

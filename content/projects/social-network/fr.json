@@ -3,7 +3,7 @@
   "tagline": "Une plateforme type Facebook avec abonnés, groupes, événements et chat en temps réel. Backend en Go, frontend en Next.js.",
   "summary": "Une plateforme sociale complète réalisée en équipe : profils, publications avec niveaux de confidentialité, groupes avec événements, notifications et chat en temps réel. Le backend est écrit en Go avec SQLite et des migrations versionnées, et le frontend utilise Next.js. Chaque partie est livrée dans sa propre image Docker.",
   "problem": "Construire un réseau social de zéro, sans framework backend : comptes utilisateurs, abonnements qui respectent les profils privés, publications visibles uniquement par les bonnes personnes, groupes avec événements, et un chat qui se met à jour en temps réel. Toute l'application devait tourner dans deux conteneurs Docker séparés.",
-  "role": "[TODO: taille de l'équipe et les parties que tu as réalisées (par exemple : chat, groupes, authentification, pages frontend)]",
+  "role": "Équipe de 5. [TODO: les parties que tu as réalisées, par exemple le chat, les groupes, l'authentification ou les pages frontend]",
   "features": [
     "Inscription et connexion, avec sessions stockées en cookies et mots de passe hachés avec bcrypt",
     "Profils publics et privés, avec demandes d'abonnement pour les profils privés",

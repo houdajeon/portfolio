@@ -17,7 +17,7 @@ export function Journey({
   // Resolve the language here (server side); the client timeline only gets plain strings.
   const steps = journey.map((step) => ({
     key: step.title.en,
-    date: pick(step.date, locale),
+    date: step.date ? pick(step.date, locale) : null,
     title: step.title[locale],
     body: step.body[locale],
     current: step.current,

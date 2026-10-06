@@ -5,7 +5,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { Rich } from "@/components/ui/rich";
 import { useScrollFrame } from "@/components/ui/use-scroll-frame";
 
-type Step = { key: string; date: string; title: string; body: string; current: boolean };
+type Step = { key: string; date: string | null; title: string; body: string; current: boolean };
 
 /**
  * Vertical timeline that fills in as you scroll: the accent line grows down to a "reading
@@ -58,12 +58,17 @@ export function Timeline({ steps }: { steps: Step[] }) {
               }`}
             />
             <Reveal>
-              <p
-                className={`font-mono text-xs ${lit ? "text-accent-text" : "text-muted"} transition-colors duration-500`}
-              >
-                <Rich text={step.date} />
-              </p>
-              <h3 className="mt-1 text-lg font-bold stretch-semi">{step.title}</h3>
+              {step.date && (
+                <p
+                  className={`font-mono text-xs ${lit ? "text-accent-text" : "text-muted"} transition-colors duration-500`}
+                >
+                  <Rich text={step.date} />
+                </p>
+              )}
+              {/* Without a date line, the title sits level with the dot */}
+              <h3 className={`${step.date ? "mt-1" : ""} text-lg font-bold stretch-semi`}>
+                {step.title}
+              </h3>
               <p className="mt-1 text-muted">
                 <Rich text={step.body} />
               </p>

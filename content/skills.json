@@ -164,11 +164,19 @@
         },
         {
           "name": "Jira",
-          "level": "familiar"
+          "level": "used",
+          "note": {
+            "en": "forum project",
+            "fr": "projet forum"
+          }
         },
         {
           "name": "Notion",
-          "level": "familiar"
+          "level": "used",
+          "note": {
+            "en": "planning my projects",
+            "fr": "planification de mes projets"
+          }
         }
       ]
     }

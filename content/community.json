@@ -2,8 +2,8 @@
   "club": {
     "name": "Cyberz",
     "description": {
-      "en": "A cybersecurity club that organises CTF competitions and takes part in them. [TODO: confirm whether Cyberz is a Zone01 Oujda club]",
-      "fr": "Un club de cybersécurité qui organise des compétitions CTF et y participe. [TODO: confirmer si Cyberz est un club de Zone01 Oujda]"
+      "en": "A cybersecurity club that organises CTF competitions and takes part in them.",
+      "fr": "Un club de cybersécurité qui organise des compétitions CTF et y participe."
     },
     "roles": [
       { "en": "Member", "fr": "Membre" },
@@ -17,15 +17,23 @@
   "events": [
     {
       "name": "Witching Hour CTF",
-      "date": "[TODO: date]",
+      "date": "2025",
       "role": {
         "en": "A CTF created and run by the Cyberz club.",
         "fr": "Un CTF créé et organisé par le club Cyberz."
       }
     },
     {
+      "name": "[TODO: CTF name]",
+      "date": "2025",
+      "role": {
+        "en": "Part of the event staff.",
+        "fr": "Membre du staff de l'événement."
+      }
+    },
+    {
       "name": "Women in Cybersecurity CTF · March 8th",
-      "date": "[TODO: year]",
+      "date": "2026",
       "role": {
         "en": "Organised by Cyberz together with ELITESEC.",
         "fr": "Organisé par Cyberz avec ELITESEC."
@@ -34,18 +42,10 @@
     },
     {
       "name": "AUSIM CyberDrill",
-      "date": "[TODO: date]",
+      "date": "2026",
       "role": {
-        "en": "Help with organisation and logistics. [TODO: confirm your role]",
-        "fr": "Aide à l'organisation et à la logistique. [TODO: confirmer ton rôle]"
-      }
-    },
-    {
-      "name": "[TODO: CTF name]",
-      "date": "[TODO: date]",
-      "role": {
-        "en": "Help with organisation and logistics. [TODO: confirm your role]",
-        "fr": "Aide à l'organisation et à la logistique. [TODO: confirmer ton rôle]"
+        "en": "Part of the event staff.",
+        "fr": "Membre du staff de l'événement."
       },
       "partners": [
         "Zone01 Oujda",

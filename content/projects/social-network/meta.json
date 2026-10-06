@@ -11,7 +11,7 @@
     "bcrypt",
     "Docker"
   ],
-  "teamSize": null,
+  "teamSize": 5,
   "repo": "https://github.com/houdajeon/Social-Network",
   "demo": null,
   "diagram": {
