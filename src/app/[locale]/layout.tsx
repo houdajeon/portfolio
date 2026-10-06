@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { HtmlShell } from "../html-shell";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { PalettePicker } from "@/components/layout/palette-picker";
 import { hasLocale, languageAlternates, localePath, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getSite } from "@/lib/content";
@@ -55,7 +54,6 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
       <Header locale={locale} dict={dict} />
       <main id="main">{children}</main>
       <Footer dict={dict} site={site} />
-      {process.env.NODE_ENV === "development" && <PalettePicker />}
     </HtmlShell>
   );
 }

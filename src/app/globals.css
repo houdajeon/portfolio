@@ -4,7 +4,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Tailwind utilities (bg-bg, text-muted, border-line, ...) point at the CSS variables below,
-   so switching theme or palette only swaps variable values. Components never hard-code a color. */
+   so switching theme only swaps variable values. Components never hard-code a color. */
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
@@ -29,44 +29,12 @@
   }
 }
 
-/* ---------- Palettes ----------
-   Each palette = light values + dark values for the same tokens.
+/* ---------- Palette (violet) ----------
+   Light values on :root, dark values on .dark, for the same tokens.
    Neutrals are tinted towards the accent hue so the page feels like one system.
    `--accent` fills buttons (with `--on-accent` text); `--accent-text` is the accent
    shade that passes WCAG AA as text on the background. */
-
-/* Blue (default) */
 :root {
-  --bg: #f5f7fb;
-  --surface: #ffffff;
-  --raised: #edf1f8;
-  --line: #d5dce8;
-  --fg: #0d1525;
-  --muted: #4d5a73;
-  --accent: #2f5fd0;
-  --accent-text: #2551be;
-  --on-accent: #ffffff;
-  --ok: #157a43;
-  --todo: #925200;
-  color-scheme: light;
-}
-.dark {
-  --bg: #0a0e17;
-  --surface: #101623;
-  --raised: #161e2f;
-  --line: #232d42;
-  --fg: #e6ebf4;
-  --muted: #8f9ab2;
-  --accent: #6e9bff;
-  --accent-text: #8db0ff;
-  --on-accent: #071022;
-  --ok: #3dd68c;
-  --todo: #f2b33d;
-  color-scheme: dark;
-}
-
-/* Violet */
-[data-palette="violet"] {
   --bg: #f7f6fb;
   --surface: #ffffff;
   --raised: #f0eef8;
@@ -76,8 +44,11 @@
   --accent: #6d4ad6;
   --accent-text: #5b3cc4;
   --on-accent: #ffffff;
+  --ok: #157a43;
+  --todo: #925200;
+  color-scheme: light;
 }
-.dark[data-palette="violet"] {
+.dark {
   --bg: #0c0b14;
   --surface: #13121e;
   --raised: #1a1828;
@@ -87,54 +58,9 @@
   --accent: #a78bfa;
   --accent-text: #b9a3ff;
   --on-accent: #140a2e;
-}
-
-/* Teal */
-[data-palette="teal"] {
-  --bg: #f4f8f7;
-  --surface: #ffffff;
-  --raised: #eaf2f0;
-  --line: #d1e0dc;
-  --fg: #0b1d1a;
-  --muted: #4a625d;
-  --accent: #0f766e;
-  --accent-text: #0f6b64;
-  --on-accent: #ffffff;
-}
-.dark[data-palette="teal"] {
-  --bg: #08100f;
-  --surface: #0d1817;
-  --raised: #12201f;
-  --line: #1e3230;
-  --fg: #e3efec;
-  --muted: #8aa39e;
-  --accent: #2dd4bf;
-  --accent-text: #5ee0cf;
-  --on-accent: #04201c;
-}
-
-/* Coral */
-[data-palette="coral"] {
-  --bg: #f8f6f6;
-  --surface: #ffffff;
-  --raised: #f2eeee;
-  --line: #e0d9da;
-  --fg: #1c1416;
-  --muted: #62575a;
-  --accent: #c2412d;
-  --accent-text: #b23a27;
-  --on-accent: #ffffff;
-}
-.dark[data-palette="coral"] {
-  --bg: #0f0e10;
-  --surface: #171518;
-  --raised: #1f1c20;
-  --line: #2e2a2f;
-  --fg: #efeaec;
-  --muted: #a39ba0;
-  --accent: #ff8a7a;
-  --accent-text: #ff9d8f;
-  --on-accent: #2a0a06;
+  --ok: #3dd68c;
+  --todo: #f2b33d;
+  color-scheme: dark;
 }
 
 /* ---------- Utilities ---------- */
@@ -266,7 +192,7 @@
   h3 {
     text-wrap: balance;
   }
-  /* Placeholders for missing facts stay visible (in amber, whatever the palette) until filled in. */
+  /* Placeholders for missing facts stay visible (in amber, apart from the accent color) until filled in. */
   mark.todo {
     background: color-mix(in srgb, var(--todo) 14%, transparent);
     color: var(--todo);
