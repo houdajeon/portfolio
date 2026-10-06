@@ -27,19 +27,11 @@
   "hero": {
     "status": "Disponible pour un stage ou un premier poste",
     "kicker": "Houda Hdili · Full-stack · Orientation DevOps",
-    "titleStart": "Du code",
-    "titleMiddle": "au",
-    "titleAccent": "cluster.",
+    "title": "Je suis Houda",
     "lede": "Je m'appelle Houda Hdili et je me forme au développement full-stack, avec une orientation DevOps, à Zone01 Oujda. Je développe des applications web complètes avec Go, Spring Boot, Next.js et Angular, puis je les déploie avec Docker et Kubernetes.",
     "ctaProjects": "Voir les projets",
     "ctaCv": "Télécharger le CV",
-    "cvSoon": "CV bientôt disponible",
-    "terminal": {
-      "title": "~/houda — zsh",
-      "role": "full-stack, orientation devops",
-      "status": "Disponible",
-      "roleShort": "full-stack/devops"
-    }
+    "cvSoon": "CV bientôt disponible"
   },
   "about": {
     "eyebrow": "à propos",
@@ -59,8 +51,7 @@
       "based": "Ville",
       "basedValue": "Safi, Maroc"
     },
-    "photoAlt": "Portrait de Houda Hdili",
-    "photoTodo": "[TODO: ajouter ta photo]"
+    "photoAlt": "Portrait de Houda Hdili"
   },
   "skills": {
     "eyebrow": "compétences",

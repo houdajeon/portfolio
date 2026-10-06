@@ -104,18 +104,16 @@
   mask-image: radial-gradient(ellipse 70% 60% at 30% 20%, black 30%, transparent 75%);
 }
 
-/* Soft accent light behind the hero terminal. */
-@utility bg-glow {
-  background: radial-gradient(
-    circle at 78% 35%,
-    color-mix(in srgb, var(--accent) 22%, transparent),
-    transparent 55%
-  );
-}
-
 /* Hover light under cards. */
 @utility shadow-glow {
   box-shadow: 0 22px 50px -24px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+/* The hero's gradient pill: violet → magenta → orange, wider than the button so it can slide. */
+@utility bg-bloom {
+  background-image: linear-gradient(90deg, #2e1065, #6d28d9 30%, #a21caf 60%, #db2777 85%, #f97316);
+  background-size: 125% 100%;
+  background-position: left;
 }
 
 /* ---------- Motion ----------
@@ -131,16 +129,6 @@
 }
 @utility rise {
   animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  animation-delay: var(--d, 0ms);
-}
-
-@keyframes appear {
-  from {
-    opacity: 0;
-  }
-}
-@utility appear {
-  animation: appear 0.01s both;
   animation-delay: var(--d, 0ms);
 }
 
@@ -165,6 +153,154 @@
 .js [data-reveal]:not([data-shown]) .term-row {
   opacity: 0;
   translate: -8px 0;
+}
+
+/* ---------- Hero ----------
+   A giant name, the photo in an arch, flowers in two layers around it.
+   --px / --py (-1 → 1) follow the mouse (Parallax component): each layer moves by a
+   different amount, so the scene has depth. Without them (touch, reduced motion) they stay 0. */
+
+/* 13.6cqi = the container width divided by the measured width of "HI, I'M HOUDA" in Archivo
+   Black (7.29em); "JE SUIS HOUDA" is 8.17em. */
+.hero-title {
+  font-size: 13.6cqi;
+  line-height: 0.82;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: linear-gradient(180deg, var(--fg) 30%, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+  background-clip: text;
+  color: transparent;
+}
+.hero-title:lang(fr) {
+  font-size: 12.1cqi;
+}
+
+.tilt {
+  transform: perspective(1000px) rotateY(calc(var(--px, 0) * 9deg))
+    rotateX(calc(var(--py, 0) * -7deg));
+}
+.depth-back {
+  translate: calc(var(--px, 0) * -12px) calc(var(--py, 0) * -8px);
+}
+.depth-1 {
+  translate: calc(var(--px, 0) * 10px) calc(var(--py, 0) * 8px);
+}
+.depth-2 {
+  translate: calc(var(--px, 0) * 22px) calc(var(--py, 0) * 16px);
+}
+
+/* Warm light behind the arch, burgundy like the scarf in the photo. */
+.arch-glow {
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, #9f1239 38%, transparent),
+    color-mix(in srgb, var(--accent) 16%, transparent) 60%,
+    transparent
+  );
+  filter: blur(24px);
+  /* Lights up as the photo opens, instead of glowing alone in an empty arch. */
+  animation: glow-in 1.2s ease-out 0.7s both;
+}
+@keyframes glow-in {
+  from {
+    opacity: 0;
+  }
+}
+/* A soft highlight that follows the mouse, and a shadow at the base for the front flowers. */
+.arch-sheen {
+  background:
+    radial-gradient(
+      circle at calc(50% + var(--px, 0) * 35%) calc(25% + var(--py, 0) * 25%),
+      rgb(255 255 255 / 0.22),
+      transparent 50%
+    ),
+    linear-gradient(to top, rgb(0 0 0 / 0.35), transparent 35%);
+  mix-blend-mode: soft-light;
+}
+
+@keyframes unveil {
+  from {
+    clip-path: inset(100% 0 0 0 round 999px 999px 24px 24px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 999px 999px 24px 24px);
+  }
+}
+/* `backwards`, not `both`: once open, the clip is removed so the 3D tilt is not cut off. */
+.unveil {
+  animation: unveil 1.2s cubic-bezier(0.65, 0, 0.35, 1) backwards;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes grow {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+.vine {
+  stroke-dasharray: 1;
+  animation: grow 1.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes bloom {
+  from {
+    transform: scale(0) rotate(-50deg);
+    opacity: 0;
+  }
+  70% {
+    opacity: 1;
+  }
+}
+.bloom {
+  animation: bloom 1s cubic-bezier(0.2, 0.9, 0.25, 1.25) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-4deg);
+  }
+  to {
+    transform: rotate(4deg);
+  }
+}
+.sway {
+  animation: sway var(--sway, 7s) ease-in-out var(--sway-delay, 0s) infinite alternate;
+}
+
+/* Petals fall through the whole hero: 100cqh is the height of their container. Hidden by
+   default, so reduced motion (which stops the animation) shows none. */
+@keyframes petal-fall {
+  from {
+    transform: translate(0, -24px);
+    opacity: 0;
+  }
+  10%,
+  85% {
+    opacity: 0.75;
+  }
+  to {
+    transform: translate(var(--drift), 100cqh);
+    opacity: 0;
+  }
+}
+.petal-fall {
+  opacity: 0;
+  animation: petal-fall var(--fall) linear var(--fall-delay) infinite;
+}
+@keyframes flutter {
+  from {
+    transform: rotate(-30deg) translateX(-8px);
+  }
+  to {
+    transform: rotate(200deg) translateX(8px);
+  }
+}
+.petal-flutter {
+  animation: flutter 3.2s ease-in-out infinite alternate;
 }
 
 @layer base {

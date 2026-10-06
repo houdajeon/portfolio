@@ -21,7 +21,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   return (
     <>
       <Hero locale={locale} dict={dict} site={site} />
-      <About dict={dict} site={site} />
+      <About dict={dict} />
       <Skills locale={locale} dict={dict} skills={getSkills()} />
       <Projects locale={locale} dict={dict} projects={projects} />
       <Journey locale={locale} dict={dict} journey={getJourney()} />

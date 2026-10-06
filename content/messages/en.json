@@ -27,19 +27,11 @@
   "hero": {
     "status": "Open to internships & junior roles",
     "kicker": "Houda Hdili · Full-stack developer · DevOps focus",
-    "titleStart": "From code",
-    "titleMiddle": "to",
-    "titleAccent": "cluster.",
+    "title": "Hi, I'm Houda",
     "lede": "I'm Houda Hdili, a full-stack developer with a DevOps focus, trained at Zone01 Oujda. I build complete web apps with Go, Spring Boot, Next.js and Angular, then ship them with Docker and Kubernetes.",
     "ctaProjects": "View projects",
     "ctaCv": "Download CV",
-    "cvSoon": "CV coming soon",
-    "terminal": {
-      "title": "~/houda — zsh",
-      "role": "full-stack developer, devops focus",
-      "status": "Available",
-      "roleShort": "full-stack/devops"
-    }
+    "cvSoon": "CV coming soon"
   },
   "about": {
     "eyebrow": "about",
@@ -59,8 +51,7 @@
       "based": "Based in",
       "basedValue": "Safi, Morocco"
     },
-    "photoAlt": "Portrait of Houda Hdili",
-    "photoTodo": "[TODO: add your photo]"
+    "photoAlt": "Portrait of Houda Hdili"
   },
   "skills": {
     "eyebrow": "skills",
