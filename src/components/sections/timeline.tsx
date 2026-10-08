@@ -1,18 +1,23 @@
 "use client";
 
 import { useRef, useState } from "react";
+import type { FlowerType } from "@/components/garden/defs";
 import { Reveal } from "@/components/ui/reveal";
 import { Rich } from "@/components/ui/rich";
 import { useScrollFrame } from "@/components/ui/use-scroll-frame";
 
 type Step = { key: string; date: string | null; title: string; body: string; current: boolean };
 
+/** The flower each step opens into, in order. */
+const BLOOMS: FlowerType[] = ["bl-violet", "bl-pink", "daisy", "bl-plum", "bl-violet", "rose-pink"];
+
 /**
- * Vertical timeline that fills in as you scroll: the accent line grows down to a "reading
- * line" at 60% of the screen height, and each step lights up once that line reaches it.
- * Without JavaScript it is simply a static list.
+ * The journey as a stem that grows while you read: it reaches down to a "reading line" at
+ * 60% of the screen height, and each step's bud opens into a flower once the line passes
+ * it. The current step stays a glowing bud: still growing. Without JavaScript it is a
+ * plain list with buds.
  */
-export function Timeline({ steps }: { steps: Step[] }) {
+export function Timeline({ steps, growing }: { steps: Step[]; growing: string }) {
   const list = useRef<HTMLOListElement>(null);
   const [reached, setReached] = useState(-1);
 
@@ -22,56 +27,68 @@ export function Timeline({ steps }: { steps: Step[] }) {
 
     // Every position is read before the style write below: reading after a write would
     // force the browser to recompute the layout a second time in the same frame.
-    // Inside the pinned Killua scene the list does not move on screen, so the scene gives
-    // the line (data-reading-line, in px from the top of the screen).
-    const readingLine = element.dataset.readingLine
-      ? Number(element.dataset.readingLine)
-      : window.innerHeight * 0.6;
+    const readingLine = window.innerHeight * 0.6;
     const rect = element.getBoundingClientRect();
     let last = -1;
-    element.querySelectorAll<HTMLElement>("[data-dot]").forEach((dot, index) => {
-      if (dot.getBoundingClientRect().top < readingLine) last = index;
+    element.querySelectorAll<HTMLElement>("[data-step]").forEach((step, index) => {
+      if (step.getBoundingClientRect().top < readingLine) last = index;
     });
 
     const progress = Math.min(1, Math.max(0, (readingLine - rect.top) / rect.height));
-    element.style.setProperty("--progress", String(progress));
+    element.style.setProperty("--progress", progress.toFixed(3));
     setReached(last); // React skips the re-render when the value is unchanged
   });
 
   return (
-    <ol ref={list} className="relative ml-2 max-w-3xl">
-      <span aria-hidden="true" className="absolute top-2 bottom-2 left-0 w-px bg-line" />
-      <span
-        aria-hidden="true"
-        className="absolute top-2 bottom-2 left-0 w-px origin-top bg-gradient-to-b from-accent to-accent-text"
-        style={{ transform: "scaleY(var(--progress, 0))" }}
-      />
+    <ol ref={list} className="relative">
+      <span aria-hidden="true" className="absolute top-2 bottom-2 left-[7px] w-px bg-line" />
+      <span aria-hidden="true" className="tl-stem" />
       {steps.map((step, index) => {
-        const lit = index <= reached;
+        const open = index <= reached;
         return (
-          <li key={step.key} className="relative pb-12 pl-9 last:pb-0">
-            <span
-              data-dot=""
-              aria-hidden="true"
-              className={`absolute top-1.5 left-0 size-3.5 -translate-x-1/2 rounded-full border-2 transition-all duration-500 ${
-                lit
-                  ? step.current
-                    ? "border-ok bg-ok shadow-[0_0_0_5px_color-mix(in_srgb,var(--ok)_22%,transparent)]"
-                    : "border-accent bg-accent shadow-[0_0_0_5px_color-mix(in_srgb,var(--accent)_20%,transparent)]"
-                  : "border-line bg-bg"
-              }`}
-            />
+          <li
+            key={step.key}
+            data-step=""
+            className={`tl-step relative pb-9 pl-10 last:pb-0 ${open ? "is-open" : ""} ${
+              step.current ? "is-current" : ""
+            }`}
+          >
+            <span aria-hidden="true" className="tl-bud">
+              <svg className="size-full overflow-visible">
+                <use href={step.current ? "#bud-pink" : "#bud-violet"} />
+              </svg>
+            </span>
+            {!step.current && (
+              <>
+                <span aria-hidden="true" className="tl-bloom">
+                  <svg className="size-full overflow-visible">
+                    <use href={`#${BLOOMS[index % BLOOMS.length]}`} />
+                  </svg>
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="tl-leaf"
+                  style={{ rotate: index % 2 ? "-30deg" : "30deg" }}
+                >
+                  <svg viewBox="-10 -32 20 34" width="9" height="15">
+                    <use href="#leaf" x={-10} y={-32} width={20} height={34} />
+                  </svg>
+                </span>
+              </>
+            )}
             <Reveal>
               {step.date && (
-                <p
-                  className={`font-mono text-xs ${lit ? "text-accent-text" : "text-muted"} transition-colors duration-500`}
-                >
+                <p className="font-mono text-xs text-accent-text">
                   <Rich text={step.date} />
                 </p>
               )}
-              {/* Without a date line, the title sits level with the dot */}
               <h3 className={`${step.date ? "mt-1" : ""} text-lg font-bold stretch-semi`}>
                 {step.title}
+                {step.current && (
+                  <span className="ml-2 font-mono text-[11px] font-medium whitespace-nowrap text-pink-400">
+                    {growing}
+                  </span>
+                )}
               </h3>
               <p className="mt-1 text-muted">
                 <Rich text={step.body} />

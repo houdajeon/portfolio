@@ -6,6 +6,12 @@ import { Reveal } from "@/components/ui/reveal";
 import { Rich } from "@/components/ui/rich";
 import { Section } from "@/components/ui/section";
 import { Cursor, Prompt, row, TerminalWindow } from "@/components/ui/terminal";
+import type { FlowerType } from "@/components/garden/defs";
+import { Flower } from "@/components/garden/flower";
+import { NightSky } from "@/components/garden/night-sky";
+
+/** Each event opens its own small flower in place of the ▸. */
+const EVENT_BLOOMS: FlowerType[] = ["bl-violet", "bl-pink", "bl-plum"];
 
 const key = "text-accent-text";
 
@@ -23,7 +29,14 @@ export function Community({
   const file = `${club.name.toLowerCase()}.yml`;
 
   return (
-    <Section id="community" eyebrow={t.eyebrow} title={t.title} intro={t.intro}>
+    <Section
+      id="community"
+      eyebrow={t.eyebrow}
+      title={t.title}
+      intro={t.intro}
+      bloom="bl-plum"
+      backdrop={<NightSky />}
+    >
       <div className="grid gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
         {/* The club, printed as a YAML file */}
         <Reveal className="self-start lg:sticky lg:top-24">
@@ -79,9 +92,12 @@ export function Community({
                   </span>
                   <div className="min-w-0">
                     <p className="font-bold text-fg">
-                      <span aria-hidden="true" className="text-accent-text">
-                        ▸{" "}
-                      </span>
+                      <Flower
+                        type={EVENT_BLOOMS[index % EVENT_BLOOMS.length]}
+                        size={16}
+                        delay={index * 260 + 520}
+                        className="mr-2 inline-block align-[-2px]"
+                      />
                       <Rich text={event.name} />
                     </p>
                     <p className="mt-0.5 text-muted">

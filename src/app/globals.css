@@ -271,38 +271,6 @@
   animation: sway var(--sway, 7s) ease-in-out var(--sway-delay, 0s) infinite alternate;
 }
 
-/* Petals fall through the whole hero: 100cqh is the height of their container. Hidden by
-   default, so reduced motion (which stops the animation) shows none. */
-@keyframes petal-fall {
-  from {
-    transform: translate(0, -24px);
-    opacity: 0;
-  }
-  10%,
-  85% {
-    opacity: 0.75;
-  }
-  to {
-    transform: translate(var(--drift), 100cqh);
-    opacity: 0;
-  }
-}
-.petal-fall {
-  opacity: 0;
-  animation: petal-fall var(--fall) linear var(--fall-delay) infinite;
-}
-@keyframes flutter {
-  from {
-    transform: rotate(-30deg) translateX(-8px);
-  }
-  to {
-    transform: rotate(200deg) translateX(8px);
-  }
-}
-.petal-flutter {
-  animation: flutter 3.2s ease-in-out infinite alternate;
-}
-
 /* ---------- Scroll effects ---------- */
 
 /* Section titles: each word rises from behind its own clipped box when the Reveal block
@@ -333,228 +301,523 @@
   transition: opacity 0.2s linear;
 }
 
-/* Project stack (ProjectGrid): a card zooms in as it arrives (--arrive), then shrinks and
-   dims as the next one covers it (--cover). Defaults = a still card. */
-.stack-card {
-  background:
-    radial-gradient(
-      120% 140% at 100% 0%,
-      color-mix(in srgb, var(--tint) 16%, transparent),
-      transparent 55%
-    ),
-    var(--surface);
-  transform-origin: 50% 0;
-  scale: calc((0.94 + 0.06 * var(--arrive, 1)) * (1 - 0.06 * var(--cover, 0)));
-  box-shadow: 0 -18px 40px -24px rgb(0 0 0 / 0.6);
-}
-.stack-shade {
-  background: var(--bg);
-  opacity: calc(var(--cover, 0) * 0.55);
-}
-.stack-num {
-  font-size: clamp(3.5rem, 9vw, 7rem);
-  font-weight: 900;
-  line-height: 0.8;
-  letter-spacing: -0.04em;
-  color: transparent;
-  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--tint) 75%, var(--fg));
+/* ---------- Garden: flowers, vines and petals through the whole page ----------
+   The flowers are SVG symbols (GardenDefs). Inside a <Reveal> block they open (`bloom`)
+   when the block scrolls into view, then sway; vines grow (`grow`). Without JavaScript
+   everything is simply in place, and reduced motion stops the movement (base layer). */
+
+:root {
+  --vine: #3f6b4a;
+  --vine-hi: #5b8a5e;
 }
 
-/* ---------- Killua scene (Story + StoryScene) ----------
-   Base rules = the plain version (phones, reduced motion, no JavaScript): a still frame
-   of the video, then the About and Journey panels. On large screens with motion allowed
-   (media query below) the scene is 660vh tall and its stage is pinned: StoryScene plays
-   the video with the scroll and sets --e (0 → 1) on each panel as it comes out of a hand. */
+.g-fl {
+  display: inline-block;
+  flex: none;
+  line-height: 0;
+  transform-origin: 50% 50%;
+}
+.g-fl-sway svg {
+  animation: sway 7s ease-in-out infinite alternate;
+}
+.g-sw {
+  animation: sway var(--sw, 7s) ease-in-out var(--swd, 0s) infinite alternate;
+}
+.g-vine {
+  fill: none;
+  stroke: var(--vine);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+.g-vine-thin {
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+.js [data-reveal]:not([data-shown]) :is(.g-fl, .g-bl) {
+  opacity: 0;
+}
+.js [data-reveal][data-shown] :is(.g-fl, .g-bl) {
+  animation: bloom 1s cubic-bezier(0.2, 0.9, 0.25, 1.25) var(--d, 0ms) both;
+}
+.js [data-reveal] .g-vine {
+  stroke-dasharray: 1;
+}
+.js [data-reveal]:not([data-shown]) .g-vine {
+  stroke-dashoffset: 1;
+}
+.js [data-reveal][data-shown] .g-vine {
+  animation: grow 1.5s cubic-bezier(0.4, 0, 0.2, 1) var(--d, 0ms) both;
+}
 
-.story-mark {
+/* Reading progress as a vine (ScrollProgress): grows with --p, leaves open as you pass. */
+.vine-progress {
+  overflow-x: clip;
+}
+.vine-progress-line {
   position: absolute;
   left: 0;
-  width: 1px;
-  pointer-events: none;
-}
-.story-stage {
-  position: relative;
-  overflow: clip;
-}
-.story-media {
-  position: relative;
-  max-width: 64rem;
-  margin-inline: auto;
-}
-/* The video's background is pure black: `lighten` lets the page background show there,
-   so there is no visible rectangle around Killua. */
-.story-poster,
-.story-video {
-  mix-blend-mode: lighten;
-}
-.story-poster {
-  display: block;
+  top: -6px;
   width: 100%;
-  height: auto;
+  height: 14px;
+  overflow: visible;
 }
-.story-video {
-  display: none;
+.vine-progress-line path {
+  fill: none;
+  stroke: var(--vine-hi);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--p, 0));
 }
-.story-petals {
-  opacity: 0.7;
+.vine-progress-tip {
+  position: absolute;
+  top: -10px;
+  /* Stays inside the screen at both ends (its 22px width). */
+  left: calc(11px + var(--p, 0) * (100% - 22px));
+  width: 22px;
+  height: 22px;
+  translate: -50% 0;
+  rotate: calc(var(--p, 0) * 900deg);
+  opacity: min(1, calc(var(--p, 0) * 60));
+}
+.vine-progress-tip svg {
+  display: block;
+}
+.vine-progress-leaf {
+  position: absolute;
+  width: 9px;
+  height: 15px;
+  opacity: 0;
+  scale: 0;
+  transition:
+    opacity 0.3s,
+    scale 0.45s cubic-bezier(0.2, 0.9, 0.25, 1.25);
+}
+.vine-progress-leaf.is-open {
+  opacity: 1;
+  scale: 1;
 }
 
-.story-panels {
+/* Journey (Timeline): a stem grows down to the reading line; buds open into flowers. */
+.tl-stem {
+  position: absolute;
+  left: 6px;
+  top: 0.5rem;
+  width: 3px;
+  border-radius: 2px;
+  height: calc(var(--progress, 0) * (100% - 1rem));
+  background: linear-gradient(var(--vine-hi), var(--vine));
+}
+.tl-bud,
+.tl-bloom {
+  position: absolute;
+  left: -5px;
+  top: -1px;
+  width: 26px;
+  height: 26px;
+}
+.tl-bud {
+  transition:
+    opacity 0.25s,
+    scale 0.25s;
+}
+.tl-step.is-open:not(.is-current) .tl-bud {
+  opacity: 0;
+  scale: 0.2;
+}
+.tl-bloom {
+  opacity: 0;
+  scale: 0;
+}
+.tl-step.is-open .tl-bloom {
+  opacity: 1;
+  scale: 1;
+  animation: bloom 0.9s cubic-bezier(0.2, 0.9, 0.25, 1.25) both;
+}
+.tl-leaf {
+  position: absolute;
+  left: -1px;
+  top: 34px;
+  width: 9px;
+  height: 15px;
+  opacity: 0;
+  transition: opacity 0.4s 0.2s;
+}
+.tl-step.is-open .tl-leaf {
+  opacity: 1;
+}
+/* The current step stays a bud, glowing: still growing. */
+.tl-step.is-current .tl-bud {
+  filter: drop-shadow(0 0 6px rgb(244 114 182 / 0.9));
+}
+.tl-step.is-current.is-open .tl-bud {
+  animation: bud-pulse 1.8s ease-in-out infinite alternate;
+}
+@keyframes bud-pulse {
+  from {
+    scale: 0.92;
+  }
+  to {
+    scale: 1.12;
+  }
+}
+
+/* Project cards: a big outline number, and a wash of the project's color (--tint). */
+.project-num {
+  display: block;
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: 5rem;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+}
+.project-card {
+  background: linear-gradient(
+    115deg,
+    var(--surface) 45%,
+    color-mix(in srgb, var(--tint) 20%, var(--surface)) 100%
+  );
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+.project-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 40px 90px -50px color-mix(in srgb, var(--tint) 60%, transparent);
+}
+
+/* "Read case study": the round arrow is the heart of a rose that opens on hover, and a few
+   petals drift out of it. */
+.case-circle {
   position: relative;
   display: grid;
-  gap: 2.5rem;
-  padding-block: 1rem 5rem;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
 }
-.story-card {
-  position: relative;
+.case-circle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
   border: 1px solid var(--line);
-  border-radius: 1rem;
-  background: color-mix(in srgb, var(--surface) 80%, transparent);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.7);
+  background: var(--bg);
 }
-/* The padding is on the content (not the card) so that, in the scene, the text that
-   scrolls inside the card is measured with its padding. */
-.story-content {
-  padding: 1.5rem;
+.case-petals {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 78px;
+  height: 78px;
+  translate: -50% -50%;
+  scale: 0.3;
+  rotate: -60deg;
+  opacity: 0;
+  transition:
+    scale 0.5s cubic-bezier(0.2, 0.9, 0.25, 1.25),
+    rotate 0.5s,
+    opacity 0.25s;
 }
-@media (width >= 40rem) {
-  .story-content {
-    padding: 2rem;
+.case-link:hover .case-petals,
+.case-link:focus-visible .case-petals,
+.project-card:hover .case-petals {
+  scale: 1;
+  rotate: 0deg;
+  opacity: 1;
+}
+.case-drift {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+.case-drift > span {
+  position: absolute;
+  left: -6px;
+  top: -6px;
+  width: 13px;
+  height: 13px;
+  opacity: 0;
+}
+.case-link:hover .case-drift > span,
+.project-card:hover .case-drift > span {
+  animation: drift 1.6s ease-out calc(var(--i) * 140ms) infinite;
+}
+@keyframes drift {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    translate: var(--dx) var(--dy);
+    rotate: 220deg;
   }
 }
 
+/* The flower of projects (ProjectFlower). Plain list by default; the flower only on large
+   screens with motion allowed, pinned while the scroll turns it (--turn, set in JS).
+   Each card sits on a circle around the heart, kept upright, and grows as it comes to the
+   front (--near, 0 → 1). Sizes are in cqw: % of the flower's width. */
+.pf-scene {
+  display: none;
+}
+.pf-detail {
+  max-width: 30rem;
+}
+.pf-detail-card {
+  animation: pf-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes pf-in {
+  from {
+    opacity: 0;
+    translate: -24px 0;
+  }
+}
+.pf-hint-icon {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--muted);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: pf-spin 2.4s linear infinite;
+}
+@keyframes pf-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+.pf-flower {
+  position: relative;
+  width: min(calc(100dvh - 7rem), 48vw);
+  aspect-ratio: 1;
+  container-type: size;
+}
+.pf-petals {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.pf-turn {
+  transform: rotate(var(--turn, 0deg));
+  opacity: 0.5;
+}
+.pf-heart {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  margin: 0;
+  font:
+    700 3.4cqw/1 var(--font-jetbrains),
+    ui-monospace,
+    monospace;
+  color: #1b1305;
+}
+.pf-heart span {
+  font-size: 0.7em;
+  opacity: 0.65;
+}
+.pf-ring {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pf-petal {
+  --angle: calc(var(--i) * var(--step) + var(--turn, 0deg) - 90deg);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 21cqw;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-36cqw)
+    rotate(calc(-1 * var(--angle)));
+  scale: calc(0.8 + 0.3 * var(--near, 0));
+  opacity: calc(0.45 + 0.55 * var(--near, 0));
+}
+.pf-petal-card {
+  position: relative;
+  display: grid;
+  gap: 0.5cqw;
+  padding: 1.6cqw 1.8cqw;
+  border: 1px solid var(--line);
+  border-radius: 2.2cqw;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: 0 0 calc(var(--near, 0) * 5cqw) color-mix(in srgb, var(--tint) 45%, transparent);
+  transition: background-color 0.2s;
+}
+.pf-petal-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1.5px solid var(--tint);
+  border-radius: inherit;
+  opacity: var(--near, 0);
+  pointer-events: none;
+}
+.pf-petal-card:hover {
+  background: var(--raised);
+}
+.pf-petal-num {
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: 4cqw;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--tint);
+}
+.pf-petal-kind {
+  font:
+    500 1.45cqw/1.2 var(--font-jetbrains),
+    ui-monospace,
+    monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.pf-petal-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 2.2cqw;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--fg);
+}
 @media (min-width: 64rem) and (min-height: 38rem) and (prefers-reduced-motion: no-preference) {
-  /* The stage sticks to the top of the screen inside a backdrop that spans the scene. */
-  .js .story {
-    height: 660vh;
-  }
-  .js .story-backdrop {
-    position: absolute;
-    inset: 0;
-  }
-  .js .story-stage {
-    position: sticky;
-    top: 0;
-    height: 100dvh;
-    background: var(--bg);
-  }
-  /* Killua in the middle, between the panels, and never wider than the video itself
-     (1280 px), so the browser never upscales it and it stays sharp. */
-  .js .story-media {
-    position: absolute;
-    top: calc(50% + 2rem);
-    left: 50%;
-    width: min(64vw, 1280px, calc((100dvh - 6rem) * 16 / 9));
-    aspect-ratio: 16 / 9;
-    max-width: none;
-    margin: 0;
-    translate: -50% -50%;
-    /* `translate` makes this box its own layer, so the blend is set here, on the layer. */
-    mix-blend-mode: lighten;
-  }
-  .js .story-poster {
+  .js .pf-plain {
     display: none;
   }
-  /* The top (hair cut by the video's edge) and the bottom fade out; the black sides blend
-     into the background (lighten). The video's flashes are skipped (StoryScene). */
-  .js .story-video {
+  .js .pf-scene {
+    position: relative;
     display: block;
-    width: 100%;
-    height: 100%;
-    mix-blend-mode: normal;
-    mask-image:
-      linear-gradient(to bottom, transparent, #000 22%, #000 84%, transparent),
-      linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
-    mask-composite: intersect;
+    height: calc(var(--count) * 42vh + 100vh);
+    margin-top: 1rem;
   }
+  .js .pf-stage {
+    position: sticky;
+    top: 4rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 3rem;
+    height: calc(100dvh - 4rem);
+  }
+}
 
-  /* Menu markers: where each panel is fully out (see the script in StoryScene). A link
-     lands 5rem below the marker's top, so the marker sits 5rem lower. */
-  .js .story-mark-about {
-    top: calc(145vh + 5rem);
-    height: 235vh;
+/* Community: a night garden, a crescent moon and fireflies (NightSky). */
+.night-moon {
+  position: absolute;
+  right: 7%;
+  top: 70px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  box-shadow: inset -16px -6px 0 0 rgb(237 233 254 / 0.75);
+  filter: drop-shadow(0 0 22px rgb(167 139 250 / 0.5));
+  opacity: 0.8;
+}
+.firefly {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 12px 3px var(--c);
+  opacity: 0.5;
+  animation:
+    firefly-move var(--t) ease-in-out var(--delay) infinite alternate,
+    firefly-glow 2.6s ease-in-out var(--delay) infinite alternate;
+}
+@keyframes firefly-move {
+  to {
+    translate: var(--dx) var(--dy);
   }
-  .js .story-mark-journey {
-    top: calc(380vh + 5rem);
-    height: calc(280vh - 5rem);
+}
+@keyframes firefly-glow {
+  from {
+    opacity: 0.08;
   }
+  to {
+    opacity: 0.9;
+  }
+}
 
-  /* About on the right, beside the hand that fires first; Journey on the left. Each panel
-     is a window: long text scrolls inside it (StoryScene moves .story-content). */
-  .js .story-panels {
-    position: absolute;
-    inset: 0;
-    display: block;
-    max-width: none;
-    margin: 0;
-    padding: 0;
-  }
-  .js .story-panel {
-    position: absolute;
-    top: 4.75rem;
-    bottom: 1.5rem;
-    width: min(24rem, 30vw);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* Comes out of the hand: small, blurred and shifted towards it, then full and sharp. */
-    opacity: min(1, calc(var(--e, 0) * 2.2));
-    scale: calc(0.55 + 0.45 * var(--e, 0));
-    translate: calc((1 - var(--e, 0)) * var(--from-x)) 0;
-    filter: var(--emerge-filter, none);
-    transform-origin: var(--origin);
-  }
-  .js .story-panel-about {
-    right: 2rem;
-    --origin: 0% 60%;
-    --from-x: -140px;
-  }
-  .js .story-panel-journey {
-    left: 2rem;
-    --origin: 100% 75%;
-    --from-x: 140px;
-  }
-  .js .story-card {
-    max-height: 100%;
-    overflow: hidden;
-    /* Glows while it is coming out of the light. */
-    box-shadow:
-      0 30px 80px -30px rgb(0 0 0 / 0.7),
-      0 0 calc(var(--e, 0) * (1 - var(--e, 0)) * 4 * 90px)
-        calc(var(--e, 0) * (1 - var(--e, 0)) * 4 * 6px) rgb(168 85 247 / 0.5);
-  }
-  .js .story-card h2 {
-    font-size: 1.75rem;
-  }
-  /* Soft top / bottom edges while some text is hidden there (data-fade from StoryScene). */
-  .js .story-card::before,
-  .js .story-card::after {
-    content: "";
-    position: absolute;
-    inset-inline: 0;
-    z-index: 1;
-    height: 3rem;
-    pointer-events: none;
+/* Contact: sending throws a handful of petals out of the button. */
+.petal-burst {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.petal-burst > span {
+  position: absolute;
+  left: -7px;
+  top: -7px;
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  animation: petal-burst 1.2s cubic-bezier(0.15, 0.7, 0.3, 1) calc(var(--i) * 25ms) both;
+}
+@keyframes petal-burst {
+  0% {
     opacity: 0;
-    transition: opacity 0.3s;
+    translate: 0 0;
+    rotate: 0deg;
+    scale: 0.4;
   }
-  .js .story-card::before {
-    top: 0;
-    background: linear-gradient(var(--surface), transparent);
+  12% {
+    opacity: 1;
   }
-  .js .story-card::after {
-    bottom: 0;
-    background: linear-gradient(transparent, var(--surface));
+  100% {
+    opacity: 0;
+    translate: var(--dx) var(--dy);
+    rotate: var(--spin);
+    scale: 1;
   }
-  .js .story-panel[data-fade~="top"] .story-card::before,
-  .js .story-panel[data-fade~="bottom"] .story-card::after {
-    opacity: 0.95;
+}
+
+/* Footer: the petals land along its top edge (FallenPetals). */
+.fallen-petal {
+  position: absolute;
+  display: block;
+}
+.js [data-reveal]:not([data-shown]) .fallen-petal {
+  opacity: 0;
+}
+.js [data-reveal][data-shown] .fallen-petal {
+  animation: land 1.4s cubic-bezier(0.3, 0.6, 0.4, 1) var(--d) both;
+}
+@keyframes land {
+  0% {
+    opacity: 0;
+    translate: var(--fx) -120px;
+    rotate: -160deg;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0;
   }
 }
 
 @layer base {
-  html {
+  html:not(.lenis) {
     scroll-behavior: smooth;
   }
   body {

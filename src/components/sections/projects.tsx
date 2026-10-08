@@ -4,7 +4,7 @@ import { format } from "@/i18n/format";
 import type { Project } from "@/lib/content";
 import { categorySchema, type Category } from "@/lib/schemas";
 import { Section } from "@/components/ui/section";
-import { ProjectGrid, type FilterId, type ProjectCard } from "./project-grid";
+import { ProjectFlower, type FilterId, type ProjectCard } from "./project-flower";
 
 export function teamLabel(teamSize: number | null, t: Messages["projects"]): string {
   if (teamSize === null) return t.teamTodo;
@@ -47,11 +47,11 @@ export function Projects({
     .filter((f) => f.count > 0);
 
   return (
-    <Section id="projects" eyebrow={t.eyebrow} title={t.title} intro={t.intro}>
-      <ProjectGrid
+    <Section id="projects" eyebrow={t.eyebrow} title={t.title} intro={t.intro} bloom="bl-pink">
+      <ProjectFlower
         cards={cards}
         filters={filters}
-        labels={{ filter: t.filterLabel, count: t.count, readCase: t.readCase }}
+        labels={{ filter: t.filterLabel, count: t.count, readCase: t.readCase, turn: t.turn }}
       />
     </Section>
   );

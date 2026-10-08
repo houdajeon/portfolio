@@ -2,13 +2,15 @@ import type { Messages } from "@/i18n/dictionaries";
 import type { Site } from "@/lib/schemas";
 import { ArrowUp, GitHub, LinkedIn } from "@/components/ui/icons";
 import { Logo } from "./header";
+import { FallenPetals } from "@/components/garden/fallen-petals";
 
 const iconLink =
   "grid size-9 place-items-center rounded-md border border-line text-muted transition hover:border-muted hover:text-fg";
 
 export function Footer({ dict, site }: { dict: Messages; site: Site }) {
   return (
-    <footer className="border-t border-line">
+    <footer className="relative border-t border-line">
+      <FallenPetals />
       <div className="page-wrap flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <Logo />

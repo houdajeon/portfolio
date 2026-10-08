@@ -4,7 +4,7 @@ import { otherLocale, type Locale } from "@/i18n/config";
 import type { Messages } from "@/i18n/dictionaries";
 import type { Site } from "@/lib/schemas";
 import { buttonStyles } from "@/components/ui/button-styles";
-import { FallingPetals, FlowerLayer } from "@/components/ui/flowers";
+import { FlowerLayer } from "@/components/ui/flowers";
 import { ArrowRight, Download } from "@/components/ui/icons";
 import { Parallax } from "@/components/ui/parallax";
 
@@ -59,7 +59,6 @@ export function Hero({ locale, dict, site }: { locale: Locale; dict: Messages; s
 
   return (
     <section id="top" aria-labelledby="hero-title" className="relative overflow-hidden">
-      <FallingPetals />
       <Parallax className="relative page-wrap pt-10 pb-16 sm:pt-14 lg:pb-24">
         <p
           className="inline-flex rise items-center gap-2.5 rounded-md border border-line bg-surface px-3 py-1.5 font-mono text-xs"

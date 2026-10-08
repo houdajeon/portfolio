@@ -91,7 +91,8 @@
     "team": "Équipe de {n}",
     "teamTodo": "[TODO: taille de l'équipe]",
     "readCase": "Lire l'étude de cas",
-    "count": "{n} projets affichés"
+    "count": "{n} projets affichés",
+    "turn": "Faites défiler pour tourner la fleur, ou cliquez sur un pétale"
   },
   "caseStudy": {
     "back": "Tous les projets",
@@ -118,7 +119,8 @@
   },
   "journey": {
     "eyebrow": "parcours",
-    "title": "Mon parcours"
+    "title": "Mon parcours",
+    "growing": "en pleine croissance"
   },
   "community": {
     "eyebrow": "communauté",

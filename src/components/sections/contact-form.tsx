@@ -1,9 +1,24 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type CSSProperties, type FormEvent } from "react";
 import type { Messages } from "@/i18n/dictionaries";
 import { buttonStyles } from "@/components/ui/button-styles";
 import { Rich } from "@/components/ui/rich";
+import { Petal, seeded } from "@/components/garden/flower";
+import type { PetalColor } from "@/components/garden/defs";
+
+/** Petals thrown out of the button when a message is sent: direction, distance, spin. */
+const random = seeded(3);
+const BURST = Array.from({ length: 16 }, (_, i) => {
+  const angle = -Math.PI / 2 + (random() - 0.5) * 2.2;
+  const distance = 70 + random() * 100;
+  return {
+    dx: Math.round(Math.cos(angle) * distance),
+    dy: Math.round(Math.sin(angle) * distance - 30),
+    spin: Math.round(-300 + random() * 600),
+    color: (["pink", "violet", "plum"] as PetalColor[])[i % 3],
+  };
+});
 
 type Status = "idle" | "sending" | "success" | "error" | "unconfigured";
 
@@ -23,9 +38,11 @@ export function ContactForm({
   labels: Messages["contact"]["form"];
 }) {
   const [status, setStatus] = useState<Status>("idle");
+  const [bursts, setBursts] = useState(0); // each send replays the petal burst
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setBursts((n) => n + 1);
     if (!accessKey) {
       setStatus("unconfigured");
       return;
@@ -115,9 +132,28 @@ export function ContactForm({
         <button
           type="submit"
           disabled={status === "sending"}
-          className={`${buttonStyles.primary} disabled:opacity-60`}
+          className={`${buttonStyles.primary} relative disabled:opacity-60`}
         >
           {status === "sending" ? labels.sending : labels.send}
+          {bursts > 0 && (
+            <span key={bursts} aria-hidden="true" className="petal-burst">
+              {BURST.map((petal, i) => (
+                <span
+                  key={i}
+                  style={
+                    {
+                      "--i": i,
+                      "--dx": `${petal.dx}px`,
+                      "--dy": `${petal.dy}px`,
+                      "--spin": `${petal.spin}deg`,
+                    } as CSSProperties
+                  }
+                >
+                  <Petal color={petal.color} />
+                </span>
+              ))}
+            </span>
+          )}
         </button>
         <p role="status" className={`text-sm ${shown?.color ?? ""}`}>
           {shown && <Rich text={shown.text} />}

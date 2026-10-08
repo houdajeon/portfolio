@@ -5,6 +5,7 @@ import { Rich } from "@/components/ui/rich";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { ContactForm } from "./contact-form";
+import { FormVines } from "@/components/garden/form-vines";
 
 const row = "flex items-center gap-3";
 const iconBox =
@@ -16,7 +17,7 @@ export function Contact({ dict, site }: { dict: Messages; site: Site }) {
   const short = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
 
   return (
-    <Section id="contact" eyebrow={t.eyebrow} title={t.title} intro={t.intro}>
+    <Section id="contact" eyebrow={t.eyebrow} title={t.title} intro={t.intro} bloom="bl-pink">
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
         <Reveal>
           <h3 className="font-mono text-xs tracking-wider text-muted uppercase">{t.direct}</h3>
@@ -57,8 +58,11 @@ export function Contact({ dict, site }: { dict: Messages; site: Site }) {
             </li>
           </ul>
         </Reveal>
-        <Reveal delay={120}>
-          <ContactForm accessKey={site.contactFormKey} labels={t.form} />
+        <Reveal delay={120} className="relative mx-4 mt-6 lg:mt-0">
+          <FormVines />
+          <div className="relative z-10">
+            <ContactForm accessKey={site.contactFormKey} labels={t.form} />
+          </div>
         </Reveal>
       </div>
     </Section>

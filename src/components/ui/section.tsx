@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import type { FlowerType } from "@/components/garden/defs";
+import { Flower } from "@/components/garden/flower";
 import { LitText } from "./lit-text";
 import { Reveal } from "./reveal";
 import { RiseWords } from "./rise-words";
@@ -8,24 +10,41 @@ type SectionProps = {
   eyebrow: string;
   title: string;
   intro?: string;
+  /** Small flower that opens after the `// eyebrow` label. */
+  bloom?: FlowerType;
+  className?: string;
+  /** Decoration behind the whole section (it fills it, under the content). */
+  backdrop?: ReactNode;
   children: ReactNode;
 };
 
 /**
- * Home page section: `// eyebrow`, a wide heading whose words rise in, an optional intro
- * that lights up while scrolling, then content.
+ * Home page section: `// eyebrow` with a small flower, a wide heading whose words rise in,
+ * an optional intro that lights up while scrolling, then content. Sections are separated
+ * by vines (VineDivider), not borders.
  */
-export function Section({ id, eyebrow, title, intro, children }: SectionProps) {
+export function Section({
+  id,
+  eyebrow,
+  title,
+  intro,
+  bloom,
+  className,
+  backdrop,
+  children,
+}: SectionProps) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className="border-t border-line py-20 sm:py-28"
+      className={`relative py-20 sm:py-24 ${className ?? ""}`}
     >
-      <div className="page-wrap">
+      {backdrop}
+      <div className="relative page-wrap">
         <Reveal>
-          <p className="font-mono text-xs tracking-wider text-muted">
+          <p className="flex items-center gap-2 font-mono text-xs tracking-wider text-muted">
             <span className="text-accent-text">{"//"}</span> {eyebrow}
+            {bloom && <Flower type={bloom} size={16} delay={300} />}
           </p>
           <h2
             id={`${id}-title`}

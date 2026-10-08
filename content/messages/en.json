@@ -91,7 +91,8 @@
     "team": "Team of {n}",
     "teamTodo": "[TODO: team size]",
     "readCase": "Read case study",
-    "count": "{n} projects shown"
+    "count": "{n} projects shown",
+    "turn": "Scroll to turn the flower, or click a petal"
   },
   "caseStudy": {
     "back": "All projects",
@@ -118,7 +119,8 @@
   },
   "journey": {
     "eyebrow": "journey",
-    "title": "How I got here"
+    "title": "How I got here",
+    "growing": "still growing"
   },
   "community": {
     "eyebrow": "community",

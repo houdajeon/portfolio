@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import { HtmlShell } from "../html-shell";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { SmoothScroll } from "@/components/layout/smooth-scroll";
+import { GardenDefs } from "@/components/garden/defs";
+import { PetalSky } from "@/components/garden/petal-sky";
 import { hasLocale, languageAlternates, localePath, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getSite } from "@/lib/content";
@@ -45,6 +48,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 
   return (
     <HtmlShell lang={locale}>
+      <GardenDefs />
+      <PetalSky />
+      <SmoothScroll />
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-on-accent"

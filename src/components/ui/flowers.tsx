@@ -1,8 +1,10 @@
 import type { CSSProperties, ReactNode } from "react";
 
 // Decorative flowers around the hero photo arch, drawn as SVG so they stay sharp at any
-// size and cost no image download. Every flower is drawn around (0, 0) and placed by its
-// parent <g>, so the CSS animations (bloom, sway in globals.css) turn around its center.
+// size and cost no image download. Their gradients (fl-*) are defined once for the whole
+// page in GardenDefs, which also turns the same flowers into reusable <symbol>s.
+// Every flower is drawn around (0, 0) and placed by its parent <g>, so the CSS animations
+// (bloom, sway in globals.css) turn around its center.
 //
 // Coordinates: the arch fills x 90→390, y 60→460 of the 480×520 viewBox, and the SVG box
 // is sized to match (see FlowerLayer), so flowers line up with the photo at every width.
@@ -13,12 +15,12 @@ const BUD = "M0 0C-5-4-6-12 0-18C6-12 5-4 0 0Z";
 const SEPAL = "M0 0C-4-2-5-6-3-9C-1-6 1-6 3-9C5-6 4-2 0 0Z";
 const LEAF = "M0 0C7-6 9-17 0-30C-9-17-7-6 0 0Z";
 
-type Tone = "violet" | "pink" | "plum";
+export type Tone = "violet" | "pink" | "plum";
 
 const ring = (count: number, offset = 0) =>
   Array.from({ length: count }, (_, i) => offset + (360 / count) * i);
 
-function Blossom({ tone }: { tone: Tone }) {
+export function Blossom({ tone }: { tone: Tone }) {
   return (
     <>
       {ring(5).map((a) => (
@@ -33,7 +35,7 @@ function Blossom({ tone }: { tone: Tone }) {
 }
 
 /** A rose seen from above: three rings of petals around a curled heart. */
-function Rose({ tone }: { tone: Tone }) {
+export function Rose({ tone }: { tone: Tone }) {
   return (
     <>
       {ring(6).map((a) => (
@@ -67,7 +69,7 @@ function Rose({ tone }: { tone: Tone }) {
   );
 }
 
-function Daisy() {
+export function Daisy() {
   return (
     <>
       {ring(14).map((a) => (
@@ -85,7 +87,7 @@ function Daisy() {
   );
 }
 
-function Bud({ tone }: { tone: Tone }) {
+export function Bud({ tone }: { tone: Tone }) {
   return (
     <>
       <path d={BUD} fill={`url(#fl-${tone})`} />
@@ -94,7 +96,7 @@ function Bud({ tone }: { tone: Tone }) {
   );
 }
 
-function Leaf() {
+export function Leaf() {
   return (
     <>
       <path d={LEAF} fill="url(#fl-leaf)" />
@@ -141,7 +143,7 @@ function Place({
   );
 }
 
-function Gradients() {
+export function Gradients() {
   // Petal gradients run from the base (dark) to the tip (pale), in each petal's own box.
   const petal = (id: string, base: string, mid: string, tip: string) => (
     <radialGradient id={id} cx="0.5" cy="1" r="1.15">
@@ -179,7 +181,6 @@ const VINES = [
 function BackLayer() {
   return (
     <>
-      <Gradients />
       {VINES.map((d, i) => (
         <path
           key={d}
@@ -288,44 +289,5 @@ export function FlowerLayer({ layer, className }: { layer: "back" | "front"; cla
     >
       {layer === "back" ? <BackLayer /> : <FrontLayer />}
     </svg>
-  );
-}
-
-// Petals drifting down across the hero: left position (%), size (px), fall time (s),
-// start offset (s), sideways drift (px) and color.
-const PETALS = [
-  [6, 19, 17, 0, 60, "#f472b6"],
-  [18, 15, 21, 7, -40, "#a78bfa"],
-  [31, 17, 19, 13, 50, "#9f1239"],
-  [47, 14, 23, 3, -60, "#f9a8d4"],
-  [62, 18, 18, 10, 40, "#a78bfa"],
-  [74, 16, 22, 16, -50, "#f472b6"],
-  [86, 20, 20, 5, 70, "#c084fc"],
-  [94, 14, 24, 12, -30, "#9f1239"],
-] as const;
-
-/** Decorative: a few petals falling behind the hero content. Hidden with reduced motion. */
-export function FallingPetals() {
-  return (
-    <div aria-hidden="true" className="[container-type:size] pointer-events-none absolute inset-0">
-      {PETALS.map(([left, size, duration, offset, drift, color]) => (
-        <span
-          key={left}
-          className="petal-fall absolute top-0"
-          style={
-            {
-              left: `${left}%`,
-              "--fall": `${duration}s`,
-              "--fall-delay": `${-offset}s`,
-              "--drift": `${drift}px`,
-            } as CSSProperties
-          }
-        >
-          <svg viewBox="-7 -7 14 14" width={size} height={size} className="petal-flutter block">
-            <path d="M0-6C4-6 6-1 0 6C-6-1-4-6 0-6Z" fill={color} />
-          </svg>
-        </span>
-      ))}
-    </div>
   );
 }
