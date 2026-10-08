@@ -17,22 +17,45 @@ const SCENE_MEDIA =
  * up under the hero, 100 when it fills the screen and pins, 660 at the end (the scene is
  * 660vh tall in globals.css, so it stays pinned for s = 100 → 660).
  *
- * Video time (seconds) at each point; in between, it is interpolated:
- *   0 → 100   eyes in the dark (0 → 2.6 s), while the hero leaves
- *   100 → 155 Killua appears, white flash (→ 5.6 s)
- *   155 → 210 his right hand charges (→ 7.2 s); About comes out of it (s 180 → 240)
+ * The scroll does not play every second of the video: its three white flashes and the ring
+ * after the first one are skipped. CLIPS are the parts that play, back to back; "scene
+ * time" runs through them continuously, and sceneToVideo() gives the matching video time.
+ */
+const CLIPS: [number, number][] = [
+  [0, 4.18], // eyes in the dark, Killua appears
+  [5, 5.68], // (flash + ring skipped) he is lit
+  [5.98, 7.98], // (flash skipped) his right hand charges
+  [8.48, 12], // (flash skipped) both hands crackle
+];
+
+/** Scene time → video time, jumping over the skipped parts. */
+function sceneToVideo(time: number) {
+  let left = time;
+  for (const [from, to] of CLIPS) {
+    if (left <= to - from) return from + left;
+    left -= to - from;
+  }
+  const [, end] = CLIPS[CLIPS.length - 1];
+  return end;
+}
+
+/*
+ * Scene time at each point; in between, it is interpolated:
+ *   0 → 100   eyes in the dark, while the hero leaves
+ *   100 → 155 Killua appears and lights up
+ *   155 → 210 his right hand charges; About comes out of it (s 180 → 240)
  *   210 → 400 About stays: its words light up, long text scrolls inside the panel
- *   400 → 445 second flash, his left hand charges (→ 9 s); Journey comes out (s 415 → 475)
+ *   400 → 445 his left hand charges; Journey comes out (s 415 → 475)
  *   445 → 640 both panels stay: the timeline scrolls inside its panel, lightning crackles
  */
-const VIDEO_KEYS: [number, number][] = [
+const SCENE_KEYS: [number, number][] = [
   [0, 0],
   [100, 2.6],
-  [155, 5.6],
-  [210, 7.2],
-  [400, 7.9],
-  [445, 9],
-  [640, 12],
+  [155, 4.78],
+  [210, 6.08],
+  [400, 6.78],
+  [445, 7.38],
+  [640, 10.38],
 ];
 const PANELS = [
   { emerge: [180, 240], scroll: [250, 390] }, // About
@@ -40,33 +63,16 @@ const PANELS = [
 ];
 const ABOUT_LIT = [240, 360];
 
-/**
- * The video's own flashes (start, strength, fade time in seconds), measured from its
- * frames: the whole picture turns light, then fades out quickly. The scene lights the whole
- * stage the same way (--flash), a little stronger and longer than the video, so the light
- * covers the video's edges instead of stopping at them.
- */
-const FLASHES = [
-  [4.2, 0.72, 0.2],
-  [5.7, 0.53, 0.15],
-  [8.0, 1, 0.2],
-];
-const flashAt = (t: number) =>
-  Math.max(
-    0,
-    ...FLASHES.map(([start, peak, fade]) => (t < start ? 0 : peak * Math.exp(-(t - start) / fade))),
-  );
-
-function videoTime(s: number) {
-  if (s <= VIDEO_KEYS[0][0]) return VIDEO_KEYS[0][1];
-  for (let i = 1; i < VIDEO_KEYS.length; i++) {
-    const [s1, t1] = VIDEO_KEYS[i];
+function sceneTime(s: number) {
+  if (s <= SCENE_KEYS[0][0]) return SCENE_KEYS[0][1];
+  for (let i = 1; i < SCENE_KEYS.length; i++) {
+    const [s1, t1] = SCENE_KEYS[i];
     if (s <= s1) {
-      const [s0, t0] = VIDEO_KEYS[i - 1];
+      const [s0, t0] = SCENE_KEYS[i - 1];
       return t0 + ((s - s0) / (s1 - s0)) * (t1 - t0);
     }
   }
-  return VIDEO_KEYS[VIDEO_KEYS.length - 1][1];
+  return SCENE_KEYS[SCENE_KEYS.length - 1][1];
 }
 
 /**
@@ -85,8 +91,8 @@ export function StoryScene({
   video: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const target = useRef(0); // video time the scroll asks for
-  const shown = useRef(0); // video time on screen, easing towards the target
+  const target = useRef(0); // scene time the scroll asks for
+  const shown = useRef(0); // scene time on screen, easing towards the target
   const ease = useRef<() => void>(() => {});
   const written = useRef(""); // panel positions last written, to tell the timeline
 
@@ -106,10 +112,9 @@ export function StoryScene({
       const goal = target.current;
       const next = shown.current + (goal - shown.current) * 0.2;
       shown.current = Math.abs(goal - next) < 0.004 ? goal : next;
-      const flash = flashAt(shown.current);
-      ref.current?.style.setProperty("--flash", flash < 0.01 ? "0" : flash.toFixed(3));
+      const time = sceneToVideo(shown.current);
       if (video.readyState >= 1 && !video.seeking) {
-        if (Math.abs(video.currentTime - shown.current) > 0.01) video.currentTime = shown.current;
+        if (Math.abs(video.currentTime - time) > 0.01) video.currentTime = time;
       }
       if (shown.current !== goal || video.seeking) frame = requestAnimationFrame(tick);
     };
@@ -172,7 +177,7 @@ export function StoryScene({
 
     const s = ((innerHeight - rootTop) / innerHeight) * 100;
     if (s > -60) load();
-    target.current = videoTime(s);
+    target.current = sceneTime(s);
     ease.current();
 
     const positions: string[] = [];

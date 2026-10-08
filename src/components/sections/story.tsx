@@ -25,7 +25,7 @@ function Heading({ id, eyebrow, title }: { id: string; eyebrow: string; title: s
 
 /**
  * About and Journey as one scene with Killua (Hunter × Hunter). On large screens the video
- * is pinned and the scroll plays it: his eyes in the dark, a flash, then lightning in his
+ * is pinned and the scroll plays it: his eyes in the dark, he lights up, then lightning in his
  * right hand brings out the About panel, which stays; lightning in his left hand brings
  * out the Journey panel next to it. StoryScene drives it. On phones (and with reduced
  * motion) it is a still picture followed by the two panels.
@@ -99,7 +99,6 @@ export function Story({
           <div aria-hidden="true" className="story-petals absolute inset-0">
             <FallingPetals />
           </div>
-          <div aria-hidden="true" className="story-flash" />
 
           <div className="story-panels page-wrap">
             <div data-panel="" className="story-panel story-panel-about">

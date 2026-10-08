@@ -24,13 +24,19 @@ export function SectionNav({ links, label }: { links: NavLink[]; label: string }
 
     // A thin band across the middle of the screen: the section crossing it is "current".
     const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setSpy({ path: pathname, id: entry.target.id === "top" ? null : entry.target.id });
+      (entries) =>
+        setSpy((previous) => {
+          let id = previous.path === pathname ? previous.id : null;
+          // A section that leaves the band stops being current, even if no other one
+          // enters it (after a jump, or in the Killua scene's intro before About).
+          for (const entry of entries) {
+            if (!entry.isIntersecting && entry.target.id === id) id = null;
           }
-        }
-      },
+          for (const entry of entries) {
+            if (entry.isIntersecting) id = entry.target.id === "top" ? null : entry.target.id;
+          }
+          return { path: pathname, id };
+        }),
       { rootMargin: "-45% 0px -50% 0px" },
     );
     targets.forEach((target) => observer.observe(target));

@@ -398,13 +398,7 @@
 .story-petals {
   opacity: 0.7;
 }
-/* Full-stage light for the video's flashes (scene only, see below). */
-.story-flash {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  display: none;
-}
+
 .story-panels {
   position: relative;
   display: grid;
@@ -463,8 +457,7 @@
     display: none;
   }
   /* The top (hair cut by the video's edge) and the bottom fade out; the black sides blend
-     into the background (lighten). During the video's flashes, .story-flash lights the
-     whole stage, so the edges never show. */
+     into the background (lighten). The video's flashes are skipped (StoryScene). */
   .js .story-video {
     display: block;
     width: 100%;
@@ -474,15 +467,6 @@
       linear-gradient(to bottom, transparent, #000 22%, #000 84%, transparent),
       linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
     mask-composite: intersect;
-  }
-  /* Lavender light, as bright as the video's flash (--flash). `lighten` keeps the brighter
-     of the two at each point, so inside and outside the video come out the same color. */
-  .js .story-flash {
-    display: block;
-    background: rgb(
-      calc(216 * var(--flash, 0)) calc(204 * var(--flash, 0)) calc(240 * var(--flash, 0))
-    );
-    mix-blend-mode: lighten;
   }
 
   /* Menu markers: where each panel is fully out (see the script in StoryScene). A link
