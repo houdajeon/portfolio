@@ -18,7 +18,7 @@ export function Logo() {
 
 export function Header({ locale, dict }: { locale: Locale; dict: Messages }) {
   const home = localePath(locale);
-  const sections = ["about", "skills", "projects", "journey", "community", "contact"] as const;
+  const sections = ["about", "journey", "skills", "projects", "community", "contact"] as const;
   const links = sections.map((id) => ({ id, href: `${home}#${id}`, label: dict.nav[id] }));
 
   return (
