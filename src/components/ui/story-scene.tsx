@@ -40,6 +40,23 @@ const PANELS = [
 ];
 const ABOUT_LIT = [240, 360];
 
+/**
+ * The video's own flashes (start, strength, fade time in seconds), measured from its
+ * frames: the whole picture turns light, then fades out quickly. The scene lights the whole
+ * stage the same way (--flash), a little stronger and longer than the video, so the light
+ * covers the video's edges instead of stopping at them.
+ */
+const FLASHES = [
+  [4.2, 0.72, 0.2],
+  [5.7, 0.53, 0.15],
+  [8.0, 1, 0.2],
+];
+const flashAt = (t: number) =>
+  Math.max(
+    0,
+    ...FLASHES.map(([start, peak, fade]) => (t < start ? 0 : peak * Math.exp(-(t - start) / fade))),
+  );
+
 function videoTime(s: number) {
   if (s <= VIDEO_KEYS[0][0]) return VIDEO_KEYS[0][1];
   for (let i = 1; i < VIDEO_KEYS.length; i++) {
@@ -89,6 +106,8 @@ export function StoryScene({
       const goal = target.current;
       const next = shown.current + (goal - shown.current) * 0.2;
       shown.current = Math.abs(goal - next) < 0.004 ? goal : next;
+      const flash = flashAt(shown.current);
+      ref.current?.style.setProperty("--flash", flash < 0.01 ? "0" : flash.toFixed(3));
       if (video.readyState >= 1 && !video.seeking) {
         if (Math.abs(video.currentTime - shown.current) > 0.01) video.currentTime = shown.current;
       }

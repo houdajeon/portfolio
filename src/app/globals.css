@@ -398,6 +398,13 @@
 .story-petals {
   opacity: 0.7;
 }
+/* Full-stage light for the video's flashes (scene only, see below). */
+.story-flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: none;
+}
 .story-panels {
   position: relative;
   display: grid;
@@ -436,21 +443,46 @@
     position: sticky;
     top: 0;
     height: 100dvh;
+    background: var(--bg);
   }
+  /* Killua in the middle, between the panels, and never wider than the video itself
+     (1280 px), so the browser never upscales it and it stays sharp. */
   .js .story-media {
     position: absolute;
-    inset: 0;
+    top: calc(50% + 2rem);
+    left: 50%;
+    width: min(64vw, 1280px, calc((100dvh - 6rem) * 16 / 9));
+    aspect-ratio: 16 / 9;
     max-width: none;
     margin: 0;
+    translate: -50% -50%;
+    /* `translate` makes this box its own layer, so the blend is set here, on the layer. */
+    mix-blend-mode: lighten;
   }
   .js .story-poster {
     display: none;
   }
+  /* The top (hair cut by the video's edge) and the bottom fade out; the black sides blend
+     into the background (lighten). During the video's flashes, .story-flash lights the
+     whole stage, so the edges never show. */
   .js .story-video {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    mix-blend-mode: normal;
+    mask-image:
+      linear-gradient(to bottom, transparent, #000 22%, #000 84%, transparent),
+      linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+    mask-composite: intersect;
+  }
+  /* Lavender light, as bright as the video's flash (--flash). `lighten` keeps the brighter
+     of the two at each point, so inside and outside the video come out the same color. */
+  .js .story-flash {
+    display: block;
+    background: rgb(
+      calc(216 * var(--flash, 0)) calc(204 * var(--flash, 0)) calc(240 * var(--flash, 0))
+    );
+    mix-blend-mode: lighten;
   }
 
   /* Menu markers: where each panel is fully out (see the script in StoryScene). A link
@@ -464,7 +496,7 @@
     height: calc(280vh - 5rem);
   }
 
-  /* About on the right, over the hand that fires first; Journey on the left. Each panel
+  /* About on the right, beside the hand that fires first; Journey on the left. Each panel
      is a window: long text scrolls inside it (StoryScene moves .story-content). */
   .js .story-panels {
     position: absolute;
@@ -491,13 +523,13 @@
   }
   .js .story-panel-about {
     right: 2rem;
-    --origin: 5% 62%;
-    --from-x: -90px;
+    --origin: 0% 60%;
+    --from-x: -140px;
   }
   .js .story-panel-journey {
     left: 2rem;
-    --origin: 85% 88%;
-    --from-x: 90px;
+    --origin: 100% 75%;
+    --from-x: 140px;
   }
   .js .story-card {
     max-height: 100%;

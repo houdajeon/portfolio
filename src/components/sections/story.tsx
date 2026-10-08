@@ -99,6 +99,7 @@ export function Story({
           <div aria-hidden="true" className="story-petals absolute inset-0">
             <FallingPetals />
           </div>
+          <div aria-hidden="true" className="story-flash" />
 
           <div className="story-panels page-wrap">
             <div data-panel="" className="story-panel story-panel-about">
