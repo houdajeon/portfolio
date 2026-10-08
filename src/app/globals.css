@@ -361,130 +361,73 @@
 }
 
 /* ---------- Killua scene (Story + StoryScene) ----------
-   Base rules = the plain version (phones, reduced motion, no JavaScript): the picture on
-   top, then the About and Journey panels, everything visible. The scene itself only runs
-   on large screens with motion allowed (media query below): the picture is pinned and the
-   scroll plays these steps, each a 0 → 1 variable set by StoryScene:
-   --eyes (eyes glow in the dark), --flash, --reveal (Killua appears), then per hand
-   --h1/--h2 (charge + bolts), --f1/--f2 (flash), and --e on each panel (comes out). */
+   Base rules = the plain version (phones, reduced motion, no JavaScript): a still frame
+   of the video, then the About and Journey panels. On large screens with motion allowed
+   (media query below) the scene is 660vh tall and its stage is pinned: StoryScene plays
+   the video with the scroll and sets --e (0 → 1) on each panel as it comes out of a hand. */
 
+.story-mark {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  pointer-events: none;
+}
 .story-stage {
   position: relative;
   overflow: clip;
-  padding-top: 3rem;
 }
-.story-aura {
-  background:
-    radial-gradient(60% 55% at 50% 62%, rgb(124 58 237 / 0.28), transparent 70%),
-    radial-gradient(40% 35% at 50% 30%, rgb(192 132 252 / 0.12), transparent 70%);
-}
-.story-figure {
+.story-media {
   position: relative;
-  width: min(100%, 44rem);
+  max-width: 64rem;
   margin-inline: auto;
 }
-.story-killua {
-  filter: drop-shadow(0 0 28px rgb(168 85 247 / 0.35));
+/* The video's background is pure black: `lighten` lets the page background show there,
+   so there is no visible rectangle around Killua. */
+.story-poster,
+.story-video {
+  mix-blend-mode: lighten;
 }
-/* Glowing eyes (like the eyes in the dark at the start of the scene). */
-.story-eye {
-  position: absolute;
-  width: 5.5%;
-  aspect-ratio: 1;
-  translate: -50% -50%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    #fff 0%,
-    rgb(216 180 254 / 0.95) 18%,
-    rgb(168 85 247 / 0.5) 45%,
-    transparent 70%
-  );
-  mix-blend-mode: screen;
-  pointer-events: none;
-  opacity: 0.45;
-  animation: eye-pulse 2.6s ease-in-out infinite alternate;
+.story-poster {
+  display: block;
+  width: 100%;
+  height: auto;
 }
-@keyframes eye-pulse {
-  from {
-    scale: 0.85;
-  }
-  to {
-    scale: 1.15;
-  }
+.story-video {
+  display: none;
 }
-/* Light gathering in each hand. */
-.story-hand {
-  position: absolute;
-  width: 26%;
-  aspect-ratio: 1;
-  translate: -50% -50%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    #fff 0%,
-    rgb(216 180 254 / 0.8) 12%,
-    rgb(147 51 234 / 0.35) 38%,
-    transparent 68%
-  );
-  mix-blend-mode: screen;
-  pointer-events: none;
-  opacity: 0.35;
+.story-petals {
+  opacity: 0.7;
 }
-.story-bolts {
-  filter: drop-shadow(0 0 4px #c084fc) drop-shadow(0 0 14px #7e22ce);
-}
-.bolts {
-  opacity: 0;
-}
-.story-flash,
-.story-flash-1,
-.story-flash-2 {
-  pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: 0;
-}
-.story-flash {
-  background: radial-gradient(
-    circle at 50% 38%,
-    rgb(250 245 255 / 0.95),
-    rgb(192 132 252 / 0.6) 25%,
-    rgb(91 33 182 / 0.25) 50%,
-    transparent 75%
-  );
-}
-.story-flash-1 {
-  background: radial-gradient(circle at 30% 82%, rgb(216 180 254 / 0.6), transparent 55%);
-}
-.story-flash-2 {
-  background: radial-gradient(circle at 70% 64%, rgb(216 180 254 / 0.6), transparent 55%);
-}
-.story-flow {
+.story-panels {
+  position: relative;
   display: grid;
   gap: 2.5rem;
-  padding-block: 3rem 5rem;
-}
-.story-spacer {
-  display: none;
+  padding-block: 1rem 5rem;
 }
 .story-card {
   position: relative;
   border: 1px solid var(--line);
   border-radius: 1rem;
-  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
   backdrop-filter: blur(12px);
-  padding: 1.5rem;
   box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.7);
 }
+/* The padding is on the content (not the card) so that, in the scene, the text that
+   scrolls inside the card is measured with its padding. */
+.story-content {
+  padding: 1.5rem;
+}
 @media (width >= 40rem) {
-  .story-card {
+  .story-content {
     padding: 2rem;
   }
 }
 
 @media (min-width: 64rem) and (min-height: 38rem) and (prefers-reduced-motion: no-preference) {
-  /* The picture sits in a full-screen stage pinned behind the panels: the backdrop spans
-     the whole scene and the stage sticks to the top of the screen inside it. */
+  /* The stage sticks to the top of the screen inside a backdrop that spans the scene. */
+  .js .story {
+    height: 660vh;
+  }
   .js .story-backdrop {
     position: absolute;
     inset: 0;
@@ -493,132 +436,104 @@
     position: sticky;
     top: 0;
     height: 100dvh;
-    padding-top: 0;
   }
-  .js .story-figure {
+  .js .story-media {
     position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: min(94vw, calc(76dvh * 736 / 494));
+    inset: 0;
+    max-width: none;
     margin: 0;
-    translate: -50% 0;
   }
-  .js .story-flow {
+  .js .story-poster {
+    display: none;
+  }
+  .js .story-video {
     display: block;
-    padding-block: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
-  .js .story-spacer {
+
+  /* Menu markers: where each panel is fully out (see the script in StoryScene). A link
+     lands 5rem below the marker's top, so the marker sits 5rem lower. */
+  .js .story-mark-about {
+    top: calc(145vh + 5rem);
+    height: 235vh;
+  }
+  .js .story-mark-journey {
+    top: calc(380vh + 5rem);
+    height: calc(280vh - 5rem);
+  }
+
+  /* About on the right, over the hand that fires first; Journey on the left. Each panel
+     is a window: long text scrolls inside it (StoryScene moves .story-content). */
+  .js .story-panels {
+    position: absolute;
+    inset: 0;
     display: block;
+    max-width: none;
+    margin: 0;
+    padding: 0;
   }
-  .js .story-spacer-intro {
-    height: 155vh;
-  }
-  .js .story-spacer-gap {
-    height: 60vh;
-  }
-  .js .story-spacer-end {
-    height: 45vh;
-  }
-
-  /* 1. In the dark, only the eyes; then the flash, and Killua comes out of the light. */
-  .js .story-aura,
-  .js .story-petals {
-    opacity: calc(0.15 + 0.85 * var(--reveal, 0));
-  }
-  .js .story-killua {
-    filter: brightness(calc(0.03 + 0.97 * var(--reveal, 0) + 0.5 * var(--flash, 0)))
-      drop-shadow(0 0 28px rgb(168 85 247 / calc(0.4 * var(--reveal, 0))));
-    /* A faint shadow in the dark (only the eyes really show), then the full picture. */
-    opacity: calc(0.3 + 0.7 * var(--reveal, 0));
-    scale: calc(1.06 - 0.06 * var(--reveal, 0));
-    translate: 0 calc((1 - var(--reveal, 0)) * 3%);
-    transform-origin: 50% 100%;
-  }
-  .js .story-eye {
-    opacity: calc(var(--eyes, 0) * (1 - 0.55 * var(--reveal, 0)));
-  }
-  .js .story-flash {
-    opacity: var(--flash, 0);
-  }
-
-  /* 2. A hand charges, its bolts leave towards its panel, a flash on that side. */
-  .js .story-hand-1 {
-    opacity: calc(0.3 * var(--reveal, 0) + 0.7 * var(--h1, 0));
-    scale: calc(0.6 + 0.7 * var(--h1, 0) + 0.4 * var(--f1, 0));
-  }
-  .js .story-hand-2 {
-    opacity: calc(0.3 * var(--reveal, 0) + 0.7 * var(--h2, 0));
-    scale: calc(0.6 + 0.7 * var(--h2, 0) + 0.4 * var(--f2, 0));
-  }
-  .js .bolts-1 {
-    --h: var(--h1, 0);
-  }
-  .js .bolts-2 {
-    --h: var(--h2, 0);
-  }
-  .js .bolts {
-    opacity: min(1, calc(var(--h) * 6));
-  }
-  /* Each bolt is drawn from the hand outwards, a little after the previous one (--b). */
-  .js .bolt path {
-    stroke-dasharray: 1;
-    stroke-dashoffset: calc(1 - clamp(0, var(--h) * 1.6 - var(--b) * 0.1, 1));
-  }
-  .js .bolt {
-    animation: flicker calc(1.6s + var(--b) * 0.37s) steps(1) infinite;
-  }
-  .js .story-flash-1 {
-    opacity: var(--f1, 0);
-  }
-  .js .story-flash-2 {
-    opacity: var(--f2, 0);
-  }
-
-  /* 3. Each panel grows out of the light on its hand's side: small, blurred and shifted
-     towards the hand, then full size and sharp. It glows while it is coming out. */
   .js .story-panel {
-    position: relative;
-    max-width: 27rem;
-    opacity: min(1, calc(var(--e, 1) * 2.2));
-    scale: calc(0.62 + 0.38 * var(--e, 1));
-    translate: calc((1 - var(--e, 1)) * var(--from-x)) calc((1 - var(--e, 1)) * 90px);
+    position: absolute;
+    top: 4.75rem;
+    bottom: 1.5rem;
+    width: min(24rem, 30vw);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Comes out of the hand: small, blurred and shifted towards it, then full and sharp. */
+    opacity: min(1, calc(var(--e, 0) * 2.2));
+    scale: calc(0.55 + 0.45 * var(--e, 0));
+    translate: calc((1 - var(--e, 0)) * var(--from-x)) 0;
     filter: var(--emerge-filter, none);
     transform-origin: var(--origin);
   }
-  .js .story-panel-1 {
-    --origin: 85% 100%;
-    --from-x: 140px;
-    margin-right: auto;
+  .js .story-panel-about {
+    right: 2rem;
+    --origin: 5% 62%;
+    --from-x: -90px;
   }
-  .js .story-panel-2 {
-    --origin: 15% 100%;
-    --from-x: -140px;
-    margin-left: auto;
+  .js .story-panel-journey {
+    left: 2rem;
+    --origin: 85% 88%;
+    --from-x: 90px;
   }
-  .js .story-panel .story-card {
+  .js .story-card {
+    max-height: 100%;
+    overflow: hidden;
+    /* Glows while it is coming out of the light. */
     box-shadow:
       0 30px 80px -30px rgb(0 0 0 / 0.7),
-      0 0 calc(var(--e, 1) * (1 - var(--e, 1)) * 4 * 90px)
-        calc(var(--e, 1) * (1 - var(--e, 1)) * 4 * 6px) rgb(168 85 247 / 0.45);
+      0 0 calc(var(--e, 0) * (1 - var(--e, 0)) * 4 * 90px)
+        calc(var(--e, 0) * (1 - var(--e, 0)) * 4 * 6px) rgb(168 85 247 / 0.5);
   }
-}
-
-@keyframes flicker {
-  0%,
-  100% {
-    opacity: 1;
+  .js .story-card h2 {
+    font-size: 1.75rem;
   }
-  8% {
-    opacity: 0.45;
+  /* Soft top / bottom edges while some text is hidden there (data-fade from StoryScene). */
+  .js .story-card::before,
+  .js .story-card::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    z-index: 1;
+    height: 3rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
-  11% {
-    opacity: 1;
+  .js .story-card::before {
+    top: 0;
+    background: linear-gradient(var(--surface), transparent);
   }
-  52% {
-    opacity: 0.7;
+  .js .story-card::after {
+    bottom: 0;
+    background: linear-gradient(transparent, var(--surface));
   }
-  55% {
-    opacity: 1;
+  .js .story-panel[data-fade~="top"] .story-card::before,
+  .js .story-panel[data-fade~="bottom"] .story-card::after {
+    opacity: 0.95;
   }
 }
 

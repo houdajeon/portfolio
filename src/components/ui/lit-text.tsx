@@ -17,6 +17,8 @@ export function LitText({ paragraphs, className }: { paragraphs: string[]; class
   useScrollFrame(() => {
     const block = ref.current;
     if (!block || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Inside the pinned Killua scene (StoryScene), the scene sets --lit itself.
+    if (block.closest("[data-scene]")) return;
     const { top, height } = block.getBoundingClientRect();
     // 0 when the top of the block reaches 85% of the screen height, 1 when its bottom
     // reaches 45%: the words light up while the text crosses the middle of the screen.

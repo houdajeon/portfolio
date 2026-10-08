@@ -22,7 +22,11 @@ export function Timeline({ steps }: { steps: Step[] }) {
 
     // Every position is read before the style write below: reading after a write would
     // force the browser to recompute the layout a second time in the same frame.
-    const readingLine = window.innerHeight * 0.6;
+    // Inside the pinned Killua scene the list does not move on screen, so the scene gives
+    // the line (data-reading-line, in px from the top of the screen).
+    const readingLine = element.dataset.readingLine
+      ? Number(element.dataset.readingLine)
+      : window.innerHeight * 0.6;
     const rect = element.getBoundingClientRect();
     let last = -1;
     element.querySelectorAll<HTMLElement>("[data-dot]").forEach((dot, index) => {
