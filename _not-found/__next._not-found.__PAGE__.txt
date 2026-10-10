@@ -1,0 +1,23 @@
+1:"$Sreact.fragment"
+2:I[97367,["/portfolio/_next/static/chunks/1mpnoxox0-4cg.js"],"OutletBoundary"]
+3:"$Sreact.suspense"
+7:I[97367,["/portfolio/_next/static/chunks/1mpnoxox0-4cg.js"],"ViewportBoundary"]
+8:I[97367,["/portfolio/_next/static/chunks/1mpnoxox0-4cg.js"],"MetadataBoundary"]
+9:I[27201,["/portfolio/_next/static/chunks/1mpnoxox0-4cg.js"],"IconMark"]
+b:I[39756,["/portfolio/_next/static/chunks/1mpnoxox0-4cg.js"],"default"]
+c:I[37457,["/portfolio/_next/static/chunks/1mpnoxox0-4cg.js"],"default"]
+f:I[22016,["/portfolio/_next/static/chunks/1mpnoxox0-4cg.js"],""]
+:HL["/portfolio/_next/static/chunks/3lx10y8cm215t.css","style"]
+6:X
+e:X
+e:C
+0:{"buildId":"vGED2i9IH7nURF6Y92XxS","data":[{"rsc":["$","$1","c",{"children":[null,null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"isPartial":"$@5","staleTime":"$6","varyParams":null},{"rsc":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L7",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L8",null,{"children":["$","$3",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"404 · Houda Hdili"}],["$","link","1",{"rel":"icon","href":"/portfolio/icon.svg?icon.0yie6zqql6-mk.svg","sizes":"any","type":"image/svg+xml"}],["$","$L9","2",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":"$@a","staleTime":"$6","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Lb",null,{"parallelRouterKey":"children","template":["$","$Lc",null,{}]}]]}],"isPartial":"$@d","staleTime":"$6","varyParams":"$e"},{"rsc":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/portfolio/_next/static/chunks/3lx10y8cm215t.css","precedence":"next"}],["$","script","script-0",{"src":"/portfolio/_next/static/chunks/1mpnoxox0-4cg.js","async":true}]],["$","html",null,{"lang":"en","className":"archivo_aefddf3b-module__UOsvBW__variable jetbrains_mono_37bfeb3d-module__XzirBW__variable dark","data-scroll-behavior":"smooth","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){var r=document.documentElement;r.classList.add('js');try{var t=localStorage.getItem('theme');r.classList.toggle('dark',t!=='light');}catch(e){}})();"}}]}],["$","body",null,{"className":"min-h-dvh font-sans antialiased","children":["$","main",null,{"className":"grid min-h-dvh place-items-center px-4","children":["$","div",null,{"className":"w-full max-w-lg","children":[["$","div",null,{"className":"rounded-xl border border-line bg-surface p-5 font-mono text-[13px] leading-relaxed","children":[["$","p",null,{"aria-hidden":"true","children":[["$","span",null,{"className":"text-ok","children":"houda"}],["$","span",null,{"className":"text-muted","children":":~"}],["$","span",null,{"className":"text-accent-text","children":"$$"}]," ",["$","span",null,{"className":"text-fg","children":"curl -I this-page"}]]}],["$","p",null,{"children":["HTTP/1.1 ",["$","span",null,{"className":"text-accent-text","children":"404 Not Found"}]]}]]}],["$","h1",null,{"className":"mt-8 text-3xl font-extrabold tracking-tight stretch-wide","children":"This page doesn't exist."}],["$","p",null,{"lang":"fr","className":"mt-2 text-lg text-muted","children":"Cette page n'existe pas."}],["$","div",null,{"className":"mt-8 flex flex-wrap gap-3","children":[["$","$Lf",null,{"href":"/en/","className":"inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-semibold transition active:translate-y-px bg-accent text-on-accent hover:brightness-110","children":"Home"}],["$","$Lf",null,{"href":"/fr/","lang":"fr","className":"inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-semibold transition active:translate-y-px border border-line bg-surface text-fg hover:border-muted","children":"Accueil"}]]}]]}]}]}]]}]]}],"isPartial":"$@10","staleTime":"$6","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@11","rootVaryParams":null,"needsRuntimeRequest":"$@12"}
+4:null
+6:300
+12:true
+6:C
+11:0
+a:"$undefined"
+d:"$undefined"
+10:"$undefined"
+5:"$undefined"
