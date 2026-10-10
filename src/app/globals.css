@@ -109,11 +109,15 @@
   box-shadow: 0 22px 50px -24px color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
-/* The hero's gradient pill: violet → magenta → orange, wider than the button so it can slide. */
+/* The hero's gradient pill: soft pinks, like the petals, wider than the button so it can slide.
+   Its dark plum text (button-styles.ts) reads on every part of it. */
 @utility bg-bloom {
-  background-image: linear-gradient(90deg, #2e1065, #6d28d9 30%, #a21caf 60%, #db2777 85%, #f97316);
+  background-image: linear-gradient(90deg, #fce7f3, #fbcfe8 30%, #f9a8d4 65%, #f472b6);
   background-size: 125% 100%;
   background-position: left;
+}
+@utility shadow-bloom {
+  box-shadow: 0 22px 50px -24px rgb(244 114 182 / 0.7);
 }
 
 /* ---------- Motion ----------

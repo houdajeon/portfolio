@@ -2,37 +2,25 @@ import Link from "next/link";
 import { projectPath, type Locale } from "@/i18n/config";
 import type { Messages } from "@/i18n/dictionaries";
 import { skillLevelSchema, type SkillLevel, type SkillsData } from "@/lib/schemas";
-import type { FlowerType } from "@/components/garden/defs";
-import { Flower } from "@/components/garden/flower";
 import { TermVine } from "@/components/garden/term-vine";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { Cursor, Prompt, row, TerminalWindow } from "@/components/ui/terminal";
 
-// Status colors read like a cluster dashboard: green = in use, accent = familiar, amber =
-// learning. The mark is a flower: open when the skill is used in a project, still a bud
-// when it is only familiar or being learned.
-const statusStyle: Record<SkillLevel, { flower: FlowerType; text: string }> = {
-  used: { flower: "bl-pink", text: "text-ok" },
-  familiar: { flower: "bud-violet", text: "text-accent-text" },
-  learning: { flower: "bud-plum", text: "text-todo" },
+// Status colors read like a cluster dashboard: green = in use, accent = familiar, amber = learning.
+const statusStyle: Record<SkillLevel, { mark: string; text: string }> = {
+  used: { mark: "bg-ok", text: "text-ok" },
+  familiar: { mark: "bg-accent", text: "text-accent-text" },
+  learning: { mark: "bg-todo", text: "text-todo" },
 };
 
-/** The status label with its flower, which opens `delay` ms after its block shows. */
-function Status({
-  level,
-  label,
-  size = 16,
-  delay = 0,
-}: {
-  level: SkillLevel;
-  label: string;
-  size?: number;
-  delay?: number;
-}) {
+function Status({ level, label }: { level: SkillLevel; label: string }) {
   return (
     <span className={`inline-flex items-center gap-2 whitespace-nowrap ${statusStyle[level].text}`}>
-      <Flower type={statusStyle[level].flower} size={size} delay={delay} />
+      <span
+        aria-hidden="true"
+        className={`size-2.5 shrink-0 rounded-[3px] ${statusStyle[level].mark}`}
+      />
       {label}
     </span>
   );
@@ -69,9 +57,9 @@ export function Skills({
           aria-label={t.legend}
           className="mb-10 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs"
         >
-          {levels.map((level, index) => (
+          {levels.map((level) => (
             <li key={level}>
-              <Status level={level} label={t.levels[level]} size={18} delay={500 + index * 150} />
+              <Status level={level} label={t.levels[level]} />
             </li>
           ))}
         </ul>
@@ -117,12 +105,7 @@ export function Skills({
                       </span>
                       {item.name}
                     </span>
-                    {/* Opens just after its row has printed (see .term-row). */}
-                    <Status
-                      level={item.level}
-                      label={t.status[item.level]}
-                      delay={(index + 3) * 45 + 380}
-                    />
+                    <Status level={item.level} label={t.status[item.level]} />
                     <span className="col-span-2 mt-0.5 text-xs text-muted sm:col-span-1 sm:mt-0">
                       {item.projects.length > 0 || item.note ? (
                         <span className="flex flex-wrap gap-x-3 gap-y-0.5">

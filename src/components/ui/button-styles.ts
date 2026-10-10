@@ -10,7 +10,7 @@ export const buttonStyles = {
   primary: `${base} bg-accent text-on-accent hover:brightness-110`,
   ghost: `${base} border border-line bg-surface text-fg hover:border-muted`,
   /** Gradient pill for the main call to action; the gradient slides on hover. */
-  bloom: `${pillBase} bg-bloom text-white ring-1 ring-accent/60 hover:bg-right hover:shadow-glow`,
+  bloom: `${pillBase} bg-bloom text-[#500724] ring-1 ring-pink-300/60 hover:bg-right hover:shadow-bloom`,
   pill: `${pillBase} border border-line text-fg hover:border-muted`,
   /** Square, borderless: header controls (theme, menu). */
   icon: "grid size-9 place-items-center rounded-md text-muted transition hover:bg-raised hover:text-fg",
