@@ -1,7 +1,9 @@
 import type { ComponentType } from "react";
 import type { Vibe } from "@/lib/schemas";
+import { ApiHero } from "./api";
 import { BlogHero } from "./blog";
 import { ClusterHero } from "./cluster";
+import { CloudHero } from "./cloud";
 import { ContainersHero } from "./containers";
 import { GameHero } from "./game";
 import { HttpHero } from "./http";
@@ -16,9 +18,9 @@ export { vibeFont } from "./fonts";
 
 /**
  * Each case study looks like the thing it is about: a game for Bomberman, a blog article for
- * 01Blog, a terminal for the shell... The header is drawn by the vibe's own component; the
- * rest of the page keeps one structure and is restyled by vibes.css ([data-vibe] on the
- * article), which also redefines the color tokens so every part follows the vibe.
+ * 01Blog, a terminal for the shell... in the colors of the rest of the site. The header is
+ * drawn by the vibe's own component; the rest of the page is the same list of cards for every
+ * project, restyled by vibes.css ([data-vibe] on the article).
  */
 const HEROES: Record<Vibe, ComponentType<HeroProps>> = {
   social: SocialHero,
@@ -30,6 +32,8 @@ const HEROES: Record<Vibe, ComponentType<HeroProps>> = {
   containers: ContainersHero,
   server: ServerHero,
   network: NetworkHero,
+  api: ApiHero,
+  cloud: CloudHero,
 };
 
 export function VibeHero(props: HeroProps) {

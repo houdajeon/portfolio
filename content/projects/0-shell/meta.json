@@ -1,5 +1,5 @@
 {
-  "order": 5,
+  "order": 4,
   "vibe": "shell",
   "categories": ["systems"],
   "stack": ["Rust", "Unix system calls", "libc", "rustyline", "Cargo"],

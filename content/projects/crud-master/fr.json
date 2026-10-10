@@ -1,0 +1,39 @@
+{
+  "title": "CRUD Master",
+  "tagline": "Une plateforme de films découpée en trois microservices Python sur trois VM Vagrant : une API gateway, une API d'inventaire en HTTP et une API de facturation alimentée par RabbitMQ.",
+  "summary": "Le backend d'une petite plateforme de streaming de films, construit en microservices. Une API gateway est le point d'entrée unique : elle transmet les requêtes `/api/movies` à l'API d'inventaire en HTTP, et publie les commandes de facturation dans une file RabbitMQ que l'API de facturation consomme. Les deux API sont écrites en Python avec Flask, chacune avec sa propre base PostgreSQL, et chaque service tourne dans sa propre machine virtuelle créée par Vagrant.",
+  "problem": "Découper une application en services indépendants qui communiquent de deux façons : un appel HTTP direct pour l'inventaire, et une file de messages asynchrone pour la facturation, pour qu'aucune commande ne soit perdue même quand l'API de facturation est arrêtée.",
+  "role": "Équipe de 2. [TODO: ce que tu as réalisé, par exemple la gateway, l'API d'inventaire, le consommateur de facturation ou l'installation Vagrant]",
+  "features": [
+    "API d'inventaire : un CRUD REST sur `/api/movies` et `/api/movies/<id>` (GET, POST, PUT, DELETE), avec recherche par titre",
+    "API de facturation : lit les commandes JSON de `billing_queue`, les enregistre dans la table `orders`, puis acquitte chaque message",
+    "API gateway : transmet `/api/movies` à l'API d'inventaire en HTTP et publie `POST /api/billing` dans RabbitMQ",
+    "Trois VM lancées avec un seul `vagrant up` : gateway-vm, inventory-vm et billing-vm",
+    "Tous les identifiants dans un seul fichier `.env`, transmis aux services par Vagrant, aucun écrit dans le code",
+    "Services gérés avec PM2, tests Postman pour chaque endpoint, et un fichier OpenAPI pour la gateway"
+  ],
+  "challenges": [
+    {
+      "title": "Aucune commande perdue quand la facturation est arrêtée",
+      "problem": "La gateway doit accepter les commandes même quand l'API de facturation est arrêtée, et elles doivent être enregistrées dès son retour.",
+      "solution": "La gateway se contente de publier la commande dans RabbitMQ et répond tout de suite. Les commandes attendent dans `billing_queue`, et l'API de facturation n'acquitte un message qu'une fois enregistré : tout ce qui est en attente est traité à son redémarrage. Nous l'avons testé avec `pm2 stop` et `pm2 start`. [TODO: confirmer, et ajouter comment la file survit à un redémarrage de RabbitMQ, par exemple des files durables]"
+    },
+    {
+      "title": "Deux façons de communiquer",
+      "problem": "L'inventaire a besoin d'une réponse immédiate, alors que la facturation peut se faire un peu plus tard.",
+      "solution": "HTTP pour l'API d'inventaire, dont la gateway renvoie la réponse telle quelle, et une file de messages pour la facturation : la gateway n'attend jamais le traitement d'un paiement."
+    },
+    {
+      "title": "Une seule configuration pour trois machines",
+      "problem": "Les noms de bases, utilisateurs, mots de passe et URL sont nécessaires sur trois VM différentes.",
+      "solution": "Un seul fichier `.env` lu par le Vagrantfile, qui transmet les valeurs à chaque VM et à chaque service, et des scripts d'installation dans `scripts/` qui installent les outils et créent les bases."
+    }
+  ],
+  "learned": [
+    "Concevoir des microservices autour d'une API gateway",
+    "Quand utiliser un appel HTTP direct et quand utiliser une file asynchrone",
+    "Acquitter des messages RabbitMQ avec `pika`",
+    "Écrire une API CRUD REST avec Flask et SQLAlchemy sur PostgreSQL",
+    "Des environnements reproductibles avec Vagrant et des scripts d'installation"
+  ]
+}

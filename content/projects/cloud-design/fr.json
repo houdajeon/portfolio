@@ -1,0 +1,41 @@
+{
+  "title": "Cloud Design",
+  "tagline": "Les microservices de mes projets précédents, conçus et déployés sur AWS avec Terraform : conteneurs, répartition de charge, autoscaling, monitoring et un réseau privé pour les données.",
+  "summary": "Le dernier projet du parcours DevOps. Les six services construits dans CRUD Master, Play with Containers et Orchestrator (une API gateway, les applications d'inventaire et de facturation, deux bases PostgreSQL et RabbitMQ) sont déployés sur Amazon Web Services. L'infrastructure est écrite en code avec Terraform, les services tournent en conteneurs Docker derrière un répartiteur de charge et s'adaptent à la charge, et les bases ne sont accessibles que depuis le VPC. [TODO: ECS ou EKS, et les principaux services AWS choisis]",
+  "problem": "Prendre une application qui tournait sur des VM locales et lui concevoir une architecture cloud qui monte en charge, reste disponible, est sécurisée et coûte peu, puis défendre chaque choix lors d'un jeu de rôle où les auditeurs jouent l'équipe ou un client.",
+  "role": "Équipe de 2. [TODO: ce que tu as réalisé, par exemple le code Terraform, le cluster, le monitoring ou la sécurité]",
+  "features": [
+    "Infrastructure en code avec Terraform : réseau, calcul, conteneurs et stockage",
+    "Six conteneurs : `api-gateway-app` (port 3000), `inventory-app` et `billing-app` (8080), `inventory-db` et `billing-db` (5432) et `rabbit-queue`",
+    "Des images Docker optimisées en taille et en temps de build",
+    "Orchestration sur [TODO: ECS ou EKS], avec les services derrière un répartiteur de charge",
+    "Des règles d'autoscaling, testées sous différentes charges",
+    "Monitoring et logs avec [TODO: quels outils, par exemple CloudWatch, Prometheus et Grafana]",
+    "Bases de données et services privés accessibles uniquement depuis le VPC",
+    "Un README avec des schémas d'architecture et la raison de chaque choix"
+  ],
+  "challenges": [
+    {
+      "title": "Garder les données privées",
+      "problem": "Les bases et la file ne doivent jamais être accessibles depuis internet, alors que la gateway doit l'être.",
+      "solution": "Seul le répartiteur de charge est exposé, et les bases n'acceptent que les connexions venant du VPC. [TODO: confirmer, et ajouter comment, par exemple des sous-réseaux privés et des security groups]"
+    },
+    {
+      "title": "Monter en charge sans trop dépenser",
+      "problem": "L'autoscaling et la haute disponibilité ajoutent des ressources, et chaque ressource qui tourne coûte de l'argent.",
+      "solution": "[TODO: comment tu as équilibré coût et disponibilité, par exemple la taille des instances, l'offre gratuite, des alertes de facturation ou la suppression des ressources inutilisées]"
+    },
+    {
+      "title": "Expliquer comme un ingénieur cloud",
+      "problem": "L'audit est un jeu de rôle : chaque décision doit être expliquée à une équipe ou à un client, avec les alternatives.",
+      "solution": "Un README avec des schémas et le raisonnement derrière chaque composant, écrit pour servir de support à cette discussion."
+    }
+  ],
+  "learned": [
+    "Concevoir une architecture cloud pour la montée en charge, la disponibilité, la sécurité et le coût",
+    "L'infrastructure en code avec Terraform",
+    "Faire tourner des conteneurs sur un orchestrateur AWS managé",
+    "Monitoring, logs et autoscaling",
+    "Expliquer des choix techniques à une équipe ou à un client"
+  ]
+}

@@ -2,7 +2,8 @@ import type { CSSProperties } from "react";
 import { Rich } from "@/components/ui/rich";
 import { BackLink, facts, ProjectLinks, StackList, type HeroProps } from "./shared";
 
-const PAINT = ["#2496ed", "#f4a261", "#2a9d8f", "#e76f51", "#8ab4f8", "#e9c46a"];
+/** The garden's colors, one per container. */
+const PAINT = ["#6d4ad6", "#db2777", "#8b5cf6", "#9f1239", "#a78bfa", "#be185d"];
 
 export function ContainersHero(props: HeroProps) {
   const { project, copy, locale, dict } = props;

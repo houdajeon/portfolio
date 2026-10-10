@@ -21,7 +21,7 @@ const BOMB = (() => {
     for (let x = 0; x < 16; x++) {
       if ((x - 6.5) ** 2 + (y - 10) ** 2 <= 30) {
         const shine = (x - 4.5) ** 2 + (y - 8) ** 2 <= 2.5;
-        pixels.push({ x, y, c: shine ? "#94b0c2" : "#1a1c2c" });
+        pixels.push({ x, y, c: shine ? "#b9a3ff" : "#16132a" });
       }
     }
   }
@@ -29,22 +29,22 @@ const BOMB = (() => {
     [8, 4],
     [9, 3],
     [10, 2],
-  ].forEach(([x, y]) => pixels.push({ x, y, c: "#f4f4f4" }));
+  ].forEach(([x, y]) => pixels.push({ x, y, c: "#eceaf4" }));
   return pixels;
 })();
 const SPARK = [
-  [11, 1, "#ffcd75"],
-  [11, 0, "#ef7d57"],
-  [12, 1, "#ef7d57"],
-  [10, 1, "#ffcd75"],
-  [11, 2, "#ef7d57"],
+  [11, 1, "#fbcfe8"],
+  [11, 0, "#f472b6"],
+  [12, 1, "#f472b6"],
+  [10, 1, "#fbcfe8"],
+  [11, 2, "#f472b6"],
 ] as const;
 
 function Heart() {
   return (
     <svg viewBox="0 0 7 6" className="gm-heart" shapeRendering="crispEdges" aria-hidden="true">
-      <path d="M1 0h2v1h1V0h2v1h1v2H6v1H5v1H4v1H3V5H2V4H1V3H0V1h1z" fill="#b13e53" />
-      <path d="M1 1h1v1H1z" fill="#ffcd75" />
+      <path d="M1 0h2v1h1V0h2v1h1v2H6v1H5v1H4v1H3V5H2V4H1V3H0V1h1z" fill="#f472b6" />
+      <path d="M1 1h1v1H1z" fill="#fdf2f8" />
     </svg>
   );
 }

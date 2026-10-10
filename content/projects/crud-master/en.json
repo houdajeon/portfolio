@@ -1,0 +1,39 @@
+{
+  "title": "CRUD Master",
+  "tagline": "A movie platform split into three Python microservices on three Vagrant VMs: an API gateway, an inventory API over HTTP and a billing API fed by RabbitMQ.",
+  "summary": "The backend of a small movie streaming platform, built as microservices. An API gateway is the single entry point: it forwards `/api/movies` requests to the Inventory API over HTTP, and publishes billing orders to a RabbitMQ queue that the Billing API consumes. Both APIs are written in Python with Flask, each with its own PostgreSQL database, and every service runs in its own virtual machine created by Vagrant.",
+  "problem": "Split one application into independent services that talk in two different ways: a direct HTTP call for the inventory, and an asynchronous message queue for billing, so that no order is lost even when the Billing API is down.",
+  "role": "Team of 2. [TODO: the parts you built, for example the gateway, the inventory API, the billing consumer or the Vagrant setup]",
+  "features": [
+    "Inventory API: a REST CRUD on `/api/movies` and `/api/movies/<id>` (GET, POST, PUT, DELETE), with search by title",
+    "Billing API: reads JSON orders from `billing_queue`, saves them in the `orders` table, then acknowledges each message",
+    "API gateway: forwards `/api/movies` to the Inventory API over HTTP and publishes `POST /api/billing` to RabbitMQ",
+    "Three VMs started with one `vagrant up`: gateway-vm, inventory-vm and billing-vm",
+    "Every credential in one `.env` file, passed to the services by Vagrant, none written in the code",
+    "Services managed with PM2, Postman tests for every endpoint, and an OpenAPI file for the gateway"
+  ],
+  "challenges": [
+    {
+      "title": "No order lost while billing is down",
+      "problem": "The gateway must accept orders even when the Billing API is stopped, and they must be saved as soon as it comes back.",
+      "solution": "The gateway only publishes the order to RabbitMQ and answers right away. Orders wait in `billing_queue`, and the Billing API acknowledges a message only once it is saved, so everything pending is processed when it restarts. We tested it with `pm2 stop` and `pm2 start`. [TODO: confirm, and add how you made the queue survive a RabbitMQ restart, for example durable queues]"
+    },
+    {
+      "title": "Two ways for services to talk",
+      "problem": "The inventory needs an immediate answer, while billing can happen a little later.",
+      "solution": "HTTP for the Inventory API, whose response the gateway returns unchanged, and a message queue for billing, so the gateway never waits for a payment to be processed."
+    },
+    {
+      "title": "One configuration for three machines",
+      "problem": "Database names, users, passwords and URLs are needed on three different VMs.",
+      "solution": "A single `.env` file read by the Vagrantfile, which passes the values to each VM and service, and provisioning scripts in `scripts/` that install the tools and create the databases."
+    }
+  ],
+  "learned": [
+    "Designing microservices around an API gateway",
+    "When to use a direct HTTP call and when to use an asynchronous queue",
+    "Acknowledging messages in RabbitMQ with `pika`",
+    "Writing a REST CRUD API with Flask and SQLAlchemy on PostgreSQL",
+    "Reproducible environments with Vagrant and provisioning scripts"
+  ]
+}

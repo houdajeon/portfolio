@@ -262,6 +262,42 @@
           "Liaison",
           "Physique"
         ]
+      },
+      "api": {
+        "kickers": {
+          "problem": "GET {{gateway}}/problem",
+          "role": "GET {{gateway}}/team",
+          "features": "GET {{gateway}}/features",
+          "architecture": "GET {{gateway}}/architecture",
+          "challenges": "POST {{gateway}}/api/billing",
+          "learned": "GET {{gateway}}/learned",
+          "screenshots": "GET {{gateway}}/screenshots"
+        },
+        "challengeProblem": "en file",
+        "challengeSolution": "ack",
+        "collection": "Collection",
+        "send": "Envoyer",
+        "body": "Corps",
+        "response": "Réponse",
+        "stopped": "arrêtée",
+        "online": "en ligne",
+        "waiting": "en attente dans billing_queue"
+      },
+      "cloud": {
+        "kickers": {
+          "problem": "resource \"problem\"",
+          "role": "resource \"team\"",
+          "features": "resource \"features\"",
+          "architecture": "module \"architecture\"",
+          "challenges": "resource \"challenges\"",
+          "learned": "output \"learned\"",
+          "screenshots": "output \"screenshots\""
+        },
+        "challengeProblem": "~ à modifier",
+        "challengeSolution": "+ appliqué",
+        "public": "Public",
+        "private": "Privé · VPC uniquement",
+        "internet": "Internet"
       }
     }
   },

@@ -69,6 +69,8 @@ export const vibeSchema = z.enum([
   "containers",
   "server",
   "network",
+  "api",
+  "cloud",
 ]);
 export type Vibe = z.infer<typeof vibeSchema>;
 

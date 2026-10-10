@@ -1,5 +1,5 @@
 {
-  "order": 7,
+  "order": 9,
   "vibe": "containers",
   "categories": ["devops"],
   "stack": ["Docker", "Docker Compose", "PostgreSQL", "RabbitMQ", "API Gateway"],

@@ -262,6 +262,42 @@
           "Data link",
           "Physical"
         ]
+      },
+      "api": {
+        "kickers": {
+          "problem": "GET {{gateway}}/problem",
+          "role": "GET {{gateway}}/team",
+          "features": "GET {{gateway}}/features",
+          "architecture": "GET {{gateway}}/architecture",
+          "challenges": "POST {{gateway}}/api/billing",
+          "learned": "GET {{gateway}}/learned",
+          "screenshots": "GET {{gateway}}/screenshots"
+        },
+        "challengeProblem": "queued",
+        "challengeSolution": "ack",
+        "collection": "Collection",
+        "send": "Send",
+        "body": "Body",
+        "response": "Response",
+        "stopped": "stopped",
+        "online": "online",
+        "waiting": "waiting in billing_queue"
+      },
+      "cloud": {
+        "kickers": {
+          "problem": "resource \"problem\"",
+          "role": "resource \"team\"",
+          "features": "resource \"features\"",
+          "architecture": "module \"architecture\"",
+          "challenges": "resource \"challenges\"",
+          "learned": "output \"learned\"",
+          "screenshots": "output \"screenshots\""
+        },
+        "challengeProblem": "~ to change",
+        "challengeSolution": "+ applied",
+        "public": "Public",
+        "private": "Private · VPC only",
+        "internet": "Internet"
       }
     }
   },

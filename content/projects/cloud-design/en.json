@@ -1,0 +1,41 @@
+{
+  "title": "Cloud Design",
+  "tagline": "The microservices from my previous projects, designed and deployed on AWS with Terraform: containers, load balancing, auto scaling, monitoring and a private network for the data.",
+  "summary": "The last project of the DevOps track. The six services built in CRUD Master, Play with Containers and Orchestrator (an API gateway, the inventory and billing apps, two PostgreSQL databases and RabbitMQ) are deployed on Amazon Web Services. The infrastructure is written as code with Terraform, the services run as Docker containers behind a load balancer and scale with the load, and the databases are reachable only from inside the VPC. [TODO: ECS or EKS, and the main AWS services you chose]",
+  "problem": "Take an application that ran on local VMs and design a cloud architecture for it that scales, stays available, is secure and still costs little, then defend every choice in a role-play where the auditors act as the team or a stakeholder.",
+  "role": "Team of 2. [TODO: the parts you built, for example the Terraform code, the cluster, monitoring or security]",
+  "features": [
+    "Infrastructure as code with Terraform: network, compute, containers and storage",
+    "Six containers: `api-gateway-app` (port 3000), `inventory-app` and `billing-app` (8080), `inventory-db` and `billing-db` (5432) and `rabbit-queue`",
+    "Docker images optimized for size and build time",
+    "Orchestration on [TODO: ECS or EKS], with the services behind a load balancer",
+    "Auto scaling policies, tested under different loads",
+    "Monitoring and logging with [TODO: which tools, for example CloudWatch, Prometheus and Grafana]",
+    "Databases and private services reachable only from inside the VPC",
+    "A README with architecture diagrams and the reason behind each choice"
+  ],
+  "challenges": [
+    {
+      "title": "Keeping the data private",
+      "problem": "The databases and the queue must never be reachable from the internet, while the gateway must be.",
+      "solution": "Only the load balancer is exposed, and the databases accept connections from inside the VPC only. [TODO: confirm, and add how you did it, for example private subnets and security groups]"
+    },
+    {
+      "title": "Scaling without overspending",
+      "problem": "Auto scaling and high availability add resources, and every running resource costs money.",
+      "solution": "[TODO: how you balanced cost and availability, for example instance sizes, the free tier, billing alerts or removing unused resources]"
+    },
+    {
+      "title": "Explaining it like a cloud engineer",
+      "problem": "The audit is a role-play: every decision has to be explained to a team or a stakeholder, with the alternatives.",
+      "solution": "A README with diagrams and the reasoning for each component, written to support that conversation."
+    }
+  ],
+  "learned": [
+    "Designing a cloud architecture for scale, availability, security and cost",
+    "Infrastructure as code with Terraform",
+    "Running containers on a managed AWS orchestrator",
+    "Monitoring, logging and auto scaling",
+    "Explaining technical choices to a team or a stakeholder"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "order": 8,
+  "vibe": "api",
+  "categories": ["devops"],
+  "stack": [
+    "Python",
+    "Flask",
+    "SQLAlchemy",
+    "PostgreSQL",
+    "RabbitMQ",
+    "pika",
+    "Vagrant",
+    "PM2",
+    "Postman",
+    "OpenAPI"
+  ],
+  "teamSize": 2,
+  "repo": null,
+  "demo": null,
+  "diagram": {
+    "cols": 4,
+    "rows": 3,
+    "nodes": [
+      { "id": "client", "label": "Client", "sub": "Postman", "at": [0, 1], "kind": "client" },
+      { "id": "gateway", "label": "API Gateway", "sub": "Flask · gateway-vm", "at": [1, 1] },
+      {
+        "id": "inventory",
+        "label": { "en": "Inventory API", "fr": "API inventaire" },
+        "sub": "Flask · SQLAlchemy",
+        "at": [2, 0]
+      },
+      {
+        "id": "movies-db",
+        "label": "movies_db",
+        "sub": "PostgreSQL",
+        "at": [3, 0],
+        "kind": "data"
+      },
+      { "id": "queue", "label": "billing_queue", "sub": "RabbitMQ", "at": [2, 2], "kind": "queue" },
+      {
+        "id": "billing",
+        "label": { "en": "Billing API", "fr": "API facturation" },
+        "sub": "pika · PM2",
+        "at": [3, 2]
+      },
+      {
+        "id": "billing-db",
+        "label": "billing_db",
+        "sub": "PostgreSQL · orders",
+        "at": [3, 1],
+        "kind": "data"
+      }
+    ],
+    "edges": [
+      { "from": "client", "to": "gateway", "label": "HTTP" },
+      { "from": "gateway", "to": "inventory", "label": "/api/movies" },
+      { "from": "inventory", "to": "movies-db", "label": "SQL" },
+      { "from": "gateway", "to": "queue", "label": { "en": "publish", "fr": "publie" } },
+      { "from": "queue", "to": "billing", "label": "consume · ack" },
+      { "from": "billing", "to": "billing-db", "label": "SQL" }
+    ],
+    "groups": [
+      { "label": "inventory-vm", "from": [2, 0], "to": [3, 0] },
+      { "label": "billing-vm", "from": [2, 1], "to": [3, 2] }
+    ]
+  }
+}

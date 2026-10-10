@@ -1,0 +1,56 @@
+{
+  "order": 11,
+  "vibe": "cloud",
+  "categories": ["devops"],
+  "stack": ["AWS", "Terraform", "Docker", "[TODO: ECS or EKS]", "Load balancing", "Auto scaling"],
+  "teamSize": 2,
+  "repo": null,
+  "demo": null,
+  "diagram": {
+    "cols": 5,
+    "rows": 3,
+    "nodes": [
+      {
+        "id": "users",
+        "label": { "en": "Users", "fr": "Utilisateurs" },
+        "sub": "HTTPS",
+        "at": [0, 1],
+        "kind": "client"
+      },
+      {
+        "id": "lb",
+        "label": "Load balancer",
+        "sub": { "en": "public", "fr": "public" },
+        "at": [1, 1]
+      },
+      { "id": "gateway", "label": "api-gateway-app", "sub": "port 3000", "at": [2, 1] },
+      { "id": "inventory", "label": "inventory-app", "sub": "port 8080", "at": [3, 0] },
+      {
+        "id": "inventory-db",
+        "label": "inventory-db",
+        "sub": "PostgreSQL · 5432",
+        "at": [4, 0],
+        "kind": "data"
+      },
+      { "id": "rabbit", "label": "rabbit-queue", "sub": "RabbitMQ", "at": [3, 2], "kind": "queue" },
+      { "id": "billing", "label": "billing-app", "sub": "port 8080", "at": [4, 2] },
+      {
+        "id": "billing-db",
+        "label": "billing-db",
+        "sub": "PostgreSQL · 5432",
+        "at": [4, 1],
+        "kind": "data"
+      }
+    ],
+    "edges": [
+      { "from": "users", "to": "lb" },
+      { "from": "lb", "to": "gateway" },
+      { "from": "gateway", "to": "inventory", "label": "HTTP" },
+      { "from": "inventory", "to": "inventory-db" },
+      { "from": "gateway", "to": "rabbit", "label": { "en": "order", "fr": "commande" } },
+      { "from": "rabbit", "to": "billing" },
+      { "from": "billing", "to": "billing-db" }
+    ],
+    "groups": [{ "label": "AWS · VPC", "from": [1, 0], "to": [4, 2] }]
+  }
+}
