@@ -58,8 +58,8 @@
       "fr": "Parcours Java"
     },
     "body": {
-      "en": "An HTTP/1.1 server in plain Java, then 01Blog with Spring Boot and Angular.",
-      "fr": "Un serveur HTTP/1.1 en Java pur, puis 01Blog avec Spring Boot et Angular."
+      "en": "An HTTP/1.1 server in plain Java, then Rise (the 01Blog subject) with Spring Boot and Angular.",
+      "fr": "Un serveur HTTP/1.1 en Java pur, puis Rise (le sujet 01Blog) avec Spring Boot et Angular."
     }
   },
   {

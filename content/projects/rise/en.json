@@ -1,0 +1,40 @@
+{
+  "title": "Rise",
+  "tagline": "A social blogging platform where students share what they learn and follow each other's progress. Spring Boot API, Angular frontend, PostgreSQL.",
+  "summary": "Rise is my answer to the Zone01 01Blog subject: a social blogging platform where students post about what they are learning and follow each other's progress. I built it alone, and Spring Boot and Angular were both new to me when I started: a Spring Boot backend secured with JWT, an Angular frontend with Angular Material, and a PostgreSQL database running in Docker. I finished it on February 25, 2026.",
+  "problem": "Students needed one place to publish what they learn, follow each other and react to posts. The platform also needed moderation, so admins can manage content and users without touching the database by hand.",
+  "role": "Solo project. I designed the database, built the Spring Boot API and its security, and wrote the Angular frontend.",
+  "features": [
+    "Sign up and log in, with the JWT in an HTTP-only cookie and passwords hashed with BCrypt",
+    "A profile page for every user, with all their posts",
+    "Posts with text, images or videos, plus likes and comments",
+    "Follow people, search for users, and get notified when they post",
+    "Report a user or a post",
+    "An admin dashboard with stats, where admins ban users, hide or delete posts and review reports",
+    "A responsive layout for phones, and a dark mode that Rise remembers"
+  ],
+  "challenges": [
+    {
+      "title": "Securing every endpoint by role",
+      "problem": "Every request must say who is calling and what they are allowed to do. Admin actions must be impossible for normal users, even if they call the API directly.",
+      "solution": "Spring Security with stateless JWT authentication: the token travels in an HTTP-only cookie, so scripts in the page cannot read it, and it is checked on every request. Endpoints are restricted by role (USER or ADMIN). [TODO: add one detail, for example how your JWT filter works]"
+    },
+    {
+      "title": "A consistent relational model",
+      "problem": "Users, posts, comments, likes, follows and reports are all linked. The data must stay consistent when a post or a user is deleted.",
+      "solution": "A relational schema in PostgreSQL with foreign keys between users, posts, comments, likes, follows and reports. [TODO: explain how you handled deletions, for example cascades or soft deletes]"
+    },
+    {
+      "title": "Accepting images and videos safely",
+      "problem": "Users attach images and videos to their posts. The server must refuse dangerous or oversized files and serve the rest efficiently.",
+      "solution": "[TODO: describe how you validated and stored media: allowed types, size limit, storage folder]"
+    }
+  ],
+  "learned": [
+    "Configuring Spring Security for a stateless REST API",
+    "Role-based authorization with JWT",
+    "Structuring an Angular app around services that call a REST API",
+    "Learning two new frameworks on one project: the hard part was starting, not the project",
+    "Planning and delivering a full project alone, with a Git workflow"
+  ]
+}

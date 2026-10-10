@@ -9,7 +9,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { plain, Rich } from "@/components/ui/rich";
 import { hasLocale, languageAlternates, localePath, projectPath } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getProject, getProjects } from "@/lib/content";
+import { getProject, getProjects, withBasePath } from "@/lib/content";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -171,9 +171,30 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
           )}
 
           <Block id="screenshots" kicker={kick.screenshots} title={t.screenshots}>
-            <div className="cs-shots">
-              <Rich text={t.screenshotsTodo} />
-            </div>
+            {project.shots.length > 0 ? (
+              <ul className="cs-shot-list">
+                {project.shots.map((shot) => (
+                  <li key={shot.src}>
+                    <figure>
+                      {/* eslint-disable-next-line @next/next/no-img-element -- static export: no image optimizer */}
+                      <img
+                        src={withBasePath(shot.src)}
+                        alt={shot.alt[locale]}
+                        width={1280}
+                        height={720}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <figcaption>{shot.alt[locale]}</figcaption>
+                    </figure>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="cs-shots">
+                <Rich text={t.screenshotsTodo} />
+              </div>
+            )}
           </Block>
 
           <nav aria-label={dict.projects.title} className="cs-nav">

@@ -18,7 +18,7 @@ export { vibeFont } from "./fonts";
 
 /**
  * Each case study looks like the thing it is about: a game for Bomberman, a blog article for
- * 01Blog, a terminal for the shell... in the colors of the rest of the site. The header is
+ * Rise, a terminal for the shell... in the colors of the rest of the site. The header is
  * drawn by the vibe's own component; the rest of the page is the same list of cards for every
  * project, restyled by vibes.css ([data-vibe] on the article).
  */

@@ -1,0 +1,40 @@
+{
+  "title": "Rise",
+  "tagline": "Une plateforme de blog social où les étudiants partagent ce qu'ils apprennent et suivent les progrès des autres. API Spring Boot, frontend Angular, PostgreSQL.",
+  "summary": "Rise est ma réponse au sujet 01Blog de Zone01 : une plateforme de blog social où les étudiants publient ce qu'ils apprennent et suivent les progrès des autres. Je l'ai réalisée seule, alors que Spring Boot et Angular étaient tous les deux nouveaux pour moi : un backend Spring Boot sécurisé avec JWT, un frontend Angular avec Angular Material, et une base PostgreSQL qui tourne dans Docker. Je l'ai terminée le 25 février 2026.",
+  "problem": "Les étudiants avaient besoin d'un endroit pour publier ce qu'ils apprennent, se suivre et réagir aux publications. La plateforme devait aussi être modérable, pour que les admins gèrent contenus et utilisateurs sans toucher à la base à la main.",
+  "role": "Projet solo. J'ai conçu la base de données, développé l'API Spring Boot et sa sécurité, et écrit le frontend Angular.",
+  "features": [
+    "Inscription et connexion, avec le JWT dans un cookie HTTP-only et des mots de passe hachés avec BCrypt",
+    "Une page de profil pour chaque utilisateur, avec toutes ses publications",
+    "Des publications avec texte, images ou vidéos, avec likes et commentaires",
+    "Suivre des personnes, rechercher des utilisateurs, et être notifié quand ils publient",
+    "Signaler un utilisateur ou une publication",
+    "Un tableau de bord admin avec statistiques, pour bannir des utilisateurs, masquer ou supprimer des publications et traiter les signalements",
+    "Une mise en page adaptée aux téléphones, et un mode sombre dont Rise se souvient"
+  ],
+  "challenges": [
+    {
+      "title": "Sécuriser chaque endpoint selon le rôle",
+      "problem": "Chaque requête doit dire qui appelle et ce qu'il a le droit de faire. Les actions d'admin doivent être impossibles pour un utilisateur normal, même s'il appelle l'API directement.",
+      "solution": "Spring Security avec une authentification JWT sans état : le token voyage dans un cookie HTTP-only, que les scripts de la page ne peuvent pas lire, et il est vérifié à chaque requête. Les endpoints sont restreints par rôle (USER ou ADMIN). [TODO: ajouter un détail, par exemple le fonctionnement de ton filtre JWT]"
+    },
+    {
+      "title": "Un modèle relationnel cohérent",
+      "problem": "Utilisateurs, publications, commentaires, likes, abonnements et signalements sont tous liés. Les données doivent rester cohérentes quand une publication ou un utilisateur est supprimé.",
+      "solution": "Un schéma relationnel dans PostgreSQL avec des clés étrangères entre utilisateurs, publications, commentaires, likes, abonnements et signalements. [TODO: expliquer comment tu as géré les suppressions, par exemple en cascade ou suppression logique]"
+    },
+    {
+      "title": "Accepter images et vidéos en toute sécurité",
+      "problem": "Les utilisateurs joignent des images et des vidéos à leurs publications. Le serveur doit refuser les fichiers dangereux ou trop lourds et servir les autres efficacement.",
+      "solution": "[TODO: décrire comment tu as validé et stocké les médias : types autorisés, taille maximale, dossier de stockage]"
+    }
+  ],
+  "learned": [
+    "Configurer Spring Security pour une API REST sans état",
+    "L'autorisation par rôle avec JWT",
+    "Structurer une application Angular autour de services qui appellent une API REST",
+    "Apprendre deux nouveaux frameworks sur un seul projet : le plus dur, c'était de commencer, pas le projet",
+    "Planifier et livrer un projet complet seule, avec un workflow Git"
+  ]
+}

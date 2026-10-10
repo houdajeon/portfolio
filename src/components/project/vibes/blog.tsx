@@ -1,7 +1,7 @@
 import { format } from "@/i18n/format";
 import { getSite } from "@/lib/content";
 import { Rich } from "@/components/ui/rich";
-import { BackLink, facts, ProjectLinks, readingMinutes, type HeroProps } from "./shared";
+import { BackLink, DemoVideo, facts, ProjectLinks, readingMinutes, type HeroProps } from "./shared";
 
 /** "Spring Security" → "SpringSecurity", as a hashtag. Placeholders are left out. */
 const hashtag = (item: string) =>
@@ -58,11 +58,18 @@ export function BlogHero(props: HeroProps) {
         </ul>
       </div>
 
-      <figure className="bl-cover" aria-hidden="true">
-        <span className="bl-cover-word">{copy.title}</span>
-        <span className="bl-cover-lines" />
-        <span className="bl-cover-blot" />
-      </figure>
+      {/* The cover of the article: the recorded demo when there is one, a drawing otherwise. */}
+      {project.video ? (
+        <figure className="bl-cover bl-cover-video">
+          <DemoVideo project={project} copy={copy} dict={dict} />
+        </figure>
+      ) : (
+        <figure className="bl-cover" aria-hidden="true">
+          <span className="bl-cover-word">{copy.title}</span>
+          <span className="bl-cover-lines" />
+          <span className="bl-cover-blot" />
+        </figure>
+      )}
 
       <div className="bl-wrap">
         <p className="bl-lede">

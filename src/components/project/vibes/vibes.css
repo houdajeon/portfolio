@@ -77,10 +77,12 @@
 .cd-grid {
   grid-template-columns: minmax(0, 1fr);
 }
+/* The column of cards sits in the middle of the page. */
 .cs-wrap {
   display: grid;
   gap: 1.25rem;
   max-width: 56rem;
+  margin-inline: auto;
   padding-block: 3rem 5rem;
 }
 /* Every part of the case study is a card: a badge and the vibe's label on top (like a post),
@@ -233,6 +235,38 @@
 }
 .cs-a {
   color: var(--fg);
+}
+/* Real screenshots: a grid of framed images with their caption. */
+.cs-shot-list {
+  display: grid;
+  gap: 1rem;
+}
+@media (width >= 40rem) {
+  .cs-shot-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cs-shot-list li:first-child {
+    grid-column: 1 / -1;
+  }
+}
+.cs-shot-list img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--bg);
+}
+.cs-shot-list figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+}
+.cs-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: #000;
 }
 .cs-shots {
   display: grid;
@@ -646,7 +680,7 @@
   font: 400 0.75rem/1.7 var(--pixel);
 }
 
-/* ---------- Blog: 01Blog, an article in a student journal ---------- */
+/* ---------- Blog: Rise, an article in a student journal ---------- */
 
 [data-vibe="blog"] {
   --serif: var(--font-serif), Georgia, "Times New Roman", serif;
@@ -771,6 +805,11 @@
   .bl-cover {
     margin-inline: 1rem;
   }
+}
+.bl-cover-video {
+  height: auto;
+  background: #000;
+  box-shadow: 0 30px 70px -40px rgb(0 0 0 / 0.7);
 }
 .bl-cover-word {
   position: absolute;

@@ -299,7 +299,9 @@
         "private": "Privé · VPC uniquement",
         "internet": "Internet"
       }
-    }
+    },
+    "videoLabel": "Vidéo de démo de {title}",
+    "watchOnLinkedIn": "La voir sur LinkedIn"
   },
   "journey": {
     "eyebrow": "parcours",

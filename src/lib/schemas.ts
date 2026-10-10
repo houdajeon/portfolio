@@ -83,6 +83,17 @@ export const projectMetaSchema = z.object({
   teamSize: z.number().int().positive().nullable(),
   repo: z.url().nullable(),
   demo: z.url().nullable(),
+  /** A recorded demo (file under /public), its poster image, and the post it was shared in. */
+  video: z
+    .object({
+      src: z.string().startsWith("/"),
+      poster: z.string().startsWith("/"),
+      link: z.url().nullable(),
+    })
+    .nullable()
+    .default(null),
+  /** Real screenshots (files under /public), shown instead of the placeholder. */
+  shots: z.array(z.object({ src: z.string().startsWith("/"), alt: localized })).default([]),
   diagram: diagramSchema.nullable(),
 });
 

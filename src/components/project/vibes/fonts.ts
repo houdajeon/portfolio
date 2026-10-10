@@ -13,7 +13,7 @@ const pixel = Press_Start_2P({
   preload: false,
 });
 
-/** Editorial serif, with italics (01Blog). */
+/** Editorial serif, with italics (Rise, the blog). */
 const serif = Newsreader({
   subsets: ["latin"],
   style: ["normal", "italic"],

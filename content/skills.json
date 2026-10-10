@@ -15,27 +15,27 @@
         {
           "name": "Java",
           "level": "used",
-          "projects": ["java-http-server", "01blog"]
+          "projects": ["java-http-server", "rise"]
         },
         {
           "name": "Spring Boot",
           "level": "used",
-          "projects": ["01blog"]
+          "projects": ["rise"]
         },
         {
           "name": "Spring Security",
           "level": "used",
-          "projects": ["01blog"]
+          "projects": ["rise"]
         },
         {
           "name": "JWT",
           "level": "used",
-          "projects": ["01blog"]
+          "projects": ["rise"]
         },
         {
           "name": "REST APIs",
           "level": "used",
-          "projects": ["social-network", "01blog"]
+          "projects": ["social-network", "rise"]
         },
         {
           "name": "WebSockets",
@@ -83,7 +83,7 @@
         {
           "name": "TypeScript",
           "level": "used",
-          "projects": ["01blog"]
+          "projects": ["rise"]
         },
         {
           "name": "Next.js",
@@ -93,7 +93,7 @@
         {
           "name": "Angular",
           "level": "used",
-          "projects": ["01blog"]
+          "projects": ["rise"]
         },
         {
           "name": "HTML & CSS",

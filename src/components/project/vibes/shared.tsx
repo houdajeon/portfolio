@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { localePath, type Locale } from "@/i18n/config";
+import { format } from "@/i18n/format";
 import type { Messages } from "@/i18n/dictionaries";
-import type { Project } from "@/lib/content";
+import { withBasePath, type Project } from "@/lib/content";
 import type { ProjectCopy } from "@/lib/schemas";
 import { categoryLabel, teamLabel } from "@/components/sections/projects";
 import { ArrowLeft, External, GitHub } from "@/components/ui/icons";
@@ -51,6 +52,11 @@ export function ProjectLinks({ project, dict }: Pick<HeroProps, "project" | "dic
           <External /> {t.demo}
         </a>
       )}
+      {project.video?.link && (
+        <a href={project.video.link} className="cs-link" rel="noopener">
+          <External /> {t.watchOnLinkedIn}
+        </a>
+      )}
     </div>
   );
 }
@@ -98,3 +104,25 @@ export const slugify = (label: string) =>
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+
+/**
+ * The project's recorded demo: nothing loads until the visitor presses play (preload="none"),
+ * the poster shows meanwhile. Plain <video>: a static export has no image or video optimizer.
+ */
+export function DemoVideo({ project, copy, dict }: Pick<HeroProps, "project" | "copy" | "dict">) {
+  if (!project.video) return null;
+  return (
+    <video
+      className="cs-video"
+      src={withBasePath(project.video.src)}
+      poster={withBasePath(project.video.poster)}
+      controls
+      muted
+      playsInline
+      preload="none"
+      width={1280}
+      height={720}
+      aria-label={format(dict.caseStudy.videoLabel, { title: copy.title })}
+    />
+  );
+}
