@@ -1,5 +1,6 @@
 {
   "order": 8,
+  "vibe": "server",
   "categories": ["devops"],
   "stack": ["Ubuntu Server", "Linux", "SSH", "Firewall", "FTP", "MySQL", "WordPress", "cron"],
   "teamSize": 1,

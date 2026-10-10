@@ -58,8 +58,23 @@ export type Diagram = z.infer<typeof diagramSchema>;
 
 // ---------- projects: meta.json (facts shared by both languages) + en.json / fr.json (copy)
 
+/** The look of a project's case study page, taken from what the project is (see project/vibes). */
+export const vibeSchema = z.enum([
+  "social",
+  "blog",
+  "cluster",
+  "http",
+  "shell",
+  "game",
+  "containers",
+  "server",
+  "network",
+]);
+export type Vibe = z.infer<typeof vibeSchema>;
+
 export const projectMetaSchema = z.object({
   order: z.number().int(),
+  vibe: vibeSchema,
   categories: z.array(categorySchema).min(1),
   stack: z.array(z.string().min(1)).min(1),
   /** null = not provided yet, rendered as a visible TODO */

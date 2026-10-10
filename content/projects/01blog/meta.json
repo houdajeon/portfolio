@@ -1,5 +1,6 @@
 {
   "order": 2,
+  "vibe": "blog",
   "categories": ["fullstack"],
   "stack": [
     "Java",

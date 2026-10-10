@@ -1,5 +1,6 @@
 {
   "order": 6,
+  "vibe": "game",
   "categories": ["game"],
   "stack": [
     "JavaScript",

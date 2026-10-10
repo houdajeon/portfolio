@@ -1,5 +1,6 @@
 {
   "order": 7,
+  "vibe": "containers",
   "categories": ["devops"],
   "stack": ["Docker", "Docker Compose", "PostgreSQL", "RabbitMQ", "API Gateway"],
   "teamSize": 1,

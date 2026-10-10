@@ -1,5 +1,6 @@
 {
   "order": 4,
+  "vibe": "http",
   "categories": ["backend"],
   "stack": ["Java", "java.nio", "HTTP/1.1", "CGI", "ProcessBuilder"],
   "teamSize": 3,

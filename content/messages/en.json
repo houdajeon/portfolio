@@ -115,7 +115,155 @@
     "screenshots": "Screenshots",
     "screenshotsTodo": "[TODO: add 2–3 screenshots or a short GIF]",
     "prev": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "vibes": {
+      "social": {
+        "kickers": {
+          "problem": "Public",
+          "role": "Team",
+          "features": "Posts",
+          "architecture": "Stack",
+          "challenges": "Chat",
+          "learned": "Notifications",
+          "screenshots": "Photos"
+        },
+        "challengeProblem": "Problem",
+        "challengeSolution": "Our fix",
+        "follow": "Follow",
+        "message": "Message",
+        "intro": "Intro",
+        "builtWith": "Built with",
+        "tabs": ["Posts", "Groups", "Events", "Chat"],
+        "composer": "What's on your mind?",
+        "like": "Like",
+        "comment": "Comment"
+      },
+      "blog": {
+        "kickers": {
+          "problem": "I.",
+          "role": "II.",
+          "features": "III.",
+          "architecture": "IV.",
+          "challenges": "V.",
+          "learned": "VI.",
+          "screenshots": "VII."
+        },
+        "challengeProblem": "The question",
+        "challengeSolution": "The answer",
+        "masthead": "the student journal",
+        "by": "By",
+        "minRead": "{n} min read",
+        "like": "Like",
+        "comment": "Comment",
+        "share": "Share",
+        "nav": ["Latest", "Topics", "Write"]
+      },
+      "cluster": {
+        "kickers": {
+          "problem": "kind: Problem",
+          "role": "kind: Role",
+          "features": "kind: FeatureList",
+          "architecture": "kind: Cluster",
+          "challenges": "kind: Event",
+          "learned": "kind: Lesson",
+          "screenshots": "kind: Screenshot"
+        },
+        "challengeProblem": "Warning",
+        "challengeSolution": "Normal"
+      },
+      "http": {
+        "kickers": {
+          "problem": "GET /problem",
+          "role": "GET /role",
+          "features": "GET /features",
+          "architecture": "GET /architecture",
+          "challenges": "POST /challenges",
+          "learned": "GET /learned",
+          "screenshots": "GET /screenshots"
+        },
+        "challengeProblem": "500 Internal Server Error",
+        "challengeSolution": "200 OK"
+      },
+      "shell": {
+        "kickers": {
+          "problem": "$ cat problem.txt",
+          "role": "$ whoami",
+          "features": "$ help",
+          "architecture": "$ cat architecture.txt",
+          "challenges": "$ history | grep fix",
+          "learned": "$ cat learned.txt",
+          "screenshots": "$ ls screenshots/"
+        },
+        "challengeProblem": "error",
+        "challengeSolution": "fix"
+      },
+      "game": {
+        "kickers": {
+          "problem": "STAGE 1",
+          "role": "PLAYER 1",
+          "features": "POWER-UPS",
+          "architecture": "MAP",
+          "challenges": "BOSS FIGHTS",
+          "learned": "XP GAINED",
+          "screenshots": "REPLAY"
+        },
+        "challengeProblem": "BOSS",
+        "challengeSolution": "WINNING MOVE",
+        "pressStart": "PRESS START",
+        "players": "PLAYERS",
+        "lives": "LIVES",
+        "items": "ITEMS",
+        "stage": "STAGE"
+      },
+      "containers": {
+        "kickers": {
+          "problem": "FROM problem",
+          "role": "WORKDIR /my-role",
+          "features": "RUN features",
+          "architecture": "COPY architecture",
+          "challenges": "HEALTHCHECK challenges",
+          "learned": "CMD [\"learned\"]",
+          "screenshots": "EXPOSE screenshots"
+        },
+        "challengeProblem": "unhealthy",
+        "challengeSolution": "healthy"
+      },
+      "server": {
+        "kickers": {
+          "problem": "$ cat /etc/issue",
+          "role": "$ id houda",
+          "features": "$ systemctl list-units",
+          "architecture": "$ tree /srv",
+          "challenges": "$ journalctl -p err",
+          "learned": "$ cat ~/notes.md",
+          "screenshots": "$ ls ~/screenshots"
+        },
+        "challengeProblem": "err",
+        "challengeSolution": "fixed"
+      },
+      "network": {
+        "kickers": {
+          "problem": "Router# show problem",
+          "role": "Router# show users",
+          "features": "Router# show interfaces",
+          "architecture": "Router# show topology",
+          "challenges": "Router# debug",
+          "learned": "Router# show history",
+          "screenshots": "Router# show captures"
+        },
+        "challengeProblem": "Request timed out",
+        "challengeSolution": "Reply received",
+        "layers": [
+          "Application",
+          "Presentation",
+          "Session",
+          "Transport",
+          "Network",
+          "Data link",
+          "Physical"
+        ]
+      }
+    }
   },
   "journey": {
     "eyebrow": "journey",

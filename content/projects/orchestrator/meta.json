@@ -1,5 +1,6 @@
 {
   "order": 3,
+  "vibe": "cluster",
   "categories": ["devops"],
   "stack": [
     "Kubernetes",
