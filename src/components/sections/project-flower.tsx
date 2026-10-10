@@ -131,7 +131,7 @@ function CardBody({
       >
         {card.title}
       </h3>
-      <p className="mt-3 text-muted">
+      <p className={`mt-3 text-muted ${big ? "text-lg" : ""}`}>
         <Rich text={card.tagline} />
       </p>
       <ul className="mt-4 flex flex-wrap gap-1.5">
@@ -269,7 +269,7 @@ export function ProjectFlower({
             {card && (
               <div
                 key={card.slug}
-                className="project-card pf-detail-card rounded-2xl border border-line p-8"
+                className="project-card pf-detail-card rounded-2xl border border-line p-8 xl:p-10"
                 style={{ "--tint": tone(active).ink } as CSSProperties}
               >
                 <CardBody

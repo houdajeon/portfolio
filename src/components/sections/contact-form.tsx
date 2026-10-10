@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, type CSSProperties, type FormEvent } from "react";
+import { useEffect, useState, type CSSProperties, type FocusEvent, type FormEvent } from "react";
 import type { Messages } from "@/i18n/dictionaries";
 import { buttonStyles } from "@/components/ui/button-styles";
 import { Rich } from "@/components/ui/rich";
 import { Petal, seeded } from "@/components/garden/flower";
 import type { PetalColor } from "@/components/garden/defs";
+import { Chibi, type ChibiMood } from "./chibi";
 
 /** Petals thrown out of the button when a message is sent: direction, distance, spin. */
 const random = seeded(3);
@@ -40,6 +41,31 @@ export function ContactForm({
   const [status, setStatus] = useState<Status>("idle");
   const [bursts, setBursts] = useState(0); // each send replays the petal burst
 
+  // The chibi's mood follows the visitor: pointer or focus in the form wakes her, Send
+  // makes her wave, a sent message makes her jump for a moment.
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [onSend, setOnSend] = useState(false);
+  const [cheering, setCheering] = useState(false);
+  const mood: ChibiMood = cheering
+    ? "cheer"
+    : onSend
+      ? "wave"
+      : hovered || focused
+        ? "awake"
+        : "rest";
+
+  useEffect(() => {
+    if (!cheering) return;
+    const timer = setTimeout(() => setCheering(false), 1600);
+    return () => clearTimeout(timer);
+  }, [cheering]);
+
+  function onBlur(event: FocusEvent<HTMLFormElement>) {
+    // Focus moving between two fields of the form does not count as leaving it.
+    if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
+  }
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBursts((n) => n + 1);
@@ -65,6 +91,7 @@ export function ContactForm({
       const result = (await response.json()) as { success?: boolean };
       if (response.ok && result.success) {
         setStatus("success");
+        setCheering(true);
         form.reset();
       } else {
         setStatus("error");
@@ -82,83 +109,99 @@ export function ContactForm({
   const shown = feedback[status];
 
   return (
-    <form onSubmit={onSubmit} className="rounded-xl border border-line bg-surface p-6">
-      <h3 className="font-bold stretch-semi">{labels.title}</h3>
-      <div className="mt-5 grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="cf-name" className={labelClass}>
-            {labels.name}
-          </label>
-          <input id="cf-name" name="name" required autoComplete="name" className={field} />
+    <div
+      className="relative"
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+    >
+      <Chibi mood={mood} />
+      <form
+        onSubmit={onSubmit}
+        onFocus={() => setFocused(true)}
+        onBlur={onBlur}
+        className="relative rounded-xl border border-line bg-surface p-6"
+      >
+        <h3 className="font-bold stretch-semi">{labels.title}</h3>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="cf-name" className={labelClass}>
+              {labels.name}
+            </label>
+            <input id="cf-name" name="name" required autoComplete="name" className={field} />
+          </div>
+          <div>
+            <label htmlFor="cf-email" className={labelClass}>
+              {labels.email}
+            </label>
+            <input
+              id="cf-email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              className={field}
+            />
+          </div>
         </div>
-        <div>
-          <label htmlFor="cf-email" className={labelClass}>
-            {labels.email}
+        <div className="mt-4">
+          <label htmlFor="cf-message" className={labelClass}>
+            {labels.message}
           </label>
-          <input
-            id="cf-email"
-            name="email"
-            type="email"
+          <textarea
+            id="cf-message"
+            name="message"
             required
-            autoComplete="email"
-            className={field}
+            rows={5}
+            minLength={10}
+            className={`${field} resize-y`}
           />
         </div>
-      </div>
-      <div className="mt-4">
-        <label htmlFor="cf-message" className={labelClass}>
-          {labels.message}
-        </label>
-        <textarea
-          id="cf-message"
-          name="message"
-          required
-          rows={5}
-          minLength={10}
-          className={`${field} resize-y`}
+        {/* Honeypot: invisible to people, bots fill it in and the service drops the message. */}
+        <input
+          type="checkbox"
+          name="botcheck"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="hidden"
         />
-      </div>
-      {/* Honeypot: invisible to people, bots fill it in and the service drops the message. */}
-      <input
-        type="checkbox"
-        name="botcheck"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-        className="hidden"
-      />
 
-      <div className="mt-5 flex flex-wrap items-center gap-4">
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          className={`${buttonStyles.primary} relative disabled:opacity-60`}
-        >
-          {status === "sending" ? labels.sending : labels.send}
-          {bursts > 0 && (
-            <span key={bursts} aria-hidden="true" className="petal-burst">
-              {BURST.map((petal, i) => (
-                <span
-                  key={i}
-                  style={
-                    {
-                      "--i": i,
-                      "--dx": `${petal.dx}px`,
-                      "--dy": `${petal.dy}px`,
-                      "--spin": `${petal.spin}deg`,
-                    } as CSSProperties
-                  }
-                >
-                  <Petal color={petal.color} />
-                </span>
-              ))}
-            </span>
-          )}
-        </button>
-        <p role="status" className={`text-sm ${shown?.color ?? ""}`}>
-          {shown && <Rich text={shown.text} />}
-        </p>
-      </div>
-    </form>
+        <div className="mt-5 flex flex-wrap items-center gap-4">
+          <button
+            type="submit"
+            disabled={status === "sending"}
+            onPointerEnter={() => setOnSend(true)}
+            onPointerLeave={() => setOnSend(false)}
+            onFocus={() => setOnSend(true)}
+            onBlur={() => setOnSend(false)}
+            className={`${buttonStyles.primary} relative disabled:opacity-60`}
+          >
+            {status === "sending" ? labels.sending : labels.send}
+            {bursts > 0 && (
+              <span key={bursts} aria-hidden="true" className="petal-burst">
+                {BURST.map((petal, i) => (
+                  <span
+                    key={i}
+                    style={
+                      {
+                        "--i": i,
+                        "--dx": `${petal.dx}px`,
+                        "--dy": `${petal.dy}px`,
+                        "--spin": `${petal.spin}deg`,
+                      } as CSSProperties
+                    }
+                  >
+                    <Petal color={petal.color} />
+                  </span>
+                ))}
+              </span>
+            )}
+          </button>
+          <p role="status" className={`text-sm ${shown?.color ?? ""}`}>
+            {shown && <Rich text={shown.text} />}
+          </p>
+        </div>
+      </form>
+    </div>
   );
 }

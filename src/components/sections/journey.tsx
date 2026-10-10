@@ -2,6 +2,7 @@ import type { Locale } from "@/i18n/config";
 import type { Messages } from "@/i18n/dictionaries";
 import { pick } from "@/i18n/format";
 import type { JourneyData } from "@/lib/schemas";
+import { JourneyGarden } from "@/components/garden/journey-garden";
 import { Section } from "@/components/ui/section";
 import { Timeline } from "./timeline";
 
@@ -29,6 +30,7 @@ export function Journey({
       eyebrow={dict.journey.eyebrow}
       title={dict.journey.title}
       bloom="bud-pink"
+      backdrop={<JourneyGarden />}
     >
       <div className="max-w-3xl rounded-2xl border border-line bg-surface/85 p-6 backdrop-blur sm:p-8">
         <Timeline steps={steps} growing={dict.journey.growing} />

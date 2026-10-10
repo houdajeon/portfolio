@@ -2,24 +2,37 @@ import Link from "next/link";
 import { projectPath, type Locale } from "@/i18n/config";
 import type { Messages } from "@/i18n/dictionaries";
 import { skillLevelSchema, type SkillLevel, type SkillsData } from "@/lib/schemas";
+import type { FlowerType } from "@/components/garden/defs";
+import { Flower } from "@/components/garden/flower";
+import { TermVine } from "@/components/garden/term-vine";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { Cursor, Prompt, row, TerminalWindow } from "@/components/ui/terminal";
 
-// Status colors read like a cluster dashboard: green = in use, accent = familiar, amber = learning.
-const statusStyle: Record<SkillLevel, { mark: string; text: string }> = {
-  used: { mark: "bg-ok", text: "text-ok" },
-  familiar: { mark: "bg-accent", text: "text-accent-text" },
-  learning: { mark: "bg-todo", text: "text-todo" },
+// Status colors read like a cluster dashboard: green = in use, accent = familiar, amber =
+// learning. The mark is a flower: open when the skill is used in a project, still a bud
+// when it is only familiar or being learned.
+const statusStyle: Record<SkillLevel, { flower: FlowerType; text: string }> = {
+  used: { flower: "bl-pink", text: "text-ok" },
+  familiar: { flower: "bud-violet", text: "text-accent-text" },
+  learning: { flower: "bud-plum", text: "text-todo" },
 };
 
-function Status({ level, label }: { level: SkillLevel; label: string }) {
+/** The status label with its flower, which opens `delay` ms after its block shows. */
+function Status({
+  level,
+  label,
+  size = 16,
+  delay = 0,
+}: {
+  level: SkillLevel;
+  label: string;
+  size?: number;
+  delay?: number;
+}) {
   return (
     <span className={`inline-flex items-center gap-2 whitespace-nowrap ${statusStyle[level].text}`}>
-      <span
-        aria-hidden="true"
-        className={`size-2.5 shrink-0 rounded-[3px] ${statusStyle[level].mark}`}
-      />
+      <Flower type={statusStyle[level].flower} size={size} delay={delay} />
       {label}
     </span>
   );
@@ -43,20 +56,31 @@ export function Skills({
     "grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 sm:grid-cols-[11rem_7rem_minmax(0,1fr)]";
 
   return (
-    <Section id="skills" eyebrow={t.eyebrow} title={t.title} intro={t.intro}>
+    <Section
+      id="skills"
+      eyebrow={t.eyebrow}
+      title={t.title}
+      intro={t.intro}
+      bloom="bl-violet"
+      backdrop={<div aria-hidden="true" className="skills-glow" />}
+    >
       <Reveal>
-        <ul aria-label={t.legend} className="mb-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs">
-          {levels.map((level) => (
+        <ul
+          aria-label={t.legend}
+          className="mb-10 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs"
+        >
+          {levels.map((level, index) => (
             <li key={level}>
-              <Status level={level} label={t.levels[level]} />
+              <Status level={level} label={t.levels[level]} size={18} delay={500 + index * 150} />
             </li>
           ))}
         </ul>
       </Reveal>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-x-8 gap-y-12 lg:grid-cols-2">
         {skills.groups.map((group, groupIndex) => (
-          <Reveal key={group.id} delay={(groupIndex % 2) * 120} className="h-full">
+          <Reveal key={group.id} delay={(groupIndex % 2) * 120} className="relative h-full">
+            <TermVine index={groupIndex} right={groupIndex % 2 === 1} />
             <TerminalWindow
               className="h-full"
               title={
@@ -93,7 +117,12 @@ export function Skills({
                       </span>
                       {item.name}
                     </span>
-                    <Status level={item.level} label={t.status[item.level]} />
+                    {/* Opens just after its row has printed (see .term-row). */}
+                    <Status
+                      level={item.level}
+                      label={t.status[item.level]}
+                      delay={(index + 3) * 45 + 380}
+                    />
                     <span className="col-span-2 mt-0.5 text-xs text-muted sm:col-span-1 sm:mt-0">
                       {item.projects.length > 0 || item.note ? (
                         <span className="flex flex-wrap gap-x-3 gap-y-0.5">

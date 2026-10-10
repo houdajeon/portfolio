@@ -30,20 +30,11 @@ export function FormVines() {
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
-        className="absolute -inset-4 h-[calc(100%+2rem)] w-[calc(100%+2rem)] overflow-visible"
+        className="g-rise absolute -inset-4 h-[calc(100%+2rem)] w-[calc(100%+2rem)] overflow-visible"
+        style={{ "--d": "200ms" } as CSSProperties}
       >
-        <path
-          className="g-vine g-vine-thin"
-          style={{ "--d": "200ms" } as CSSProperties}
-          pathLength={1}
-          d="M3 102C-1 82 5 62 2 42C0 24 4 9 15 0"
-        />
-        <path
-          className="g-vine g-vine-thin"
-          style={{ "--d": "320ms" } as CSSProperties}
-          pathLength={1}
-          d="M97 102C101 82 95 62 98 42C100 24 96 9 85 0"
-        />
+        <path className="g-vine g-vine-thin" d="M3 102C-1 82 5 62 2 42C0 24 4 9 15 0" />
+        <path className="g-vine g-vine-thin" d="M97 102C101 82 95 62 98 42C100 24 96 9 85 0" />
       </svg>
       {FLOWERS.map(([x, y, type, size, delay, tilt = 0]) => (
         <span

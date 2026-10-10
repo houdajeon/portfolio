@@ -58,7 +58,8 @@ export function Contact({ dict, site }: { dict: Messages; site: Site }) {
             </li>
           </ul>
         </Reveal>
-        <Reveal delay={120} className="relative mx-4 mt-6 lg:mt-0">
+        {/* Top margin on one column: room for the chibi peeking over the form. */}
+        <Reveal delay={120} className="relative mx-4 mt-36 sm:mt-44 lg:mt-0">
           <FormVines />
           <div className="relative z-10">
             <ContactForm accessKey={site.contactFormKey} labels={t.form} />
